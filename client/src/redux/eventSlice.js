@@ -11,13 +11,33 @@ export const getEvents=createAsyncThunk("api/getEvents",async()=>{
         console.log(err);
     }    
 })
-export const addEvent=createAsyncThunk("api/addEvent",async({clubName,name,clubimg,description})=>{
+export const updateEvent=createAsyncThunk("api/updateEvent",async({id,club,name,image,desc})=>{
+    try{
+        console.log(image);
+        const res=await axios.patch(`${BASE_URL}/api/admin/updateEvent`,{
+            id,
+            club,
+            name,
+            image,
+            desc,
+        },{
+            headers:{
+                "Content-Type":"multipart/form-data",
+                Authorization:`Bearer ${localStorage.getItem("token")}`,
+            }
+        });
+        toast.success(res.data.message);
+    }catch(err){
+        console.log(err);
+    }
+})
+export const addEvent=createAsyncThunk("api/addEvent",async({club,name,image,desc})=>{
     try{
         const result=await axios.post(`${BASE_URL}/api/admin/addEvent`,{
-            clubName,
+            club,
             name,
-            clubimg,
-            description,
+            image,
+            desc,
         },{
             headers:{
               "Content-Type":"multipart/form-data",

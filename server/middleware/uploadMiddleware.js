@@ -1,8 +1,5 @@
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const express=require('express');
-const expressAsyncHandler=require('express-async-handler');
-const multer = require('multer');
-const uploadImageRoutes=express.Router();
 const dotenv=require('dotenv');
 dotenv.config();
 const s3Client = new S3Client({
@@ -13,23 +10,22 @@ const s3Client = new S3Client({
     },
   });
 
-const uploadImage=async (file) => {
+const uploadImage=async (folderName,file) => {
     try {
       const contentType = file.mimetype;
   
-      const params = {
+      const command =new PutObjectCommand({
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: file.originalname,
+        Key:`${folderName}/${file.originalname}`,
         Body: file.buffer,
         ContentType: contentType,
-      };
+      });
   
-      const response = await s3Client.send(new PutObjectCommand(params));
+      const response = await s3Client.send(command);
       console.log("File uploaded to S3:", response);
     
     } catch (error) {
       console.error("Failed to upload file to S3:", error);
-      res.status(500).json({ error: "Failed to upload file to S3" });
     }
   };
   

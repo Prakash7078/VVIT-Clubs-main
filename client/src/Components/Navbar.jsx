@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import {useDispatch, useSelector } from 'react-redux';
 import {logoutUser} from '../redux/authSlice';
-import AudioComponent from './AudioComponent';
 import { Badge, Avatar, Dialog, Button } from "@material-tailwind/react";
 import { FiLogOut } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
@@ -29,7 +28,7 @@ function Navbar() {
     }
   
   return (
-    <div className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 md:py-5 py-2 sm:px-10 w-full bg-[#fff3e0]'>
+    <div className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-5 sm:px-10 w-full bg-[#fff3e0]'>
         <div className='flex gap-3 items-center'>
             <div className='md:hidden position:relative ml-2 '>
                 {!isMenuOpen ? <TiThMenu

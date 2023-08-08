@@ -35,7 +35,9 @@ function App() {
         {/* <Route path="/admin/registers/:rollno/profile" element={<UserProfile/>}/>         */}
         <Route path="/admin/addAdmin" element={<AddAdmin/>}/>        
         <Route path="/admin/addClub" element={<Club/>}/>        
+        <Route path="/admin/updateClub/:clubname" element={<Club/>}/>        
         <Route path="/admin/addEvent" element={<Event/>}/>   
+        <Route path="/admin/updateEvent/:eventname" element={<Event/>}/>   
         <Route path="/admin/reviews" element={<Reviews/>}/>   
              
 

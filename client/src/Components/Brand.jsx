@@ -69,7 +69,7 @@ function Brand() {
                     </div>
                 </div>
             </CardBody>
-            <span className='font-bold text-4xl text-black relative bottom-72 md:bottom-80 md:left-96 h-20 px-10 bg-white'>
+            <span className='font-bold text-4xl font-serif text-black relative bottom-72 md:bottom-80 md:left-96 h-20 px-10 bg-white'>
                   {/* Style will be inherited from the parent element */}
                   
                   <Typewriter

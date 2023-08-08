@@ -97,29 +97,31 @@ function AllClubs() {
               </tr>
             </thead>
             <tbody>
-              {currentProducts.map(({image,name }, index) => {
+              {currentProducts.map((item, index) => {
                 const isLast = index === clubs.length - 1;
                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
     
                 return (
                   <tr key={name}>
                     <td className={classes}>
-                      <Link to={`/${name}`}><Avatar src={image} alt={name} size="sm" /></Link>
+                      <Link to={`/${item.name}`}><Avatar src={item.image} alt={name} size="sm" /></Link>
                     </td>
                     <td className={classes}>
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {name}
+                        {item.name}
                       </Typography>
                     </td>
                     <td className={classes}>
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {registers.filter((item)=>item.club===name).length===0?"False":"True"}
+                        {registers.filter((item)=>item.club===item.name).length===0?"False":"True"}
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Typography as="a" href="#" variant="small" color="blue" className="font-medium">
-                        Edit
-                      </Typography>
+                      <Link to={`/admin/updateClub/${item.name}`}>
+                        <Typography variant="small" color="blue" className="font-medium">
+                          Edit
+                        </Typography>
+                      </Link>
                     </td>
                   </tr>
                 );

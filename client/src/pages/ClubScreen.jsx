@@ -1,6 +1,6 @@
 import {useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { addRegister, deleteRegister, getRegister } from '../redux/registerSlice';
@@ -18,6 +18,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Footer from '../Components/Footer';
 import Team from '../Components/Team';
 function ClubScreen() {
+    const { pathname } = useLocation();
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
     const [yearFilter, setYearFilter] = useState("All");
     const [branchFilter, setBranchFilter] = useState("All");
     const [studentFilter, setStudentFilter] = useState(false);
@@ -185,7 +189,7 @@ function ClubScreen() {
   return (
     <div className='lg:pt-24 pt-8'>
         {clubs && clubs.filter((item)=>item.name===name).map((item,index)=>(
-            <div key={index} className=''>
+            <div key={index} className='mb-3'>
                 <Card className="flex sm:flex-row w-full mt-12  " >
                 <CardHeader shadow={false} floated={false} className="sm:w-1/4 shrink-0  rounded-r-none">
                 <img 
@@ -221,7 +225,7 @@ function ClubScreen() {
             <div key={index} className=' mt-16 '>
                 <Card
                     shadow={false}
-                    className="relative grid md:h-[40rem] sm:h-8 w-full max-w-[28rem] sm:max-w-full items-end justify-center overflow-hidden text-center"
+                    className="relative grid md:h-[40rem] h-full w-full max-w-[28rem] sm:max-w-full items-end justify-center overflow-hidden text-center"
                     >
                     <CardHeader
                         floated={false}
@@ -374,8 +378,8 @@ function ClubScreen() {
                     <td className="border text-center px-4 py-2">{product.branch}</td>
                     <td className="border text-center px-4 py-2">{product.roll}</td>
                     <td className="border text-center px-4 py-2">{product.section}</td>
-                    <td>{userInfo && userInfo.isAdmin && <div className="w-fit mx-auto cursor-pointer">{product.isWinner ? <img src={gold} className='w-10 h-10 object-cover'  onClick={()=>handleWinner(product.roll,product.isWinner)}/>:<Switch color='red' onClick={()=>handleWinner(product.roll,product.isWinner)}/>}</div>}</td>
-
+                    <td>{userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <div className="w-fit mx-auto cursor-pointer">{product.isWinner ? <img src={gold} className='w-10 h-10 object-cover'  onClick={()=>handleWinner(product.roll,product.isWinner)}/>:<Switch color='red' onClick={()=>handleWinner(product.roll,product.isWinner)}/>}</div>}</td>
+                    <td>{userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator")&& <div className="w-fit mx-auto cursor-pointer">{product.isRunner ? <img src={silver} className='w-10 h-10 object-cover'  onClick={()=>handleRunner(product.roll,product.isRunner)}/>:<Switch color='red' onClick={()=>handleRunner(product.roll,product.isRunner)}/>}</div>}</td>
                     </tr>
                 ))}
                 {currentProducts?.map((product) => (
@@ -393,8 +397,8 @@ function ClubScreen() {
                     <td className="border text-center px-4 py-2">{product.branch}</td>
                     <td className="border text-center px-4 py-2">{product.roll}</td>
                     <td className="border text-center px-4 py-2">{product.section}</td>
-                    <td>{userInfo && userInfo.isAdmin && <div className="w-fit mx-auto cursor-pointer">{product.isWinner ? <img src={gold} className='w-10 h-10 object-cover'  onClick={()=>handleWinner(product.roll,product.isWinner)}/>:<Switch color='red' onClick={()=>handleWinner(product.roll,product.isWinner)}/>}</div>}</td>
-                    <td>{userInfo && userInfo.isAdmin && <div className="w-fit mx-auto cursor-pointer">{product.isRunner ? <img src={silver} className='w-10 h-10 object-cover'  onClick={()=>handleRunner(product.roll,product.isRunner)}/>:<Switch color='red' onClick={()=>handleRunner(product.roll,product.isRunner)}/>}</div>}</td>
+                    <td>{userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <div className="w-fit mx-auto cursor-pointer">{product.isWinner ? <img src={gold} className='w-10 h-10 object-cover'  onClick={()=>handleWinner(product.roll,product.isWinner)}/>:<Switch color='red' onClick={()=>handleWinner(product.roll,product.isWinner)}/>}</div>}</td>
+                    <td>{userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator")&& <div className="w-fit mx-auto cursor-pointer">{product.isRunner ? <img src={silver} className='w-10 h-10 object-cover'  onClick={()=>handleRunner(product.roll,product.isRunner)}/>:<Switch color='red' onClick={()=>handleRunner(product.roll,product.isRunner)}/>}</div>}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -475,7 +479,7 @@ function ClubScreen() {
               unmount: { scale: 0.9, y: -100 },
             }}
           >
-            <DialogHeader>{dailogData["name"]}</DialogHeader>
+            <DialogHeader>{dailogData.name}</DialogHeader>
             <DialogBody divider>
               {dailogData["desc"]}  
             </DialogBody>

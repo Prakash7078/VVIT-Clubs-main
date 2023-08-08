@@ -18,9 +18,9 @@ const getDetails=async(req,res)=>{
 };
 const addEvent=(expressAsyncHandler(async(req,res)=>{
     const events=new Event({
-        clubname:req.body.clubName,
+        clubname:req.body.club,
         eventname:req.body.name,
-        description:req.body.description,
+        description:req.body.desc,
     });
     if (req.file) {
         // Uploading the profile image to AWS S3
@@ -34,21 +34,47 @@ const addEvent=(expressAsyncHandler(async(req,res)=>{
     res.status(200).json({message:"add Event succesfully"});
 
 }))
+const updateEvent=(expressAsyncHandler(async(req,res)=>{
+    const {id}=req.body;
+    const newOne=await Event.findByIdAndUpdate(id,{clubname:req.body.club,eventname:req.body.name,description:req.body.desc});
+    if(req.file){
+        await uploadImage("events",req.file);
+        newOne.eventimage= `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/events/${req.file.originalname}`;
+    }else{
+        newOne.image=req.body.image;
+    }
+    newOne.save();
+    console.log(newOne);
+    return res.status(StatusCodes.OK).json({message:"Event updated succesfully"});
+}))
+const updateClub=(expressAsyncHandler(async(req,res)=>{
+    const {id}=req.body;
+    const newOne=await Clubs.findByIdAndUpdate(id,{name:req.body.name,desc:req.body.desc},{new:true});
+    if(req.file){
+        await uploadImage("clubs",req.file);
+        newOne.image = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/clubs/${req.file.originalname}`;
+    }else{
+        newOne.image=req.body.image;
+    }
+    newOne.save();
+    console.log("newOne",newOne);
+    return res.status(StatusCodes.OK).json({message:"club update succesfully"});
+}))
 const addClub=(expressAsyncHandler(async(req,res)=>{
     const clubs=new Clubs({
         name:req.body.name,
-        desc:req.body.description,
+        desc:req.body.desc,
     });
     if (req.file) {
         // Uploading the profile image to AWS S3
-        await uploadImage(req.file);
+        await uploadImage("clubs",req.file);
   
         // Setting the cover image URL in the book model
-        clubs.image = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/profile-images/${clubs._id}/${req.file.originalname}`;
-      }
+        clubs.image = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/clubs/${req.file.originalname}`;
+    }
     const res1=await clubs.save();
     console.log(res1);
-    res.status(StatusCodes.OK).json({message:"club added succesfully"});
+    return res.status(StatusCodes.OK).json({message:"club added succesfully"});
 }));
 const addCoordinator=(expressAsyncHandler(async(req,res)=>{
     const {roll}=req.body;
@@ -86,4 +112,4 @@ const addAdmin=(expressAsyncHandler(async(req,res)=>{
     const user=await newAdmin.save();
     return res.status(StatusCodes.CREATED).json({message:"admin added succesfully"});
 }))
-module.exports={getDetails,addEvent,addClub,addAdmin,addCoordinator};
+module.exports={getDetails,addEvent,addClub,addAdmin,addCoordinator,updateClub,updateEvent};

@@ -10,12 +10,31 @@ export const getClubs=createAsyncThunk("api/getClubs",async()=>{
         console.log(err);
    }
 })
-export const addClub=createAsyncThunk("api/addClub",async({name,clubimg,description})=>{
+export const updateClub=createAsyncThunk("api/updateClub",async({id,name,image,desc})=>{
+    try{
+        console.log(image);
+        const result=await axios.patch(`${BASE_URL}/api/admin/updateClub`,{
+            id,
+            name,
+            image,
+            desc,
+        },{
+            headers:{
+                "Content-Type":"multipart/form-data",
+                Authorization:`Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        toast.success(result.data.message);
+    }catch(err){
+        console.log(err);
+    }
+})
+export const addClub=createAsyncThunk("api/addClub",async({name,image,desc})=>{
     try{
         const result=await axios.post(`${BASE_URL}/api/admin/addClub`,{
             name,
-            clubimg,
-            description,
+            image,
+            desc,
         },{
             headers:{
               "Content-Type":"multipart/form-data",

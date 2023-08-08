@@ -119,9 +119,11 @@ if (loading) {
                       </Typography>
                     </td> */}
                     <td className={classes}>
-                      <Typography as="a" href="#" variant="small" color="blue" className="font-medium">
-                        Edit
-                      </Typography>
+                      <Link to={`/admin/updateEvent/${eventname}`}>
+                        <Typography variant="small" color="blue" className="font-medium">
+                          Edit
+                        </Typography>
+                      </Link>
                     </td>
                   </tr>
                 );
