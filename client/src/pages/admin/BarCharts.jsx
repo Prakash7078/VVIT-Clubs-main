@@ -1,4 +1,4 @@
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid,ResponsiveContainer } from 'recharts';
 function BarCharts() {
     const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
 
@@ -47,8 +47,9 @@ function BarCharts() {
     return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
     };
   return (
+    <ResponsiveContainer width="100%" height={300}>
     <BarChart
-      width={500}
+      width={400}
       height={300}
       data={data}
       margin={{
@@ -67,6 +68,7 @@ function BarCharts() {
         ))}
       </Bar>
     </BarChart>
+    </ResponsiveContainer>
   )
 }
 

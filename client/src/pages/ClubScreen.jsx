@@ -33,6 +33,9 @@ function ClubScreen() {
       if(inp==="register"){
         setDailogData({"name":"Registration","desc": "Once u registered into the event you cannot register to another event, If u want to register for another event you can unregister this one."})
       }
+      if(inp==="winner"){
+        setDailogData({"name":"Winner","desc": "Now he is winner for one of these club events, If u don't you can click again "})
+      }
       console.log(dailogData)
       setOpen(!open);
     }
@@ -120,6 +123,7 @@ function ClubScreen() {
         }
     }
     const handleWinner=async(rollno,winner)=>{
+        handleOpen("winner");
         await dispatch(makeWinner({rollno,winner}));
         await dispatch(getRegister());
     }
@@ -187,7 +191,7 @@ function ClubScreen() {
         // ],
       };
   return (
-    <div className='lg:pt-24 pt-8'>
+    <div className='lg:pt-24 pt-8 bg-[#fbe9e7]'>
         {clubs && clubs.filter((item)=>item.name===name).map((item,index)=>(
             <div key={index} className='mb-3'>
                 <Card className="flex sm:flex-row w-full mt-12  " >
@@ -235,30 +239,30 @@ function ClubScreen() {
                         style={{ backgroundImage: `url('${event.eventimage}')` }}                    >
                         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/100 via-black/70" />
                     </CardHeader>
-                    <CardBody className="relative  px-6 md:px-12 ">
+                    <CardBody className="relative  px-6 md:px-12">
                         {userInfo && <Typography
                         variant="h2"
                         color="white"
-                        className="mb-3 font-bold leading-[1.5]"
+                        className="mb-3 font-bold leading-[1.5] text-sm lg:text-4xl"
                         >
                         Hey {userInfo.username}
                         </Typography>}
                         <Typography
                         variant="h2"
                         color="white"
-                        className="mb-3 font-bold lg:text-5xl leading-[1.5] text-gray-400"
+                        className="mb-3 font-bold lg:text-5xl leading-[1.5] text-white text-sm"
                         >
                         Be the face of VVIT Clubs
                         </Typography>
-                        <Typography variant="h5" className="mb-4 text-white">
+                        <Typography variant="h5" className="mb-4 text-white text-sm lg:text-3xl">
                         {event.eventname} Event
                         </Typography>
                         {(registerInfo && userInfo && userInfo.rollno===registerInfo.roll && event.eventname===registerInfo.event) ? <button className='bg-red-500 px-8 py-2 text-white h-fit mt-10 ' onClick={()=>handleDeleteregister(registerInfo.roll)}>UnRegister</button>
-                            :<button className='bg-green-500 px-8 py-2 text-white h-fit mt-10 font-bold 'onClick={()=>handleRegister(event.clubname,event.eventname)}>Register</button>}
+                            :<button className='bg-green-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 lg:font-bold 'onClick={()=>handleRegister(event.clubname,event.eventname)}>Register</button>}
                         <Typography
                         variant="h5"
                         color="white"
-                        className="pt-5 pb-8 leading-[1.5] text-gray-400"
+                        className="pt-5 pb-8 leading-[1.5] text-gray-400 text-sm lg:text-xl"
                         >
                         {event.description}
                         </Typography>
@@ -267,9 +271,9 @@ function ClubScreen() {
             </div>)
         )}
         </Slider>}
-       {userInfo && currentProducts.length>0 && (userInfo.isAdmin || userInfo.category==="Coordinator") && <div>
-        <div className='flex flex-col md:flex-row justify-between mt-16 mb-5 items-center'>
-            <div className=" flex items-center mb-3 md:mb-0 flex-wrap lg:mx-10 flex-col sm:flex-row">
+       {userInfo &&  (userInfo.isAdmin || userInfo.category==="Coordinator") && <div>
+        <div className='flex flex-col md:flex-row justify-between mt-16 mb-5 items-center gap-2 '>
+            <div className=" flex items-center gap-3 md:mb-0 flex-wrap lg:mx-10 flex-col sm:flex-row ">
                   <div>
                     <label htmlFor="yearFilter" className="sm:mr-2">
                     Year:
@@ -331,8 +335,9 @@ function ClubScreen() {
                     />
                   </div>
             </div>
-             <div className="relative flex  md:w-max sm:mr-10 w-80 justify-between">
+             <div className="relative flex  md:w-max  justify-between ">
                 <Input
+                    color='brown'
                     type="search"
                     label="Type Rollno..."
                     className="pr-24 "
@@ -346,9 +351,9 @@ function ClubScreen() {
                 </Button>
             </div>
         </div>
-       <div className="overflow-x-auto lg:mx-10">
-        <table className="w-full border-collapse ">
-                <thead>
+       <div className="overflow-x-auto lg:mx-10 bg-white mx-2">
+        <table className="w-full border-collapse">
+                <thead className='top-0 sticky'>
                 <tr className="bg-primary text-secondary  ">
                     <th className="px-4 py-2">Image</th>
                     <th className="px-4 py-2">Name</th>
@@ -423,16 +428,16 @@ function ClubScreen() {
         />
          </div>}
          {currentProducts.filter((item) => item.isWinner || item.isRunner).length > 0 && (
-            <div className='my-16 mx-10 relative'>
+            <div className='my-16 mx-10 relative '>
                 <h1 className='text-center text-3xl font-bold mb-16'>Winners and Runners</h1>
                 <Slider {...settings}>
                 {currentProducts.filter((item) => item.isWinner || item.isRunner).map((item) => (
-                  <div key={item.id} className='relative'>
-                    <div className='bg-brown-900 h-full md:w-10 w-4 absolute top-0 left-0 transform -translate-x-1/2'></div>
+                  <div key={item.id} className='relative bg-white '>
+                    <div className='bg-brown-900 h-full md:w-10 w-4 absolute top-0 left-0 transform -translate-x-1/2 '></div>
                     <div className='bg-brown-900 h-10 w-full absolute bottom-0 left-0 transform translate-y-1/2'></div>
                     <div className='w-3/4 lg:w-1/2 mx-auto mb-10 relative overflow-hidden'>
-                      <div className='bg-white rounded-lg lg:p-6 shadow-lg flex justify-between flex-col md:flex-row-reverse items-center'>
-                        <div>
+                      <div className=' bg-white rounded-lg lg:p-10 shadow-lg flex justify-between flex-col md:flex-row-reverse items-center'>
+                        <div className='pt-5'>
                             <img src={item.userimage} alt='winorrun' className='w-60 h-60 object-cover rounded-full' />
                         </div>
                         <div className='mt-6'>                

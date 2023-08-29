@@ -13,6 +13,7 @@ import { BsChatTextFill } from 'react-icons/bs'
 import { AiOutlinePlus } from 'react-icons/ai';
 import AudioComponent from './AudioComponent';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Brand() {
     const audio = document.getElementById("audiotag");
@@ -21,8 +22,9 @@ function Brand() {
         audio.play();
         setIsMuted(!isMuted);
       };
-    
-    useEffect(() => {
+      const userInfo = useSelector((state) => state.auth.userInfo);
+      console.log(userInfo);
+      useEffect(() => {
         // Trigger audio playback when component mounts
       }, [isMuted]);
     // const [openPopover, setOpenPopover] = useState(true);
@@ -34,7 +36,7 @@ function Brand() {
     <div className=''>
         <Card
             shadow={false}
-            className="relative grid h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center"
+            className="relative grid h-[25rem] md:h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center"
             >
             <CardHeader
                 floated={false}
@@ -69,7 +71,7 @@ function Brand() {
                     </div>
                 </div>
             </CardBody>
-            <span className='font-bold text-4xl font-serif text-black relative bottom-72 md:bottom-80 md:left-96 h-20 px-10 bg-white'>
+            <span className='font-bold sm:text-2xl md:text-4xl font-serif text-black relative bottom-44 md:bottom-80 md:left-96 h-fit px-10 bg-white'>
                   {/* Style will be inherited from the parent element */}
                   
                   <Typewriter
@@ -89,7 +91,7 @@ function Brand() {
                 />
                 </span>
         </Card>
-        <div className='fixed lg:top-3/4 top-96 right-10 z-50'>
+        <div className='fixed lg:top-3/4 top-80 right-8 z-50'>
         <SpeedDial>
           <SpeedDialHandler>
             <IconButton color='brown' size="lg" className="rounded-full">
@@ -97,9 +99,9 @@ function Brand() {
             </IconButton>
           </SpeedDialHandler>
           <SpeedDialContent >
-            <SpeedDialAction >
+            {userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <SpeedDialAction >
               <Link to='https://chat-dude.netlify.app/' target='_blank'><BsChatTextFill className="h-5 w-5"  /></Link>
-            </SpeedDialAction>
+            </SpeedDialAction>}
             <SpeedDialAction>
             <AudioComponent isMuted={isMuted} />
             <div onClick={handleButtonClick} className="cursor-pointer bg-green-400 rounded-full">

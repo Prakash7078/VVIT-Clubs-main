@@ -108,11 +108,11 @@ function AllRegistrations() {
   return (
     <div>
       <Sidebar/>
-      <div className="lg:pt-5 lg:pl-72 ">
+      <div className="lg:pt-5 lg:pl-72 pt-5">
             <div>
                 <CardHeader floated={false} shadow={false} className="rounded-none">
-                    <div className="mb-8 flex items-center justify-between gap-8">
-                      <div>
+                    <div className="mb-8 flex items-center justify-between gap-8 sm:flex-row flex-col">
+                      <div className="text-center sm:text-left">
                         <Typography variant="h5" color="brown-gray">
                           Registrations List
                         </Typography>
@@ -120,7 +120,7 @@ function AllRegistrations() {
                           See Information about all Registartions.
                         </Typography>
                       </div>
-                      <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+                      <div className="flex flex-row gap-2 ">
                         <Button variant="outlined" color="brown" size="sm" >
                           view all
                         </Button>

@@ -19,9 +19,9 @@ function Reviews() {
   return (
     <div>
       <Sidebar/>
-      <div className='pt-10 lg:pl-80 mr-16 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1'>
+      <div className='pt-10 lg:pl-80 mx-auto flex flex-wrap'>
         {messages.map((item,index)=>(
-          <div key={index} className='box shadow-2xl mx-5 px-10 py-10 flex flex-col gap-3 w-full'>
+          <div key={index} className='box shadow-2xl mx-3 px-10 py-10 flex flex-col gap-3 w-fit'>
             <div className='font-bold flex items-center gap-5 '><p>{item.email}</p><span className='cursor-pointer'><MdDelete onClick={()=>handleDeletereview(item._id)} size={20}/></span></div>
             <div className='flex flex-col'>
                 <h1>{item.name}</h1>

@@ -26,7 +26,25 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-
+export const updateRegister=createAsyncThunk(
+  "api/updateRegister",
+  async(payload)=>{
+    console.log("payload",payload);
+    try{
+      const response=await axios.patch(`${BASE_URL}/api/auth/profile`,payload,{
+        headers:{
+          "Content-Type":"multipart/form-data",
+          Authorization:`Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const{user,message}=response.data;
+      toast.success(message);
+      localStorage.setItem("userInfo",JSON.stringify(user));
+    }catch(err){
+      throw new Error(err.message);
+    }
+  }
+)
 // Async thunk action to handle user signup
 export const signupUser = createAsyncThunk(
   "auth/signup",

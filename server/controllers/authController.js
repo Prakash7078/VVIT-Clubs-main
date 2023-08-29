@@ -6,11 +6,26 @@ const expressAsyncHandler=require('express-async-handler');
 const uploadImage = require('../middleware/uploadMiddleware');
 const userRoutes=express.Router();
 const dotenv=require('dotenv');
+const { StatusCodes } = require('http-status-codes');
 dotenv.config();
 userRoutes.get('/:rollno',async(req,res)=>{
     const result=await User.find({rollno:req.params.rollno});
     res.send(result);
 });
+const profile=(expressAsyncHandler(async(req,res)=>{
+    const {id}=req.body;
+    const{name,email,branch,rollno,section,year}=req.body;
+    const newOne=await User.findByIdAndUpdate(id,{username:name,email:email,branch:branch,rollno:rollno,section:section,year:year});
+    if(req.file){
+        await uploadImage("profiles",req.file);
+        newOne.image= `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/profiles/${req.file.originalname}`;
+    }else{
+        newOne.image=req.body.image;
+    }
+    newOne.save();
+    console.log(newOne);
+    return res.status(StatusCodes.OK).json({user:newOne,message:"Profile Update Succesfully"});
+}))
 const login=(expressAsyncHandler(async(req,res)=>{
     const user=await User.findOne({email:req.body.data.email});
     if(user){
@@ -53,4 +68,4 @@ const signup=(expressAsyncHandler(async(req,res)=>{
       .status(201)
       .json({token, user});
 }));
-module.exports = {login,signup};
+module.exports = {login,signup,profile};

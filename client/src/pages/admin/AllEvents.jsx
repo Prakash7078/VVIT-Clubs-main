@@ -53,7 +53,7 @@ if (loading) {
       <div className="pt-10 lg:pl-80 lg:mr-32">
         <Card className="h-full w-full">
           <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-8 flex items-center justify-between gap-8">
+            <div className="mb-8 flex items-center justify-between gap-8 flex-col sm:flex-row">
               <div>
                 <Typography variant="h5" color="brown-gray">
                   Events List
@@ -62,7 +62,7 @@ if (loading) {
                   See Information about all events.
                 </Typography>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+              <div className="flex  flex-row gap-2 shrink-0">
                 <Button variant="outlined" color="brown" size="sm" >
                   view all
                 </Button>
@@ -77,59 +77,61 @@ if (loading) {
               </div>
             </div>
           </CardHeader>
-          <table className="w-full min-w-max table-auto text-left ">
-            <thead>
-              <tr>
-                {TABLE_HEAD.map((head) => (
-                  <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal leading-none opacity-70"
-                    >
-                      {head}
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {currentProducts.map(({eventimage,eventname,clubname }, index) => {
-                const isLast = index === events.length - 1;
-                const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-    
-                return (
-                  <tr key={eventname}>
-                    <td className={classes}>
-                      <Link to={`/${clubname}`}><Avatar src={eventimage} alt={eventname} size="sm" /></Link>
-                    </td>
-                    <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {clubname}
+          <div className="overflow-x-auto mx-2 sm:mx-0">
+            <table className="w-full min-w-max table-auto text-left ">
+              <thead>
+                <tr>
+                  {TABLE_HEAD.map((head) => (
+                    <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal leading-none opacity-70"
+                      >
+                        {head}
                       </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {eventname}
-                      </Typography>
-                    </td>
-                    {/* <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {working?"True":"False"}
-                      </Typography>
-                    </td> */}
-                    <td className={classes}>
-                      <Link to={`/admin/updateEvent/${eventname}`}>
-                        <Typography variant="small" color="blue" className="font-medium">
-                          Edit
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {currentProducts.map(({eventimage,eventname,clubname }, index) => {
+                  const isLast = index === events.length - 1;
+                  const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+      
+                  return (
+                    <tr key={eventname}>
+                      <td className={classes}>
+                        <Link to={`/${clubname}`}><Avatar src={eventimage} alt={eventname} size="sm" /></Link>
+                      </td>
+                      <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {clubname}
                         </Typography>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      </td>
+                      <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {eventname}
+                        </Typography>
+                      </td>
+                      {/* <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {working?"True":"False"}
+                        </Typography>
+                      </td> */}
+                      <td className={classes}>
+                        <Link to={`/admin/updateEvent/${eventname}`}>
+                          <Typography variant="small" color="blue" className="font-medium">
+                            Edit
+                          </Typography>
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </Card>
       </div>
       <ReactPaginate

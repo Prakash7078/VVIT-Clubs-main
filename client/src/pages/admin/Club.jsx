@@ -44,7 +44,7 @@ function Club() {
         <Sidebar/>
         <div className='pt-10 lg:pl-96 lg:flex items-center '>
             <Card shadow={true} className='lg:ml-20 lg:px-10 pb-10'>
-                <form className='text-center mt-40 md:mt-10 flex sm:flex-row flex-col items-center gap-10 px-10 mx-auto' onSubmit={handleClubSubmit}>
+                <form className='text-center md:mt-10 flex sm:flex-row flex-col items-center gap-10 px-10 mx-auto' onSubmit={handleClubSubmit}>
                     <div>
                         <label htmlFor="fileInput"  className="p-2  rounded-md cursor-pointer">
                                 <img src={clubdata.image?thumps:upload} alt='clubimage' className='w-40 h-40 object-cover'/>                        </label>

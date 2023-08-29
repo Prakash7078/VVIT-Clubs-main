@@ -8,14 +8,14 @@ const Team = (props) => {
     const {data}=value;
   return (
     <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-      <div id="team" className="bg-[#e64a19] pb-10">
+      <div id="team" className="bg-[#fbe9e7] pb-10">
         <section className="">
           <div className=" px-4 mx-auto max-w-screen-xl text-center pt-10 ">
             <div className="mx-auto mb-8 max-w-screen-sm ">
               <h2 className="mb-4 text-5xl tracking-tight font-extrabold text-black">
                 Our Team
               </h2>
-              <p className="font-light text-secondary sm:text-xl">
+              <p className="font-light sm:text-xl">
                 Coordinators
               </p>
             </div>
@@ -55,7 +55,7 @@ const Team = (props) => {
                         </h3>
                         <p>{member.branch}</p>
                         <p>{member.roll}</p>                    
-                        <Link to='/profile'><Button color="brown" className="mt-3">Profile</Button></Link>               
+                        <Link to={`${member.roll}/profile`}><Button color="brown" className="mt-3">Profile</Button></Link>               
                       </div>
                     </div>
                   </SplideSlide>
