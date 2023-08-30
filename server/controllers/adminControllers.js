@@ -34,6 +34,14 @@ const addEvent=(expressAsyncHandler(async(req,res)=>{
     res.status(200).json({message:"add Event succesfully"});
 
 }))
+
+const deleteEvent=async(req,res)=>{
+    const event=await User.findById(req.params.id);
+    await Register.deleteMany({event:event.name});
+    await Event.findByIdAndDelete(req.params.id);
+    res.status(StatusCodes.OK).json({message:"event delete succesfully"});
+}
+
 const updateEvent=(expressAsyncHandler(async(req,res)=>{
     const {id}=req.body;
     const newOne=await Event.findByIdAndUpdate(id,{clubname:req.body.club,eventname:req.body.name,description:req.body.desc});
@@ -76,6 +84,15 @@ const addClub=(expressAsyncHandler(async(req,res)=>{
     console.log(res1);
     return res.status(StatusCodes.OK).json({message:"club added succesfully"});
 }));
+const deleteClub=async(req,res)=>{
+    console.log("delete id",req.params.id);
+    const club=await Clubs.findById(req.params.id);
+    await Register.deleteMany({club:club.name});
+    await Event.deleteMany({clubname:club.name});
+    const result=await Clubs.findByIdAndDelete(req.params.id);
+    res.json({message:"Club deleted succesfully"});
+};
+
 const addCoordinator=(expressAsyncHandler(async(req,res)=>{
     const {roll}=req.body;
     const existingRegister=await Register.findOne({roll})
@@ -112,4 +129,4 @@ const addAdmin=(expressAsyncHandler(async(req,res)=>{
     const user=await newAdmin.save();
     return res.status(StatusCodes.CREATED).json({message:"admin added succesfully"});
 }))
-module.exports={getDetails,addEvent,addClub,addAdmin,addCoordinator,updateClub,updateEvent};
+module.exports={getDetails,addEvent,addClub,addAdmin,addCoordinator,updateClub,updateEvent,deleteClub,deleteEvent};

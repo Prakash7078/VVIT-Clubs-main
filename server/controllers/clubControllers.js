@@ -14,4 +14,5 @@ const getChooseclub=async(req,res)=>{
         res.status(404).send({message:'Product not Found'});
     }
 };
+
 module.exports={getChooseclub,getClubs};

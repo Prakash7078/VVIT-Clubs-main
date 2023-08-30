@@ -34,6 +34,7 @@ function Club() {
         if(clubname){
             await dispatch(updateClub(clubdata));
             await dispatch(getClubs());
+            
         }else{
             await dispatch(addClub(clubdata));
             await dispatch(getClubs());

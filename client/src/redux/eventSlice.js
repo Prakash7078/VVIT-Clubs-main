@@ -11,6 +11,22 @@ export const getEvents=createAsyncThunk("api/getEvents",async()=>{
         console.log(err);
     }    
 })
+export const deleteEvent=createAsyncThunk("api/deleteEvent",async(id)=>{
+    try{
+        const result=await axios.delete(`${BASE_URL}/api/admin/deleteEvent/${id}`,
+            {
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+        toast.success(result.message);
+
+    }catch(err){
+        toast.error("Event not deleted");
+    }
+})
+
 export const updateEvent=createAsyncThunk("api/updateEvent",async({id,club,name,image,desc})=>{
     try{
         console.log(image);

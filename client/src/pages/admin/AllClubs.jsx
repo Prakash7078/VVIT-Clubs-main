@@ -1,13 +1,14 @@
-import { BiSolidAddToQueue } from "react-icons/bi";
+import { BiSolidAddToQueue, BiSolidEditAlt } from "react-icons/bi";
 import Sidebar from "../../Components/Sidebar"
 import { Avatar, Button, Card, CardHeader, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
-import { getClubs } from "../../redux/clubSlice";
+import { deleteClub, getClubs } from "../../redux/clubSlice";
 import { getRegister } from "../../redux/registerSlice";
 import { Link } from "react-router-dom";
 import { Rings } from "react-loader-spinner";
+import { MdDelete } from "react-icons/md";
 function AllClubs() {
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 5; // Number of products per page
@@ -39,12 +40,16 @@ function AllClubs() {
       </div>
     );
  }
-  
+  const handleDelete=async(id)=>{
+    console.log("id",id);
+    await dispatch(deleteClub(id));
+    await dispatch(getClubs());
+  }
         // Function to handle page change
   const handlePageChange = (selectedPage) => {
       setCurrentPage(selectedPage.selected + 1);
   };
-  const TABLE_HEAD = ["Image", "Name", "Working", "Edit"];
+  const TABLE_HEAD = ["Image", "Name", "Working", "Edit","Delete"];
   
   const totalPages = Math.ceil(clubs?.length / perPage);
   const currentProducts = clubs?.slice(
@@ -120,10 +125,11 @@ function AllClubs() {
                       </td>
                       <td className={classes}>
                         <Link to={`/admin/updateClub/${item.name}`}>
-                          <Typography variant="small" color="blue" className="font-medium">
-                            Edit
-                          </Typography>
+                          <BiSolidEditAlt size={22}/>
                         </Link>
+                      </td>
+                      <td className={classes}>
+                        <MdDelete size={20} color="red" className="cursor-pointer" onClick={()=>handleDelete(item._id)}/>
                       </td>
                     </tr>
                   );

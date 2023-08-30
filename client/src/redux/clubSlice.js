@@ -10,6 +10,21 @@ export const getClubs=createAsyncThunk("api/getClubs",async()=>{
         console.log(err);
    }
 })
+export const deleteClub=createAsyncThunk("api/deleteClub",async(id)=>{
+    try{
+        const result=await axios.delete(`${BASE_URL}/api/admin/deleteClub/${id}`,
+            {
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        );
+        toast.success(result.data.message);
+
+    }catch(err){
+        toast.error("Club not deleted");
+    }
+})
 export const updateClub=createAsyncThunk("api/updateClub",async({id,name,image,desc})=>{
     try{
         console.log(image);

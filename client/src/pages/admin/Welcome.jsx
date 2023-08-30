@@ -52,7 +52,7 @@ function Welcome() {
               </span>
             </div>
           </div>
-          <div className='mt-16 flex flex-col md:flex-row sm:justify-around'>
+          <div className='mt-16 flex flex-col '>
             <div>
                 <PieCharts/>
             </div>

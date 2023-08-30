@@ -49,7 +49,7 @@ function BarCharts() {
   return (
     <ResponsiveContainer width="100%" height={300}>
     <BarChart
-      width={400}
+      width={300}
       height={300}
       data={data}
       margin={{

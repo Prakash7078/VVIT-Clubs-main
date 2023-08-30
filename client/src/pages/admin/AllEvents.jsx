@@ -1,12 +1,14 @@
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
-import {getEvents} from '../../redux/eventSlice'
+import {deleteEvent, getEvents} from '../../redux/eventSlice'
 import Sidebar from "../../Components/Sidebar"
 import { Avatar, Button, Card, CardHeader, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { BiSolidAddToQueue } from "react-icons/bi";
+import { BiSolidAddToQueue, BiSolidEditAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { Rings } from "react-loader-spinner";
+import { MdDelete } from "react-icons/md";
+import { getRegister } from "../../redux/registerSlice";
 
 function AllEvents() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +26,12 @@ function AllEvents() {
   const handlePageChange = (selectedPage) => {
       setCurrentPage(selectedPage.selected + 1);
   };
-  const TABLE_HEAD = ["EventImage", "ClubName", "Eventname", "Edit"];
+  const handleDelete=async(id)=>{
+    await dispatch(deleteEvent(id));
+    await dispatch(getEvents());
+  }
+
+  const TABLE_HEAD = ["EventImage", "ClubName", "Eventname", "Edit","Delete"];
   
   const totalPages = Math.ceil(events?.length / perPage);
   const currentProducts = events?.slice(
@@ -121,10 +128,11 @@ if (loading) {
                       </td> */}
                       <td className={classes}>
                         <Link to={`/admin/updateEvent/${eventname}`}>
-                          <Typography variant="small" color="blue" className="font-medium">
-                            Edit
-                          </Typography>
+                          <BiSolidEditAlt size={22}/>
                         </Link>
+                      </td>
+                      <td className={classes}>
+                        <MdDelete size={20} color="red" className="cursor-pointer" onClick={()=>handleDelete(item._id)}/>
                       </td>
                     </tr>
                   );
