@@ -102,7 +102,7 @@ if (loading) {
                 </tr>
               </thead>
               <tbody>
-                {currentProducts.map(({eventimage,eventname,clubname }, index) => {
+                {currentProducts.map(({_id,eventimage,eventname,clubname }, index) => {
                   const isLast = index === events.length - 1;
                   const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
       
@@ -132,7 +132,7 @@ if (loading) {
                         </Link>
                       </td>
                       <td className={classes}>
-                        <MdDelete size={20} color="red" className="cursor-pointer" onClick={()=>handleDelete(item._id)}/>
+                        <MdDelete size={20} color="red" className="cursor-pointer" onClick={()=>handleDelete(_id)}/>
                       </td>
                     </tr>
                   );

@@ -24,10 +24,10 @@ const addEvent=(expressAsyncHandler(async(req,res)=>{
     });
     if (req.file) {
         // Uploading the profile image to AWS S3
-        await uploadImage(req.file);
+        await uploadImage("events",req.file);
   
         // Setting the cover image URL in the book model
-        events.eventimage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/profile-images/${events._id}/${req.file.originalname}`;
+        events.eventimage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/events/${req.file.originalname}`;
       }
     
     const event=await events.save();
@@ -35,12 +35,13 @@ const addEvent=(expressAsyncHandler(async(req,res)=>{
 
 }))
 
-const deleteEvent=async(req,res)=>{
-    const event=await User.findById(req.params.id);
+const deleteEvent=(expressAsyncHandler(async(req,res)=>{
+    const event=await Event.findById(req.params.id);
+    console.log("event",event);
     await Register.deleteMany({event:event.name});
     await Event.findByIdAndDelete(req.params.id);
     res.status(StatusCodes.OK).json({message:"event delete succesfully"});
-}
+}))
 
 const updateEvent=(expressAsyncHandler(async(req,res)=>{
     const {id}=req.body;
