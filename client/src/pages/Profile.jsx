@@ -26,7 +26,7 @@ function Profile() {
         <div className="flex justify-center items-center gap-16 sm:flex-row flex-col">
               <div>
                 <label htmlFor="fileInput"  className=" cursor-pointer">
-                  <img src={profiledata.image?profiledata.image:thumps} alt='updateImage' className='rounded-full object-cover w-52 h-52 text-center'/></label>
+                  <img src={profiledata.image?profiledata.image:thumps} alt='updateImage' className={`rounded-full object-cover w-52 h-52 text-center ${edit?'sm:mb-32':'mb-0'}`}/></label>
                 <input
                   id="fileInput"
                   type="file"

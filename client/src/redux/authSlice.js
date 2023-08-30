@@ -58,6 +58,7 @@ export const signupUser = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
+      console.log("error",error);
       if (!error?.response) {
         throw error;
       }

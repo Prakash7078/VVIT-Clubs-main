@@ -36,7 +36,7 @@ function Brand() {
     <div className=''>
         <Card
             shadow={false}
-            className="relative grid h-[25rem] md:h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center"
+            className="relative grid h-[25rem] md:h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center mt-5 md:mt-0"
             >
             <CardHeader
                 floated={false}
@@ -44,7 +44,7 @@ function Brand() {
                 color="transparent"
                 className={`absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center zoom-in-out`}
                 style={{ backgroundImage:`url(${vvit})`}}                    >
-                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/40" />
+                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/40 " />
             </CardHeader>
             <CardBody className="relative px-6 md:px-12 top-24 md:right-96 hidden lg:block">
                 <div className='bg-white'>

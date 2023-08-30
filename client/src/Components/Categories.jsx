@@ -49,11 +49,11 @@ function Categories() {
         {
           breakpoint: 768,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: 2,
           },
         },
         {
-          breakpoint: 480,
+          breakpoint: 580,
           settings: {
             slidesToShow: 1,
           },
@@ -68,14 +68,14 @@ function Categories() {
               <h1 className='font-bold text-4xl'>Club Events</h1>
               <h3>Choose Event</h3>
           </div>
-         <div className='mx-10'>
+         <div className='mx-7'>
           <Slider {...settings}>
               {clubs.map((product, index) => {
                 return (
                   <div key={index} >
                       <Link to={`/${product.name}`} key={index}>
-                          <div className='m-5 shadow-2xl pb-4 bg-white hover:scale-105 transition-all duration-500'>
-                            <img src={product.image} className=' cursor-pointer w-full h-96 md:h-60 object-cover  rounded-t-lg mb-10' alt='event'/>
+                          <div className='m-0 sm:m-5 shadow-2xl pb-4 bg-white hover:scale-105 transition-all duration-500'>
+                            <img src={product.image} className=' cursor-pointer w-full h-60 object-cover  rounded-t-lg mb-10' alt='event'/>
                               <div className='flex justify-between items-center'>
                                 <h1 className='font-bold ml-4'>{product.name}</h1>
                                 <Link to={`/${product.name}`}>
