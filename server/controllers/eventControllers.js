@@ -77,7 +77,7 @@ const eventRegistration=(expressAsyncHandler(async(req,res)=>{
     }
 }));
 const deleteUserregister=async(req,res)=>{
-    const result=await Register.deleteOne({roll:req.params.id});
-    res.status(200).json({error:"registration delete succesfully"});
+    const result=await Register.deleteOne({roll:req.params.rollno});
+    res.status(200).json({message:"registration delete succesfully"});
 };
 module.exports={getClubevents,getClubregistrations,eventRegistration,updateUserregister,deleteUserregister,updateWinner,updateRunner};

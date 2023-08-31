@@ -42,7 +42,7 @@ function Contact() {
   }     
 
   return (
-    <div id="contact" className="text-gray-600 body-font relative bg-[#fcf0cd]">
+    <div id="#contact" className="text-gray-600 body-font relative bg-[#fcf0cd]">
          <div className="container px-5 py-24 mx-auto">
             <div className="flex flex-col text-center mb-12">
               <h1 className="sm:text-3xl text-2xl font-bold title-font mb-4 text-black">

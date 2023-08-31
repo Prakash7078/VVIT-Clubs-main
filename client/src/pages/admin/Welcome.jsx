@@ -1,5 +1,5 @@
 import Sidebar from '../../Components/Sidebar'
-import { BsRocket } from 'react-icons/bs'
+import { BsRocket, BsWindowSidebar } from 'react-icons/bs'
 import PieCharts from './PieCharts';
 import BarCharts from './BarCharts';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +7,13 @@ import { useEffect } from 'react';
 import { getClubs } from '../../redux/clubSlice';
 import { getEvents } from '../../redux/eventSlice';
 import { getRegister } from '../../redux/registerSlice';
+import { useLocation } from 'react-router-dom';
 
 function Welcome() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   //pie chart
   const clubscount=useSelector((state)=>state.clubs.clubs).length;
   const eventscount=useSelector((state)=>state.events.events).length;

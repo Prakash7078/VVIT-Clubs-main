@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import small from '../Images/logo-small.jpg';
 import {TiThMenu} from 'react-icons/ti'
-import { Link, useNavigate } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
+import {Link as Route, useNavigate } from 'react-router-dom';
+import {Link} from 'react-scroll';
+// import { HashLink } from 'react-router-hash-link';
 import {useDispatch, useSelector } from 'react-redux';
 import {logoutUser} from '../redux/authSlice';
 import { Badge, Avatar, Dialog, Button } from "@material-tailwind/react";
@@ -28,7 +29,7 @@ function Navbar() {
     }
   
   return (
-    <div className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-5 sm:px-10 w-full bg-[#fff3e0]'>
+    <div  className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-5 sm:px-10 w-full bg-[#fff3e0]'>
         <div className='flex gap-3 items-center'>
             <div className='md:hidden position:relative ml-2 '>
                 {!isMenuOpen ? <TiThMenu
@@ -41,36 +42,36 @@ function Navbar() {
                     isMenuOpen ? 'visible' : 'hidden'
                     } md:hidden group-hover:visible absolute left-0 top-16 font-semibold bg-[#fff3e0] w-full px-10 py-5 z-50 h-fit `}
                 >
-                    <li className='py-2'>{userInfo && userInfo.isAdmin && <button ><Link to='/dashboard'>DashBoard</Link></button>}</li>
-                    <li className='py-2'><HashLink to='/#home'>Home</HashLink></li>
-                    <li className='py-2'><HashLink to='/#about'>About</HashLink></li>
-                    <li className='py-2'><HashLink to='/#category'>Clubs</HashLink></li>
-                    <li className='py-2'><HashLink to='/#contact'>Contact</HashLink></li>
+                    <li className='py-2'>{userInfo && userInfo.isAdmin && <button ><Route to='/dashboard'>DashBoard</Route></button>}</li>
+                    <li className='py-2'><Link smooth={true} duration={1000} to='#home'>Home</Link></li>
+                    <li className='py-2'><Link smooth={true} duration={1000} to='#about'>About</Link></li>
+                    <li className='py-2'><Link smooth={true} duration={1000} to='#category'>Clubs</Link></li>
+                    <li className='py-2'><Link smooth={true} duration={1000} to='#contact'>Contact</Link></li>
                     
                 </ul>
                 
             </div>
-            <img className='sm:w-15 sm:h-10 w-14 h-7  cursor-pointer'src={small} alt='logo'/>
+            <Route to="/"><img className='sm:w-15 sm:h-10 w-14 h-7  cursor-pointer'src={small} alt='logo'/></Route>
             
         </div>
         <div className='bg-brown-600 rounded-full w-fit'>
             <ul className='hidden md:flex gap-2  px-5 py-2 rounded-full items-center bg-slate-500 w-fit text-white'>
-                <li className='cursor-pointer hover:font-bold mx-3 '><HashLink to='/#home'>Home</HashLink></li>
-                <li className='cursor-pointer hover:font-bold mx-3'><HashLink to='/#about'>About</HashLink></li>
-                <li className='cursor-pointer hover:font-bold mx-3'><HashLink to='/#category'>Clubs</HashLink></li>
-                <li className='cursor-pointer hover:font-bold mx-3'><HashLink to='/#contact'>Contact</HashLink></li>
-                <li className='cursor-pointer hover:font-bold mx-3'>{userInfo && userInfo.isAdmin && <li><Link to='/dashboard'>Dashboard</Link></li>}</li>
+                <li className='cursor-pointer hover:font-bold mx-3 '><Link smooth={true} duration={1000} to='#home'>Home</Link></li>
+                <li className='cursor-pointer hover:font-bold mx-3'><Link smooth={true} duration={1000}  to='#about'>About</Link></li>
+                <li className='cursor-pointer hover:font-bold mx-3'><Link smooth={true} duration={1000} to='#category'>Clubs</Link></li>
+                <li className='cursor-pointer hover:font-bold mx-3'><Link smooth={true} duration={1000} to='#contact'>Contact</Link></li>
+                <li className='cursor-pointer hover:font-bold mx-3'>{userInfo && userInfo.isAdmin && <li><Route to='/dashboard'>Dashboard</Route></li>}</li>
             </ul>
         </div>
         <div className='flex gap-3 items-center justify-end'>
           {/* <button><BsChatTextFill size={20}/></button> */}
-          {userInfo && userInfo.image!="" && <Link to='/profile'><Badge overlap="circular" placement="bottom-end" className='bg-green-600'>
+          {userInfo && userInfo.image!="" && <Route to='/profile'><Badge overlap="circular" placement="bottom-end" className='bg-green-600'>
             <Avatar
               size="sm"
               src={userInfo.image}
               alt="profile picture"
             />
-          </Badge></Link>}
+          </Badge></Route>}
           {!userInfo ? (<Button className='bg-brown-400' onClick={handleOpen}>Sign In</Button>):
           (<button className=' inline-flex items-center rounded-full space-x-2 p-2 bg-primary text-secondary ' onClick={handleSignout}><FiLogOut/></button>)}
         </div>

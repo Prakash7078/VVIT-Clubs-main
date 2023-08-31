@@ -33,7 +33,7 @@ function Brand() {
     //     onClick: () => setOpenPopover(true),
     // };
   return (
-    <div className=''>
+    <div id="#home" className=''>
         <Card
             shadow={false}
             className="relative grid h-[25rem] md:h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center mt-5 md:mt-0"
@@ -82,13 +82,7 @@ function Brand() {
                     delaySpeed={1000}
                 />
                 <br />
-                <Typewriter
-                    words={['JOIN','THE','CLUB','JOIN THE CLUB']}
-                    loop={3}
-                    typeSpeed={70}
-                    deleteSpeed={50}
-                    delaySpeed={1000}
-                />
+                <h1>JOIN THE CLUB</h1>
                 </span>
         </Card>
         <div className='fixed lg:top-3/4 top-80 right-8 z-50'>

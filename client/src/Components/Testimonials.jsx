@@ -39,7 +39,7 @@ const Testimonial = () => {
             >
               <div className="p-6">
                 <div className="mb-4 flex space-x-1">
-                  <Rating />
+                  <Rating value={5} readonly/>
                 </div>
                 <p className="text-lg text-gray-800">{testimonial.quote}</p>
               </div>

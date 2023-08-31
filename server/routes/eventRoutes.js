@@ -9,5 +9,5 @@ router.patch('/register/update/:roll',isAuth,updateUserregister);
 router.patch('/register/update/winner/:roll',isAuth,updateWinner);
 router.patch('/register/update/runner/:roll',isAuth,updateRunner);
 router.post('/register',isAuth,eventRegistration);
-router.delete('/registration/delete/:id',isAuth,deleteUserregister);
+router.delete('/registration/delete/:rollno',isAuth,deleteUserregister);
 module.exports=router;
