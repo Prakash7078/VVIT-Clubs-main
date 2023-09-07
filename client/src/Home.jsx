@@ -7,6 +7,7 @@ import Testimonial from './Components/Testimonials'
 import Brand from './Components/Brand'
 import { useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import Tutorials from './Components/Tutorials'
 
 function Home() {
   const { pathname } = useLocation();
@@ -20,6 +21,7 @@ function Home() {
         <Categories/>
         <Overview/>
         <Testimonial/>
+        <Tutorials value={"home"}/>
         <Contact/>
         <Footer/>
     </div>

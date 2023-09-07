@@ -10,9 +10,7 @@ function Contact() {
   // const form = useRef();
   const userInfo = useSelector((state) => state.auth.userInfo);
  const navigate=useNavigate();
-  const [name,setName]=useState('');
   const[text,setText]=useState('');
-  const[email,setEmail]=useState('');
   const msgHandler=async(e)=>{
     e.preventDefault();  
     //serviceID,templateID,form,public key
@@ -25,6 +23,8 @@ function Contact() {
     if(userInfo){
       try{
         const rollno=userInfo.rollno;
+        const name=userInfo.username;
+        const email=userInfo.email;
         await axios.post(`${BASE_URL}/api/msgs/send`,{
             name,
             email,
@@ -73,8 +73,8 @@ function Contact() {
                     type="text"
                     id="name"
                     name="name"
-                    value={name}
-                    onChange={(e)=>setName(e.target.value)}
+                    readOnly
+                    value={userInfo?.username}
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-800 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary text-base outline-none text-black py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   />
                 </div>
@@ -91,8 +91,8 @@ function Contact() {
                     type="email"
                     id="email"
                     name="email"
-                    value={email}
-                    onChange={(e)=>setEmail(e.target.value)}
+                    readOnly
+                    value={userInfo?.email}
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-500 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary text-base outline-none text-black py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   />
                 </div>

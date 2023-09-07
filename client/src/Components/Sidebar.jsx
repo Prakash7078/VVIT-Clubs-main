@@ -90,6 +90,15 @@ function Sidebar() {
                     Add Event
                   </ListItem>
                 </Link>
+                <Link to='/admin/testimony'>
+                  <ListItem >
+                    <ListItemPrefix>
+                        <MdEvent className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Add Testimonial
+                  </ListItem>
+                </Link>
+                
               </List>
               </Card>
          </div>
@@ -166,6 +175,14 @@ function Sidebar() {
                         <MdEvent className="h-5 w-5" />
                     </ListItemPrefix>
                     Add Event
+                  </ListItem>
+                </Link>
+                <Link to='/admin/testimony'>
+                  <ListItem >
+                    <ListItemPrefix>
+                        <MdEvent className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Add Testimonial
                   </ListItem>
                 </Link>
               </List>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../redux/authSlice";
-import {Link, useNavigate } from 'react-router-dom'
+import { forgotPassword} from "../redux/authSlice";
+import {useNavigate } from 'react-router-dom'
 import {
   Button,
   Card,
@@ -10,23 +10,22 @@ import {
   CardFooter,
   Typography,
   Input,
-  Checkbox,
 } from "@material-tailwind/react";
 import { Rings } from "react-loader-spinner";
-function Login(props) {
+function PasswordRequest(props) {
     const {value}=props;
-    const [data, setData] = useState({ email: "", password: "" });
+    const[email,setEmail]=useState("");
     const navigate=useNavigate();
     const userInfo = useSelector((state) => state.auth.userInfo);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.auth.loading);
 
     const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+        setEmail(e.target.value);
     };
-    const handleLogin=async(e)=>{
+    const handlePassword=async(e)=>{
         e.preventDefault();
-         dispatch(loginUser(data));
+         dispatch(forgotPassword({email}));
          value();
     };
     useEffect(()=>{
@@ -51,38 +50,34 @@ function Login(props) {
         );
     }
   return (
-    <div id="login" className='sm:mt-32 mt-40'>
+    <div id="login" className='sm:mt-52 mt-40'>
         <Card className="mx-auto w-full max-w-[24rem]">
           <CardHeader
             variant="gradient"
             color="brown"
-            className="mb-4 grid h-20 place-items-center"
+            className="mb-10 grid h-20 place-items-center"
           >
-            <Typography variant="h3" color="white">
-              Sign In
+            <Typography variant="h5" color="white">
+            Reset Password Request
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Email" size="lg" onChange={handleChange} value={data.email} name='email' />
-            <Input label="Password" size="lg" onChange={handleChange} value={data.password} name='password'/>
-            <div className="-ml-2.5 ">
-              <Link to="/passwordrequest"><Checkbox label="Forget Password ?" onClick={value} /></Link>
-            </div>
+            <Input label="Email" size="lg" onChange={handleChange} value={email} name='email' />
           </CardBody>
           <CardFooter className="pt-0">
-            <Button color='brown'variant="gradient" onClick={handleLogin} fullWidth>
-              Sign In
+            <Button color='brown'variant="gradient" onClick={handlePassword} fullWidth>
+              Send Email
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
-              Don&apos;t have an account?
+              Remember Password
               <Typography
                 as="a"
-                href="/signup"
+                href="/login"
                 variant="small"
                 color="brown"
                 className="ml-1 font-bold"
               >
-                Sign up
+                Log In
               </Typography>
             </Typography>
           </CardFooter>
@@ -92,4 +87,4 @@ function Login(props) {
   )
 }
 
-export default Login
+export default PasswordRequest

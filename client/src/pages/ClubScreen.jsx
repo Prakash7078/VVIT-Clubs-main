@@ -17,6 +17,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from '../Components/Footer';
 import Team from '../Components/Team';
+import Tutorials from '../Components/Tutorials';
 function ClubScreen() {
     const { pathname } = useLocation();
     useEffect(() => {
@@ -475,6 +476,7 @@ function ClubScreen() {
             </div>
           )}
           {currentProducts.filter((item) =>item.category==="Coordinator").length>0 && <Team data={currentProducts}/>}
+          <Tutorials value={name}/>
          <Footer/>
          <Dialog
             open={open}

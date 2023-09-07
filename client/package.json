@@ -30,7 +30,8 @@
     "react-simple-typewriter": "^5.0.1",
     "react-slick": "^0.29.0",
     "recharts": "^2.7.2",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "vite-plugin-rewrite-all": "^1.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",

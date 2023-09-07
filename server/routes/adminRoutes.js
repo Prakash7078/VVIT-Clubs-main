@@ -1,6 +1,6 @@
 const express=require("express");
 const router = express.Router();
-const {getDetails,addClub,addEvent, addAdmin, addCoordinator, updateClub, updateEvent, deleteEvent, deleteClub}=require("../controllers/adminControllers.js");
+const {getDetails,addClub,addEvent, addAdmin, addCoordinator, updateClub, updateEvent, deleteEvent, deleteClub, addTestimony}=require("../controllers/adminControllers.js");
 const isAuth=require('../middleware/auth');
 
 router.get("/",isAuth,getDetails);
@@ -11,7 +11,7 @@ router.delete('/deleteClub/:id',isAuth,deleteClub);
 router.patch("/updateEvent",isAuth,updateEvent);
 router.post("/addClub",isAuth,addClub);
 router.delete('/deleteEvent/:id',isAuth,deleteEvent);
-
+router.post("/addTestimonial",isAuth,addTestimony);
 router.patch("/updateClub",isAuth,updateClub);
 
 module.exports=router;

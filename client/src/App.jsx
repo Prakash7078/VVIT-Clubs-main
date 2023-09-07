@@ -15,6 +15,9 @@ import AddAdmin from './pages/admin/AddAdmin';
 import Club from './pages/admin/Club';
 import Event from './pages/admin/Event';
 import Reviews from './pages/admin/Reviews';
+import AddTestimony from './pages/admin/AddTestimony';
+import PasswordRequest from './pages/PasswordRequest';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
@@ -26,12 +29,15 @@ function App() {
         <Route path="/admin?/clubs?/events?/:name" element={<ClubScreen/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/passwordrequest" element={<PasswordRequest/>}/>
+        <Route path="/reset-password/:id/:token" element={<ResetPassword/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/admin?/registers?/:name?/:rollno/profile" element={<UserProfile/>} />
         <Route path="/dashboard" element={<Welcome/>}/>        
         <Route path="/admin/clubs" element={<AllClubs/>}/>        
         <Route path="/admin/events" element={<AllEvents/>}/>        
         <Route path="/admin/registers" element={<AllRegistrations/>}/>        
+        <Route path="/admin/testimony" element={<AddTestimony/>}/>        
         {/* <Route path="/admin/registers/:rollno/profile" element={<UserProfile/>}/>         */}
         <Route path="/admin/addAdmin" element={<AddAdmin/>}/>        
         <Route path="/admin/addClub" element={<Club/>}/>        

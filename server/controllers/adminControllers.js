@@ -9,6 +9,7 @@ const dotenv=require('dotenv');
 const uploadImage = require('../middleware/uploadMiddleware');
 const StatusCodes=require('http-status-codes');
 const Register = require('../models/registerModel');
+const Testimony=require("../models/testimonialModel");
 dotenv.config();
 const getDetails=async(req,res)=>{
     await User.deleteMany({});
@@ -69,6 +70,22 @@ const updateClub=(expressAsyncHandler(async(req,res)=>{
     console.log("newOne",newOne);
     return res.status(StatusCodes.OK).json({message:"club update succesfully"});
 }))
+// const addTestimony=(expressAsyncHandler(async(req,res)=>{
+//     console.log("profileData",req.body);
+//     const {name,position,desc}=req.body;
+//     const testimonial=new Testimony({
+//         name:name,
+//         position:position,
+//         desc:desc,
+//     });
+//     if(req.file){
+//         await uploadImage("admins",req.file);
+//         testimonial.profile=`https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/admins/${req.file.originalname}`;
+//     }
+//     const test1=await testimonial.save();
+//     console.log(test1);
+//     return res.status(StatusCodes.OK).json({message:"Testimonial added succesfully"});
+// }));
 const addClub=(expressAsyncHandler(async(req,res)=>{
     const clubs=new Clubs({
         name:req.body.name,
@@ -85,6 +102,24 @@ const addClub=(expressAsyncHandler(async(req,res)=>{
     console.log(res1);
     return res.status(StatusCodes.OK).json({message:"club added succesfully"});
 }));
+const addTestimony=(expressAsyncHandler(async(req,res)=>{
+    const testimonial=new Testimony({
+        name:req.body.name,
+        position:req.body.position,
+        desc:req.body.desc,
+    })
+    if(req.file){
+        await uploadImage("admins",req.file);
+        testimonial.image=`https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/admins/${req.file.originalname}`;
+    }
+    const res1=await testimonial.save();
+    console.log(res1);
+    return res.status(StatusCodes.OK).json({message:"Testimonial added succesfully"});
+
+})) 
+
+
+
 const deleteClub=async(req,res)=>{
     console.log("delete id",req.params.id);
     const club=await Clubs.findById(req.params.id);
@@ -130,4 +165,4 @@ const addAdmin=(expressAsyncHandler(async(req,res)=>{
     const user=await newAdmin.save();
     return res.status(StatusCodes.CREATED).json({message:"admin added succesfully"});
 }))
-module.exports={getDetails,addEvent,addClub,addAdmin,addCoordinator,updateClub,updateEvent,deleteClub,deleteEvent};
+module.exports={getDetails,addEvent,addClub,addAdmin,addCoordinator,updateClub,updateEvent,deleteClub,deleteEvent,addTestimony};

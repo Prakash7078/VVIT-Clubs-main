@@ -21,6 +21,53 @@ const data={
           name: "Contact",
           href: "contact",
         },
+    ],
+    tutorials:[
+      {
+        id:"home",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
+      {
+        id:"home",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
+      {
+        id:"home",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
+      {
+        id:"Dance",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
+      {
+        id:"Dance",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
+      {
+        id:"Dance",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
+      {
+        id:"Music",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
+      {
+        id:"Music",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
+      {
+        id:"Music",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"Previous dance tutorial",
+      },
     ]
 }
 export default data;
