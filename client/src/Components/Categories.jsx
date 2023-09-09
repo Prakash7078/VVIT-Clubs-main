@@ -1,5 +1,5 @@
 import { useEffect} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClubs } from '../redux/clubSlice';
 import { Rings } from 'react-loader-spinner';
@@ -9,8 +9,17 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 function Categories() {
    const dispatch = useDispatch();
+   const navigate=useNavigate();
+   const userInfo = useSelector((state) => state.auth.userInfo);
    const clubs=useSelector((state)=>state.clubs.clubs);
    const load=useSelector((state)=>state.clubs.load);
+   const checkLogin=(name)=>{
+    if(!userInfo){
+      navigate("/login");
+    }else{
+      navigate(`/${name}`)
+    }
+   }
     useEffect(()=>{
         const fetchData=async()=>{
             await dispatch(getClubs());
@@ -75,17 +84,13 @@ function Categories() {
               {clubs.map((product, index) => {
                 return (
                   <div key={index} >
-                      <Link to={`/${product.name}`} key={index}>
-                          <div className='m-0 sm:m-5 shadow-2xl pb-4 bg-white hover:scale-105 transition-all duration-500'>
+                          <div key={index} onClick={()=>checkLogin(product.name)} className='m-0 sm:m-5 shadow-2xl pb-4 bg-white hover:scale-105 transition-all duration-500'>
                             <img src={product.image} className=' cursor-pointer w-full h-60 object-cover  rounded-t-lg mb-10' alt='event'/>
                               <div className='flex justify-between items-center'>
                                 <h1 className='font-bold ml-4'>{product.name}</h1>
-                                <Link to={`/${product.name}`}>
-                                    <Button className='bg-[#8d6e63] text-white py-2 px-2 mr-4 rounded-md'>Know More&gt;&gt;</Button>
-                                </Link>        
+                                <Button onClick={()=>checkLogin(product.name)} className='bg-[#8d6e63] text-white py-2 px-2 mr-4 rounded-md'>Know More&gt;&gt;</Button>
                               </div>
                           </div>
-                      </Link>                 
                   </div>
                 );
               })}

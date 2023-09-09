@@ -14,7 +14,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import AudioComponent from './AudioComponent';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import {motion} from 'framer-motion';
 function Brand() {
     const audio = document.getElementById("audiotag");
     const [isMuted, setIsMuted] = useState(true);
@@ -47,6 +47,10 @@ function Brand() {
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/40 " />
             </CardHeader>
             <CardBody className="relative px-6 md:px-12 top-24 md:right-96 hidden lg:block">
+                <motion.div
+                initial={{scale:0}}
+                whileInView={{scale:1}}
+                transition={{duration:0.7}}>
                 <div className='bg-white'>
                     {/* <PopoverHandler >
                         <Button className=''color='white'>Basic Info</Button>
@@ -70,6 +74,7 @@ function Brand() {
                         />
                     </div>
                 </div>
+                </motion.div>
             </CardBody>
             <span className='font-bold sm:text-2xl md:text-4xl font-serif text-black relative bottom-44 md:bottom-80 md:left-96 h-fit px-10 bg-white'>
                   {/* Style will be inherited from the parent element */}

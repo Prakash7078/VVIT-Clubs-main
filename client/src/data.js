@@ -26,7 +26,12 @@ const data={
       {
         id:"home",
         url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
-        desc:"Previous dance tutorial",
+        desc:"To achieve a zoom-in and zoom-out effect on the background image like a movie shot, you can use CSS animations and keyframes. Here's how you can modify the Brand component to achieve this effect:Here's how you can modify the Brand component to achieve this effect",
+      },
+      {
+        id:"home",
+        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        desc:"To achieve a zoom-in and zoom-out effect on the background image like a movie shot, you can use CSS animations and keyframes. Here's how you can modify the Brand component to achieve this effect:Here's how you can modify the Brand component to achieve this effect",
       },
       {
         id:"home",
@@ -34,37 +39,32 @@ const data={
         desc:"Previous dance tutorial",
       },
       {
-        id:"home",
+        id:"DANCE",
         url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
         desc:"Previous dance tutorial",
       },
       {
-        id:"Dance",
+        id:"DANCE",
         url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
         desc:"Previous dance tutorial",
       },
       {
-        id:"Dance",
+        id:"DANCE",
         url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
         desc:"Previous dance tutorial",
       },
       {
-        id:"Dance",
+        id:"MUSIC",
         url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
         desc:"Previous dance tutorial",
       },
       {
-        id:"Music",
+        id:"MUSIC",
         url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
         desc:"Previous dance tutorial",
       },
       {
-        id:"Music",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
-        desc:"Previous dance tutorial",
-      },
-      {
-        id:"Music",
+        id:"MUSIC",
         url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
         desc:"Previous dance tutorial",
       },

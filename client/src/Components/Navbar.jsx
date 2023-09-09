@@ -4,6 +4,7 @@ import {TiThMenu} from 'react-icons/ti'
 import {Link as Route, useNavigate } from 'react-router-dom';
 import {Link} from 'react-scroll';
 // import { HashLink } from 'react-router-hash-link';
+import {motion} from 'framer-motion';
 import {useDispatch, useSelector } from 'react-redux';
 import {logoutUser} from '../redux/authSlice';
 import { Badge, Avatar, Dialog, Button } from "@material-tailwind/react";
@@ -29,7 +30,7 @@ function Navbar() {
     }
   
   return (
-    <div  className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-5 sm:px-10 w-full bg-[#fff3e0]'>
+    <div  className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-4 sm:px-10 w-full bg-[#fff3e0]'>
         <div className='flex gap-3 items-center'>
             <div className='md:hidden position:relative ml-2 '>
                 {!isMenuOpen ? <TiThMenu
@@ -51,10 +52,19 @@ function Navbar() {
                 </ul>
                 
             </div>
-            <Route to="/"><img className='sm:w-15 sm:h-10 w-14 h-7  cursor-pointer'src={small} alt='logo'/></Route>
+            <motion.div 
+            initial={{scale:0}}
+            whileInView={{scale:1}}
+            transition={{duration:0.7}}>
+              <Route to="/"><img className='sm:w-15 sm:h-10 w-14 h-7  cursor-pointer'src={small} alt='logo'/></Route>
+            </motion.div>
             
         </div>
         <div className='bg-brown-600 rounded-full w-fit'>
+            <motion.ul
+                initial={{scale:0}}
+                whileInView={{scale:1}}
+                transition={{duration:0.7}}>
             <ul className='hidden md:flex gap-2  px-5 py-2 rounded-full items-center bg-slate-500 w-fit text-white'>
                 <li className='cursor-pointer hover:font-bold mx-3 '><Link smooth={true} duration={1000} to='#home'>Home</Link></li>
                 <li className='cursor-pointer hover:font-bold mx-3'><Link smooth={true} duration={1000}  to='#about'>About</Link></li>
@@ -62,6 +72,7 @@ function Navbar() {
                 <li className='cursor-pointer hover:font-bold mx-3'><Link smooth={true} duration={1000} to='#contact'>Contact</Link></li>
                 <li className='cursor-pointer hover:font-bold mx-3'>{userInfo && userInfo.isAdmin && <li><Route to='/dashboard'>Dashboard</Route></li>}</li>
             </ul>
+            </motion.ul>
         </div>
         <div className='flex gap-3 items-center justify-end'>
           {/* <button><BsChatTextFill size={20}/></button> */}

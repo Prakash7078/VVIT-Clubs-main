@@ -41,12 +41,12 @@ function Tutorials({ value }) {
       <h1 className='text-center font-bold text-2xl p-10'>Memories</h1>
       <div className='sm:mx-20 mx-7'>
         <Slider {...settings}>
-          {data.tutorials && data.tutorials.filter((item) => item.id === "home").map((item) => (
+          {data.tutorials && data.tutorials.filter((item) => item.id ===value).map((item) => (
             <div key={item.id} className=''>
               <div className='flex flex-col items-center gap-10 pb-10'>
                 {/* Set a CSS class on the iframe */}
                 <iframe className="responsive-iframe" src="https://www.youtube.com/embed/dyqvPUxiqqc" allowFullScreen></iframe>
-                <p>{item.desc}</p>
+                <p className='sm:px-16'>{item.desc}</p>
               </div>
             </div>
           ))}
