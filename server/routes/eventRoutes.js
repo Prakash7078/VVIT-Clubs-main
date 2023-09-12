@@ -1,11 +1,10 @@
 const express=require('express');
 const { getClubs } = require('../controllers/clubControllers');
 const isAuth=require('../middleware/auth');
-const { getClubevents, getRegisterusers, getClubregistrations, updateUserregister, eventRegistration, deleteUserregister,updateWinner,updateRunner } = require('../controllers/eventControllers');
+const { getClubevents, getRegisterusers, getClubregistrations,  eventRegistration, deleteUserregister,updateWinner,updateRunner } = require('../controllers/eventControllers');
 const router=express.Router();
 router.get('/all',getClubevents);
 router.get('/register/all',isAuth,getClubregistrations);
-router.patch('/register/update/:roll',isAuth,updateUserregister);
 router.patch('/register/update/winner/:roll',isAuth,updateWinner);
 router.patch('/register/update/runner/:roll',isAuth,updateRunner);
 router.post('/register',isAuth,eventRegistration);

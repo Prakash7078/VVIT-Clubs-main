@@ -3,9 +3,9 @@ import { toast } from 'react-hot-toast';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { addRegister, deleteRegister, getRegister } from '../redux/registerSlice';
+import { addRegister, deleteRegister, getRegisters } from '../redux/registerSlice';
 import { Rings } from 'react-loader-spinner';
-import { getClubs } from '../redux/clubSlice';
+import { getClubRegisters, getClubs } from '../redux/clubSlice';
 import ReactPaginate from 'react-paginate';
 import { Button, Input,Card,CardHeader,CardBody,Typography, Rating, Switch, Dialog, DialogHeader, DialogBody, DialogFooter } from '@material-tailwind/react';
 import { getEvents } from '../redux/eventSlice';
@@ -18,26 +18,28 @@ import "slick-carousel/slick/slick-theme.css";
 import Footer from '../Components/Footer';
 import Team from '../Components/Team';
 import Tutorials from '../Components/Tutorials';
+import ClubRegistration from '../Components/ClubRegistration';
 function ClubScreen() {
     const { pathname } = useLocation();
     useEffect(() => {
       window.scrollTo(0, 0);
     }, [pathname]);
+    
     const [yearFilter, setYearFilter] = useState("All");
     const [branchFilter, setBranchFilter] = useState("All");
     const [studentFilter, setStudentFilter] = useState(false);
     const [coordinatorFilter, setCoordinatorFilter] = useState(false);
 
     const [open, setOpen] = useState(false);
+    const [registeropen, setRegisteropen] = useState(false);
     const [dailogData,setDailogData]=useState({name:"",desc:""});
+    const handleRegisterOpen=()=>{
+      setRegisteropen(!registeropen);
+    }
     const handleOpen = (inp) =>{
-      if(inp==="register"){
-        setDailogData({"name":"Registration","desc": "Once u registered into the event you cannot register to another event, If u want to register for another event you can unregister this one."})
-      }
       if(inp==="winner"){
         setDailogData({"name":"Winner","desc": "Now he is winner for one of these club events, If u don't you can click again "})
       }
-      console.log(dailogData)
       setOpen(!open);
     }
  
@@ -53,20 +55,43 @@ function ClubScreen() {
     const load=useSelector((state)=>state.clubs.loading);
     const loading = useSelector((state) => state.auth.loading);
     const userInfo = useSelector((state) => state.auth.userInfo);
-    const registerInfo = useSelector((state) => state.register.registerInfo);
+    const[registerInfo,setRegisterInfo]=useState(null);
+    // const registerInfo = useSelector((state) => state.register.registerInfo);
     const registers= useSelector((state) => state.register.registers);
+    const clubregisters= useSelector((state) => state.clubs.clubregisters);
     const events= useSelector((state) => state.events.events);
+   
     //fetch event data
     useEffect(()=>{
         const fetchData=async()=>{
             console.log("user",userInfo);
-            console.log("register",registerInfo);
             await dispatch(getClubs());
-            await dispatch(getRegister());
+            await dispatch(getRegisters());
+            await dispatch(getClubRegisters());
             await dispatch(getEvents());
         }
         fetchData();
    },[dispatch]);
+   useEffect(()=>{
+    findRegister();
+   },[events])
+   //Find the specific register of club .
+   const findRegister =async() => {
+    await dispatch(getRegisters());
+    if (userInfo && registers.length>0) {
+        const res =registers.find(register => register.roll === userInfo.rollno && register.club === name);
+        
+        // Check if a matching register object was found
+        if (res) {
+            setRegisterInfo(res);
+        } else {
+            // Handle the case where no matching register was found
+            console.log("No matching register found.");
+            setRegisterInfo(null);
+        }
+      }
+    }
+
     const handleCategoryChange = (e) => {
         setYearFilter(e.target.value);
       };
@@ -118,7 +143,11 @@ function ClubScreen() {
     const handleDeleteregister=async(rollno)=>{
         try{
            await dispatch(deleteRegister(rollno));
-           await dispatch(getRegister());
+           await dispatch(getRegisters());
+           await findRegister();
+           setRegisterInfo(null);
+           console.log("delete",registerInfo);
+
         }catch(err){
             toast.error("Registration not deleted succesfully");
         }
@@ -126,21 +155,24 @@ function ClubScreen() {
     const handleWinner=async(rollno,winner)=>{
         handleOpen("winner");
         await dispatch(makeWinner({rollno,winner}));
-        await dispatch(getRegister());
+        await dispatch(getRegisters());
     }
     const handleRunner=async(rollno,runner)=>{
         await dispatch(makeRunner({rollno,runner}));
-        await dispatch(getRegister());
+        await dispatch(getRegisters());
     }
     const handleRegister=async(clubname,eventname)=>{
         const club=clubname;
         const event=eventname;
-        handleOpen("register");
         if(userInfo){
             const{category,username,image,branch,year,section,rollno}=userInfo;
             try{
-                await dispatch(addRegister({club,event,category,username,image,branch,year,section,rollno}));
-                await dispatch(getRegister());
+                const res1=await dispatch(addRegister({club,event,category,username,image,branch,year,section,rollno}));
+                await dispatch(getRegisters());
+                console.log(res1.payload);
+                setRegisterInfo(res1.payload);
+                console.log("registerInfo",registerInfo);
+
             }catch(err){
                 toast.error("You already registered for one of these events");
             }
@@ -215,15 +247,21 @@ function ClubScreen() {
                 <Typography color="gray" className="font-normal mb-8">
                     {item.desc}
                 </Typography>
-                <a href="#" className="inline-block">
-                    <Button variant="text" className="flex items-center gap-2">
+                  <Button onClick={handleRegisterOpen} variant="text" className="flex items-center gap-2 bg-light-blue-100">
                     Register
-                    </Button>
-                </a>
+                  </Button>
                 </CardBody>
                 </Card>
             </div>
         ))} 
+        <Dialog
+          size="xs"
+          open={registeropen}
+          handler={handleRegisterOpen}
+          className="bg-white shadow-none"
+        >
+          <ClubRegistration value={handleRegisterOpen} club={name}/>
+        </Dialog>
         {events.filter((item)=>item.clubname===name).length>0 && 
         <Slider {...settings} className='mx-10 mb-10'>
         {events.filter((item)=>item.clubname===name).map((event,index)=>(
@@ -258,8 +296,8 @@ function ClubScreen() {
                         <Typography variant="h5" className="mb-4 text-white text-sm lg:text-3xl">
                         {event.eventname} Event
                         </Typography>
-                        {(registerInfo && userInfo && userInfo.rollno===registerInfo.roll && event.eventname===registerInfo.event) ? <button className='bg-red-500 px-8 py-2 text-white h-fit mt-10 ' onClick={()=>handleDeleteregister(registerInfo.roll)}>UnRegister</button>
-                            :<button className='bg-green-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 lg:font-bold 'onClick={()=>handleRegister(event.clubname,event.eventname)}>Register</button>}
+                        {(registerInfo && registerInfo.club) ? <button className='bg-red-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 ' onClick={()=>handleDeleteregister(registerInfo.roll)}>UnRegister</button>
+                        : <button className='bg-green-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 lg:font-bold 'onClick={()=>handleRegister(event.clubname,event.eventname)}>Register</button>}
                         <Typography
                         variant="h5"
                         color="white"
@@ -475,7 +513,9 @@ function ClubScreen() {
               `}</style>
             </div>
           )}
-          {currentProducts.filter((item) =>item.category==="Coordinator").length>0 && <Team data={currentProducts}/>}
+          {clubregisters.filter((item) => item.category === "Coordinator" && item.club === name).length > 0 && (
+            <Team data={clubregisters.filter((item) => item.category === "Coordinator" && item.club === name)} />
+          )}
           <Tutorials value={name}/>
          <Footer/>
          <Dialog

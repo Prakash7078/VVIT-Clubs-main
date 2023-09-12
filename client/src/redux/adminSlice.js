@@ -75,7 +75,7 @@ export const makeCoordinator=createAsyncThunk(
     "api/makeCoordinator",
     async({newCategory,roll})=>{
         try{
-            const res=await axios.patch(`${BASE_URL}/api/events/register/update/${roll}`,{
+            const res=await axios.patch(`${BASE_URL}/api/clubs/registers/update/${roll}`,{
                 category:newCategory,
             },{
                 headers: {

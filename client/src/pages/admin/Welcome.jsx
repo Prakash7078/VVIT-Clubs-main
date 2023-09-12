@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getClubs } from '../../redux/clubSlice';
 import { getEvents } from '../../redux/eventSlice';
-import { getRegister } from '../../redux/registerSlice';
+import { getRegisters } from '../../redux/registerSlice';
 import { useLocation } from 'react-router-dom';
 
 function Welcome() {
@@ -24,7 +24,7 @@ function Welcome() {
     const fetchdata=async()=>{
       await dispatch(getClubs());
       await dispatch(getEvents());
-      await dispatch(getRegister());
+      await dispatch(getRegisters());
       console.log(clubscount);
     }
     fetchdata();

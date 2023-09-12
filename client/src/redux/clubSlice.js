@@ -4,11 +4,19 @@ import { BASE_URL } from "../config/url";
 import { toast } from "react-hot-toast";
 export const getClubs=createAsyncThunk("api/getClubs",async()=>{
    try{
-        const res=await axios.get((`${BASE_URL}/api/clubs/`));
+        const res=await axios.get(`${BASE_URL}/api/clubs/`);
         return res.data;
    }catch(err){
         console.log(err);
    }
+})
+export const getClubRegisters=createAsyncThunk("api/getClub",async()=>{
+    try{
+        const res=await axios.get(`${BASE_URL}/api/clubs/registers/all`);
+        return res.data;
+    }catch(err){
+        console.log(err.message)
+    }
 })
 export const deleteClub=createAsyncThunk("api/deleteClub",async(id)=>{
     try{
@@ -61,10 +69,25 @@ export const addClub=createAsyncThunk("api/addClub",async({name,image,desc})=>{
         console.log(err);
     }
 })
+export const clubRegister=createAsyncThunk("api/clubRegister",async({data})=>{
+    const result=await axios.post(`${BASE_URL}/api/clubs/register`,{
+        data,
+    },{
+        headers:{
+            Authorization:`Bearer ${localStorage.getItem("token")}`,
+        },
+    });
+    if (result.data.error) {
+        throw new Error(result.data.message);
+    }
+    console.log("response",result.data);
+    return result.data;
+})
 const clubSlice=createSlice({
     name:"clubs",
     initialState:{
         clubs:[],
+        clubregisters:[],
         load:false,
         error:null,
     },
@@ -93,6 +116,29 @@ const clubSlice=createSlice({
         .addCase(addClub.rejected, (state) => {
             state.load = false;
             toast.error("Network error!");
+        });
+        builder
+        .addCase(clubRegister.pending, (state) => {
+            state.load = true;
+          })
+        .addCase(clubRegister.fulfilled, (state,{payload}) => {
+            state.loading=false;
+            toast.success(payload.message);
+        })
+        .addCase(clubRegister.rejected, (state,{error}) => {
+            state.load = false;
+            toast.error(error.message);
+        });
+        builder
+        .addCase(getClubRegisters.pending, (state) => {
+            state.load = true;
+          })
+        .addCase(getClubRegisters.fulfilled, (state,{payload}) => {
+            state.loading=false;
+            state.clubregisters=payload;
+        })
+        .addCase(getClubRegisters.rejected, (state) => {
+            state.load = false;
         });
     }
 })

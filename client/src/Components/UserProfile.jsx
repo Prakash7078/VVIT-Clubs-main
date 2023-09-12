@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { BASE_URL } from '../config/url';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRegister } from '../redux/registerSlice';
+import { getRegisters } from '../redux/registerSlice';
 import {
     Tabs,
     TabsHeader,
@@ -22,7 +22,7 @@ function UserProfile() {
         const fetchData=async()=>{
             const res1=await axios.get(`${BASE_URL}/api/users/${rollno}`);
             const res3=await axios.get(`${BASE_URL}/api/msgs/${rollno}`);
-            dispatch(getRegister());
+            dispatch(getRegisters());
             setProfileuser(res1);   
             setFeedback(res3);
             console.log(feedback)

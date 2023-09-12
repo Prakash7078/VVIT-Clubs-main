@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteClub, getClubs } from "../../redux/clubSlice";
-import { getRegister } from "../../redux/registerSlice";
+import { getRegisters } from "../../redux/registerSlice";
 import { Link } from "react-router-dom";
 import { Rings } from "react-loader-spinner";
 import { MdDelete } from "react-icons/md";
@@ -19,7 +19,7 @@ function AllClubs() {
   useEffect(()=>{
     const fetchClubs=async()=>{
       await dispatch(getClubs());
-      await dispatch(getRegister());
+      await dispatch(getRegisters());
       console.log("registers",registers);
     };
     fetchClubs();

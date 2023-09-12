@@ -8,7 +8,7 @@ import { BiSolidAddToQueue, BiSolidEditAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { Rings } from "react-loader-spinner";
 import { MdDelete } from "react-icons/md";
-import { getRegister } from "../../redux/registerSlice";
+import { getRegisters } from "../../redux/registerSlice";
 
 function AllEvents() {
   const [currentPage, setCurrentPage] = useState(1);

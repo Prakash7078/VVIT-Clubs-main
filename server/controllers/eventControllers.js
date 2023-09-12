@@ -4,6 +4,8 @@ const expressAsyncHandler = require('express-async-handler');
 const Register = require('../models/registerModel');
 const User = require('../models/userModel');
 const { StatusCodes } = require('http-status-codes');
+const ClubRegister = require('../models/clubRegisterModel');
+
 const getClubevents=async(req,res)=>{
     const event=await Event.find({});
     res.status(StatusCodes.OK).json({events:event});
@@ -39,22 +41,20 @@ const updateWinner=async(req,res)=>{
         console.log(err);
     }
 }
-const updateUserregister=async(req,res)=>{
-    const rollno=String(req.params.roll);
-    console.log("rollno",req.params.roll);
-    const newOne=await Register.findOneAndUpdate({roll:rollno},{category:req.body.category},{new:true})
-    const newUser=await User.findOneAndUpdate({rollno:rollno},{category:req.body.category},{new:true})
-    console.log("newone",newOne);
-    console.log("newone",newUser);
-    res.status(StatusCodes.OK).json({message:"Coordination changed succesfully"});
-};
+
 const eventRegistration=(expressAsyncHandler(async(req,res)=>{
     const{club,event,category,username,image,year,branch,rollno,section}=req.body;
     try{
-            const rollnum = await Register.find({ roll: rollno });
-            if (rollnum.length > 0) {
-            res.status(500).json({ error: "You already registered into this application" });
+        //Here first we are checking user registers list and after check club registartion for event register.
+            const rollnum = await Register.findOne({ roll: rollno });
+            if (rollnum) {
+            res.json({ error:true,message: `You already registered for ${rollnum.event} event` });
             return;
+            }
+            const reg=await ClubRegister.findOne({roll:rollno,club:club});
+            if(!reg){
+                res.json({error:true,message:`You need to register for ${club} club`});
+                return;
             }
             const newRegister=new Register({
             club,
@@ -80,4 +80,4 @@ const deleteUserregister=async(req,res)=>{
     const result=await Register.deleteOne({roll:req.params.rollno});
     res.status(200).json({message:"registration delete succesfully"});
 };
-module.exports={getClubevents,getClubregistrations,eventRegistration,updateUserregister,deleteUserregister,updateWinner,updateRunner};
+module.exports={getClubevents,getClubregistrations,eventRegistration,deleteUserregister,updateWinner,updateRunner};

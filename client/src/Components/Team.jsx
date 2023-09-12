@@ -7,7 +7,7 @@ const Team = (props) => {
     const value=props;
     const {data}=value;
   return (
-    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+    // <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }}>
       <div id="team" className="bg-[#fbe9e7] pb-10">
         <section className="">
           <div className=" px-4 mx-auto max-w-screen-xl text-center pt-10 ">
@@ -43,13 +43,13 @@ const Team = (props) => {
               {data.filter((item)=>item.category==="Coordinator").map((member, index) => {
                 return (
                   <SplideSlide key={index} className="mx-auto md:mx-0">
-                    <div className="text-center text-gray-700 w-fit md:mr-5 mx-auto md:mx-0">
+                    <div className="text-center text-gray-700 w-fit md:mr-5 mx-auto md:mx-0 bg-white shadow-2xl  ">
                       <img
-                        className="h-80 md:h-60 w-96 md:w-80 object-cover "
+                        className="h-80 md:h-60 w-96 md:w-80 object-fit mb-4"
                         src={member.userimage}
                         alt="Bonnie Avatar"
                       />
-                      <div className="bg-white pb-5">
+                      <div className="pb-5">
                         <h3 className="mb-1 text-2xl font-bold tracking-tight">
                           <p>{member.name}</p>
                         </h3>
@@ -66,7 +66,7 @@ const Team = (props) => {
           </div>
         </section>
       </div>
-    </motion.div>
+    // </motion.div>
   );
 };
 

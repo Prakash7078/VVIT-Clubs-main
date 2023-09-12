@@ -39,7 +39,7 @@ const addEvent=(expressAsyncHandler(async(req,res)=>{
 const deleteEvent=(expressAsyncHandler(async(req,res)=>{
     const event=await Event.findById(req.params.id);
     console.log("event",event);
-    await Register.deleteMany({event:event.name});
+    await Register.deleteMany({event:event.eventname});
     await Event.findByIdAndDelete(req.params.id);
     res.status(StatusCodes.OK).json({message:"event delete succesfully"});
 }))
@@ -129,15 +129,15 @@ const deleteClub=async(req,res)=>{
     res.json({message:"Club deleted succesfully"});
 };
 
-const addCoordinator=(expressAsyncHandler(async(req,res)=>{
-    const {roll}=req.body;
-    const existingRegister=await Register.findOne({roll})
-    if(existingRegister){
-        const updatedUser=await Register.findOneAndUpdate({roll},{category:"Coordinator"},{new:true});
-        console.log(updatedUser);
-        return res.status(StatusCodes.OK).json({message:"Registered User updated as Coordinator"});
-    }return res.status(StatusCodes.BAD_REQUEST).json({message:"User Not regisered"});
-}))
+// const addCoordinator=(expressAsyncHandler(async(req,res)=>{
+//     const {roll}=req.body;
+//     const existingRegister=await Register.findOne({roll})
+//     if(existingRegister){
+//         const updatedUser=await Register.findOneAndUpdate({roll},{category:"Coordinator"},{new:true});
+//         console.log(updatedUser);
+//         return res.status(StatusCodes.OK).json({message:"Registered User updated as Coordinator"});
+//     }return res.status(StatusCodes.BAD_REQUEST).json({message:"User Not regisered"});
+// }))
 const addAdmin=(expressAsyncHandler(async(req,res)=>{
     const{category,name,email,password,branch,year,section,rollno,admin}=req.body;
     console.log("admin",admin);
@@ -165,4 +165,4 @@ const addAdmin=(expressAsyncHandler(async(req,res)=>{
     const user=await newAdmin.save();
     return res.status(StatusCodes.CREATED).json({message:"admin added succesfully"});
 }))
-module.exports={getDetails,addEvent,addClub,addAdmin,addCoordinator,updateClub,updateEvent,deleteClub,deleteEvent,addTestimony};
+module.exports={getDetails,addEvent,addClub,addAdmin,updateClub,updateEvent,deleteClub,deleteEvent,addTestimony};
