@@ -11,8 +11,8 @@ const eventRouter=require('./routes/eventRoutes');
 const clubRouter=require('./routes/clubRoutes');
 const connectDB=require('./db/connectDB');
 const app = express();
-import { dirname, join} from 'path';
-import { fileURLToPath } from 'url';
+const { dirname, join}=require('path');
+const { fileURLToPath }=require('url');
 dotenv.config();
 const storage = multer.memoryStorage();
 const upload = multer({
