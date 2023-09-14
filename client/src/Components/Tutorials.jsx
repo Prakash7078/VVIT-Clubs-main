@@ -39,7 +39,7 @@ function Tutorials({ value }) {
   return (
     <div className='bg-[#fff3e0]'>
       <h1 className='text-center font-bold text-2xl p-10'>Memories</h1>
-      <div className='sm:mx-20 mx-7'>
+      <div className='sm:mx-20 mx-8 '>
         <Slider {...settings}>
           {data.tutorials && data.tutorials.filter((item) => item.id ===value).map((item) => (
             <div key={item.id} className=''>

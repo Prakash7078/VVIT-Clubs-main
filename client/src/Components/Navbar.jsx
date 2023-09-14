@@ -30,7 +30,7 @@ function Navbar() {
     }
   
   return (
-    <div  className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-4 sm:px-10 w-full bg-[#fff3e0]'>
+    <div  className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-4 sm:px-10 w-full bg-[#fff3e0] px-2'>
         <div className='flex gap-3 items-center'>
             <div className='md:hidden position:relative ml-2 '>
                 {!isMenuOpen ? <TiThMenu
@@ -56,7 +56,7 @@ function Navbar() {
             initial={{scale:0}}
             whileInView={{scale:1}}
             transition={{duration:0.7}}>
-              <Route to="/"><img className='sm:w-15 sm:h-10 w-14 h-7  cursor-pointer'src={small} alt='logo'/></Route>
+              <Route to="/"><img className='sm:w-15 sm:h-10 w-14 h-10  cursor-pointer'src={small} alt='logo'/></Route>
             </motion.div>
             
         </div>

@@ -134,8 +134,8 @@ function AllRegistrations() {
               </CardHeader>
             </div>
         <div className='flex flex-col lg:flex-row justify-between mb-5 items-center '>
-            <div className=" flex items-center mb-3 md:mb-0 flex-col ">
-                    <div>
+            <div className=" flex items-center mb-3 md:mb-0 flex-col gap-3 ">
+                    <div className="">
                       <label htmlFor="yearFilter" className="mr-2">
                       Year:
                       </label>
@@ -213,7 +213,7 @@ function AllRegistrations() {
                       />
                     </div>
             </div>
-             <div className="relative flex w-full  md:w-max sm:mr-5 ">
+             <div className="relative flex w-fit md:w-max sm:mr-5 ">
                 <Input
                     type="search"
                     label="Type Rollno..."
@@ -228,7 +228,7 @@ function AllRegistrations() {
                 </Button>
             </div>
         </div>
-       <Card className="overflow-x-auto">
+       <Card className="overflow-x-auto mx-3">
         <table className="w-full border-collapse">
                 <thead>
                 <tr className="bg-primary text-secondary">

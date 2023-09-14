@@ -66,11 +66,11 @@ function UserProfile() {
                 {data.map(({ value}) => (
                 <TabPanel key={value} value={value} className='flex items-center justify-center mt-12'>
                     {value==="profile" && profileuser && profileuser.data.map((item,index)=>(
-                        <div key={index} className='flex sm:gap-20 gap-10  flex-col sm:flex-row'>
+                        <div key={index} className='flex sm:gap-20 gap-10  flex-col sm:flex-row items-center'>
                             <div>
                               <img className='w-44 h-44 object-cover rounded-lg' src={item.image} alt='profile'/>
                             </div>
-                            <div className='flex flex-col gap-2'>
+                            <div className='flex flex-col gap-2 items-center sm:items-start'>
                                 <h1><span className='font-bold'>UserName </span> {item.username}</h1>
                                 <h1><span className='font-bold'>Category</span> {item.category}</h1>
                                 <h1><span className='font-bold'>Email</span> {item.email}</h1>

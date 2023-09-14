@@ -90,7 +90,7 @@ function Brand() {
                 <h1>JOIN THE CLUB</h1>
                 </span>
         </Card>
-        <div className='fixed lg:top-3/4 top-80 right-8 z-50'>
+        <div className='fixed lg:top-3/4 sm:top-80 right-8 z-50'>
         <SpeedDial>
           <SpeedDialHandler>
             <IconButton color='brown' size="lg" className="rounded-full">

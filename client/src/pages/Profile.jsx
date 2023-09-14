@@ -35,8 +35,8 @@ function Profile() {
                   disabled={edit?false:true}
                 />
               </div>
-          <div className="flex flex-col gap-3">
-            <p><span className="font-bold pr-2">Category</span>{userInfo.category}</p>
+          <div className="flex flex-col gap-3 items-center sm:items-start ">
+            <p ><span className="font-bold pr-2">Category</span>{userInfo.category}</p>
             <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">UserName</p><input className={`${edit?'border-2 border-black':'border-none'}`} type="text" value={profiledata?.name} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["name"]:e.target.value})}/></span>
             <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">Email</p><input className={`${edit?'border-2 border-black':'border-none'}`}  type="email" value={profiledata?.email} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["email"]:e.target.value})}/></span>
             <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">Roll No</p><input className={`${edit?'border-2 border-black':'border-none'}`}  type="text" value={profiledata?.rollno} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["rollno"]:e.target.value})}/></span>
