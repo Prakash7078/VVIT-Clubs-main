@@ -1,58 +1,81 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {toast} from 'react-hot-toast';
-import axios from 'axios';
-import { BASE_URL } from '../../config/url';
 import Sidebar from '../../Components/Sidebar';
 import { Button, Card, Input, Textarea, Typography } from '@material-tailwind/react';
-import { RiImageEditLine } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
-import { addEvent } from '../../redux/eventSlice';
+import thumps from '../../Images/thumbs-up.png';
+import upload from '../../Images/upload.png'
+import { useDispatch, useSelector } from 'react-redux';
+import { addEvent, getEvents, updateEvent } from '../../redux/eventSlice';
+import { useParams } from 'react-router-dom';
 
 function Event() {
-    const[name,setName]=useState("");
-    const[clubName,setClubName]=useState("");
-    const[clubimg,setClubimg]=useState(null);
+    const params=useParams();
+    const {eventname}=params;
+    const[eventdata,setEventdata]=useState({id:"",club:"",image:null,name:"",desc:""});
+    const events=useSelector((state)=>state.events.events);
     const dispatch=useDispatch();
-    const[description,setDescription]=useState("");
+    useEffect(()=>{
+        const fetchClubs=async()=>{
+            await dispatch(getEvents());
+        }
+        fetchClubs();
+    },[dispatch])
+    useEffect(()=>{
+        const updateEvent=events.filter((item)=>item.eventname===eventname)[0];
+        if(updateEvent){
+            setEventdata({"id":updateEvent._id,"club":updateEvent.clubname,"image":updateEvent.eventimage,"name":updateEvent.eventname,"desc":updateEvent.description});
+        }
+    },[events])
     const handleFileChange=(e)=>{
-        setClubimg(e.target.files[0]);
-        toast.success('file upload succesfully');
+        setEventdata({ ...eventdata,["image"]:e.target.files[0]});
+        toast.success("Image uploaded successfully");
     }
     const handleEventSubmit=async(e)=>{
         e.preventDefault();
-        await dispatch(addEvent({clubName,name,clubimg,description}));
+        if(eventname){
+            await dispatch(updateEvent(eventdata));
+        }else{
+            await dispatch(addEvent(eventdata));
+        }
     }
   return (
     <div >
         <Sidebar/>
         <div className='pt-6 lg:pl-96 lg:flex items-center '>
-            <Card shadow={true} className='lg:ml-20 lg:px-16 pb-10'>
-                <form className='text-center mt-10 flex flex-col gap-3 mx-auto  lg:mx-0 px-10 ' onSubmit={handleEventSubmit}>
-                    <Typography variant="h4" color="blue-gray">
+            <Card shadow={true} className='lg:ml-10 lg:px-16 pb-10'>
+                <form className='text-center md:mt-10  flex sm:flex-row flex-col items-center gap-10 px-10 mx-auto' onSubmit={handleEventSubmit}>
+                    <div>
+                        <label htmlFor="fileInput"  className="p-2  rounded-md cursor-pointer">
+                                <img src={eventdata.image?thumps:upload}  alt='update image' className='w-40 h-40 object-cover' />
+                        </label>
+                        <input
+                            id="fileInput"
+                            type="file"
+                            className="hidden"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+                    <div className='flex flex-col gap-6'>
+                        {eventname ?  <Typography variant="h4" color="blue-gray">
+                            Update Event
+                        </Typography>: <Typography variant="h4" color="blue-gray">
                             Add Event
-                    </Typography>
-                        <select id="mySelect" name="mySelect"  onChange={(e)=>setClubName(e.target.value)} value={clubName} className='border-2 px-12 py-3'>
-                            <option value="" disabled>
-                            Select Club
-                            </option>
-                            <option value="MUSIC">Music</option>
-                            <option value="DANCE">Dance</option>
-                            <option value="THEATER">Theater</option>
-                            <option value="TECHNICAL">Technical</option>
-                            <option value="CULINARY">Culinary</option>
-                        </select>
-                    <Input label='Event Name' type='text' value={name} onChange={(e)=>setName(e.target.value)}/>
-                    <label htmlFor="fileInput1"  className="p-2 border border-gray-400 rounded-md cursor-pointer">
-                        <RiImageEditLine size={20} />
-                    </label>
-                    <input
-                        id="fileInput1"
-                        type="file"
-                        className="hidden"
-                        onChange={handleFileChange}
-                    />
-                    <Textarea label="Club Description" type='text' maxLength={200} value={description} onChange={(e)=>setDescription(e.target.value)} />
-                    <Button  type='submit'>Submit</Button>
+                        </Typography>}
+                            <select id="mySelect" name="mySelect"  onChange={(e)=>setEventdata({...eventdata,"club":e.target.value})} value={eventdata?.club} className='border-4 px-12 py-3'>
+                                <option value="" disabled>
+                                Select Club
+                                </option>
+                                <option value="MUSIC">Music</option>
+                                <option value="DANCE">Dance</option>
+                                <option value="THEATER">Theater</option>
+                                <option value="TECHNICAL">Technical</option>
+                                <option value="CULINARY">Culinary</option>
+                            </select>
+                        <Input label='Event Name' color='brown' type='text' value={eventdata?.name} onChange={(e)=>setEventdata({...eventdata,"name":e.target.value})}/>
+                        
+                        <Textarea label="Club Description" color='brown' type='text' maxLength={200} value={eventdata?.desc} onChange={(e)=>setEventdata({...eventdata,"desc":e.target.value})} />
+                        <Button  type='submit' color='brown'>Submit</Button>
+                    </div>
                 </form>
             </Card>
         </div>

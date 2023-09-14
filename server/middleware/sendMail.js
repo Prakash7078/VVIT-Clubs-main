@@ -1,19 +1,20 @@
 const nodemailer=require("nodemailer");
+const dotenv=require("dotenv");
 const sendMail=async(email,message)=>{
     try{
         //Create a transporter
         const transporter=nodemailer.createTransport({
             service:"gmail",
             auth:{
-                user:"ponduriprakash@gmail.com",
-                pass:"prakash7078",
+                user:"vvitclubs7078@gmail.com",
+                pass:process.env.PASS,
             },
         });
         const mailOptions={
-            from:email,
-            to:"ponduriprakash7078@gmail.com",
+            from:"vvitclubs7078@gmail.com",
+            to:email,
             subject:"Message from VVIT Clubs",
-            text:message,
+            text:`${message}`,
         };
         transporter.sendMail(mailOptions,(error)=>{
             if(error){

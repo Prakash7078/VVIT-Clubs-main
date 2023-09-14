@@ -10,6 +10,7 @@ const msgRouter=require('./routes/msgRoutes');
 const eventRouter=require('./routes/eventRoutes');
 const clubRouter=require('./routes/clubRoutes');
 const connectDB=require('./db/connectDB');
+const eventsRouter = require('./routes/events');
 const app = express();
 dotenv.config();
 const storage = multer.memoryStorage();
@@ -28,6 +29,7 @@ app.use("/api/users",userRouter);
 app.use("/api/msgs",msgRouter);
 app.use("/api/clubs",clubRouter);
 app.use("/api/events",eventRouter);
+
 
 const port = process.env.PORT || 5000;
 

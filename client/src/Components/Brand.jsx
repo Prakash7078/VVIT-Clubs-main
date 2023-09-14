@@ -13,7 +13,8 @@ import { BsChatTextFill } from 'react-icons/bs'
 import { AiOutlinePlus } from 'react-icons/ai';
 import AudioComponent from './AudioComponent';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
+import {motion} from 'framer-motion';
 function Brand() {
     const audio = document.getElementById("audiotag");
     const [isMuted, setIsMuted] = useState(true);
@@ -21,8 +22,9 @@ function Brand() {
         audio.play();
         setIsMuted(!isMuted);
       };
-    
-    useEffect(() => {
+      const userInfo = useSelector((state) => state.auth.userInfo);
+      console.log(userInfo);
+      useEffect(() => {
         // Trigger audio playback when component mounts
       }, [isMuted]);
     // const [openPopover, setOpenPopover] = useState(true);
@@ -31,10 +33,10 @@ function Brand() {
     //     onClick: () => setOpenPopover(true),
     // };
   return (
-    <div className=''>
+    <div id="#home" className=''>
         <Card
             shadow={false}
-            className="relative grid h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center"
+            className="relative grid h-[25rem] md:h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center mt-5 md:mt-0"
             >
             <CardHeader
                 floated={false}
@@ -42,15 +44,19 @@ function Brand() {
                 color="transparent"
                 className={`absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center zoom-in-out`}
                 style={{ backgroundImage:`url(${vvit})`}}                    >
-                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/40" />
+                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/40 " />
             </CardHeader>
             <CardBody className="relative px-6 md:px-12 top-24 md:right-96 hidden lg:block">
+                <motion.div
+                initial={{scale:0}}
+                whileInView={{scale:1}}
+                transition={{duration:0.7}}>
                 <div className='bg-white'>
                     {/* <PopoverHandler >
                         <Button className=''color='white'>Basic Info</Button>
                     </PopoverHandler> */}
                     <div className="w-[24rem] p-0 overflow-y-auto md:flex z-10 hidden">
-                        <div className="p-4">
+                        {/*<div className="p-4">
                         <Typography color="blue-gray" className="font-medium mb-2">VVIT Clubs</Typography>
                         <Typography variant="small" color="gray" className="font-normal mb-4">
                             Material Tailwind is an easy to use components library for Tailwind CSS and Material Design. 
@@ -65,31 +71,14 @@ function Brand() {
                         src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhbSUyMGJ1aWxkaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
                         alt="image"
                         className="w-1/2 h-full object-cover"
-                        />
+                  />*/}
                     </div>
                 </div>
+                </motion.div>
             </CardBody>
-            <span className='font-bold text-4xl text-black relative bottom-72 md:bottom-80 md:left-96 h-20 px-10 bg-white'>
-                  {/* Style will be inherited from the parent element */}
-                  
-                  <Typewriter
-                    words={['WELCOME', 'TO','VVIT', 'WELCOME TO VVIT']}
-                    loop={3}
-                    typeSpeed={70}
-                    deleteSpeed={50}
-                    delaySpeed={1000}
-                />
-                <br />
-                <Typewriter
-                    words={['JOIN','THE','CLUB','JOIN THE CLUB']}
-                    loop={3}
-                    typeSpeed={70}
-                    deleteSpeed={50}
-                    delaySpeed={1000}
-                />
-                </span>
+           
         </Card>
-        <div className='fixed lg:top-3/4 top-96 right-10 z-50'>
+        <div className='fixed lg:top-3/4 top-80 right-8 z-50'>
         <SpeedDial>
           <SpeedDialHandler>
             <IconButton color='brown' size="lg" className="rounded-full">
@@ -97,9 +86,9 @@ function Brand() {
             </IconButton>
           </SpeedDialHandler>
           <SpeedDialContent >
-            <SpeedDialAction >
+            {userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <SpeedDialAction >
               <Link to='https://chat-dude.netlify.app/' target='_blank'><BsChatTextFill className="h-5 w-5"  /></Link>
-            </SpeedDialAction>
+            </SpeedDialAction>}
             <SpeedDialAction>
             <AudioComponent isMuted={isMuted} />
             <div onClick={handleButtonClick} className="cursor-pointer bg-green-400 rounded-full">

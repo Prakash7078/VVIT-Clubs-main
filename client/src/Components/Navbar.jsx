@@ -29,7 +29,7 @@ function Navbar() {
     }
   
   return (
-    <div className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 md:py-5 py-2 sm:px-10 w-full bg-[#fff3e0]'>
+    <div className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 md:py-5 py-2 sm:px-10 w-full '>
         <div className='flex gap-3 items-center'>
             <div className='md:hidden position:relative ml-2 '>
                 {!isMenuOpen ? <TiThMenu
@@ -54,7 +54,7 @@ function Navbar() {
             <img className='sm:w-15 sm:h-10 w-14 h-7  cursor-pointer'src={small} alt='logo'/>
             
         </div>
-        <div className='bg-brown-600 rounded-full w-fit'>
+        <div className='bg-black bg-opacity-50 rounded-full w-fit'>
             <ul className='hidden md:flex gap-2  px-5 py-2 rounded-full items-center bg-slate-500 w-fit text-white'>
                 <li className='cursor-pointer hover:font-bold mx-3 '><HashLink to='/#home'>Home</HashLink></li>
                 <li className='cursor-pointer hover:font-bold mx-3'><HashLink to='/#about'>About</HashLink></li>

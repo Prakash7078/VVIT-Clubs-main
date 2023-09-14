@@ -1,11 +1,11 @@
 import {useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { addRegister, deleteRegister, getRegister } from '../redux/registerSlice';
+import { addRegister, deleteRegister, getRegisters } from '../redux/registerSlice';
 import { Rings } from 'react-loader-spinner';
-import { getClubs } from '../redux/clubSlice';
+import { getClubRegisters, getClubs } from '../redux/clubSlice';
 import ReactPaginate from 'react-paginate';
 import { Button, Input,Card,CardHeader,CardBody,Typography, Rating, Switch, Dialog, DialogHeader, DialogBody, DialogFooter } from '@material-tailwind/react';
 import { getEvents } from '../redux/eventSlice';
@@ -17,19 +17,29 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from '../Components/Footer';
 import Team from '../Components/Team';
+import Tutorials from '../Components/Tutorials';
+import ClubRegistration from '../Components/ClubRegistration';
 function ClubScreen() {
+    const { pathname } = useLocation();
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+    
     const [yearFilter, setYearFilter] = useState("All");
     const [branchFilter, setBranchFilter] = useState("All");
     const [studentFilter, setStudentFilter] = useState(false);
     const [coordinatorFilter, setCoordinatorFilter] = useState(false);
 
     const [open, setOpen] = useState(false);
+    const [registeropen, setRegisteropen] = useState(false);
     const [dailogData,setDailogData]=useState({name:"",desc:""});
+    const handleRegisterOpen=()=>{
+      setRegisteropen(!registeropen);
+    }
     const handleOpen = (inp) =>{
-      if(inp==="register"){
-        setDailogData({"name":"Registration","desc": "Once u registered into the event you cannot register to another event, If u want to register for another event you can unregister this one."})
+      if(inp==="winner"){
+        setDailogData({"name":"Winner","desc": "Now he is winner for one of these club events, If u don't you can click again "})
       }
-      console.log(dailogData)
       setOpen(!open);
     }
  
@@ -45,20 +55,43 @@ function ClubScreen() {
     const load=useSelector((state)=>state.clubs.loading);
     const loading = useSelector((state) => state.auth.loading);
     const userInfo = useSelector((state) => state.auth.userInfo);
-    const registerInfo = useSelector((state) => state.register.registerInfo);
+    const[registerInfo,setRegisterInfo]=useState(null);
+    // const registerInfo = useSelector((state) => state.register.registerInfo);
     const registers= useSelector((state) => state.register.registers);
+    const clubregisters= useSelector((state) => state.clubs.clubregisters);
     const events= useSelector((state) => state.events.events);
+   
     //fetch event data
     useEffect(()=>{
         const fetchData=async()=>{
             console.log("user",userInfo);
-            console.log("register",registerInfo);
             await dispatch(getClubs());
-            await dispatch(getRegister());
+            await dispatch(getRegisters());
+            await dispatch(getClubRegisters());
             await dispatch(getEvents());
         }
         fetchData();
    },[dispatch]);
+   useEffect(()=>{
+    findRegister();
+   },[events])
+   //Find the specific register of club .
+   const findRegister =async() => {
+    await dispatch(getRegisters());
+    if (userInfo && registers.length>0) {
+        const res =registers.find(register => register.roll === userInfo.rollno && register.club === name);
+        
+        // Check if a matching register object was found
+        if (res) {
+            setRegisterInfo(res);
+        } else {
+            // Handle the case where no matching register was found
+            console.log("No matching register found.");
+            setRegisterInfo(null);
+        }
+      }
+    }
+
     const handleCategoryChange = (e) => {
         setYearFilter(e.target.value);
       };
@@ -110,28 +143,36 @@ function ClubScreen() {
     const handleDeleteregister=async(rollno)=>{
         try{
            await dispatch(deleteRegister(rollno));
-           await dispatch(getRegister());
+           await dispatch(getRegisters());
+           await findRegister();
+           setRegisterInfo(null);
+           console.log("delete",registerInfo);
+
         }catch(err){
             toast.error("Registration not deleted succesfully");
         }
     }
     const handleWinner=async(rollno,winner)=>{
+        handleOpen("winner");
         await dispatch(makeWinner({rollno,winner}));
-        await dispatch(getRegister());
+        await dispatch(getRegisters());
     }
     const handleRunner=async(rollno,runner)=>{
         await dispatch(makeRunner({rollno,runner}));
-        await dispatch(getRegister());
+        await dispatch(getRegisters());
     }
     const handleRegister=async(clubname,eventname)=>{
         const club=clubname;
         const event=eventname;
-        handleOpen("register");
         if(userInfo){
             const{category,username,image,branch,year,section,rollno}=userInfo;
             try{
-                await dispatch(addRegister({club,event,category,username,image,branch,year,section,rollno}));
-                await dispatch(getRegister());
+                const res1=await dispatch(addRegister({club,event,category,username,image,branch,year,section,rollno}));
+                await dispatch(getRegisters());
+                console.log(res1.payload);
+                setRegisterInfo(res1.payload);
+                console.log("registerInfo",registerInfo);
+
             }catch(err){
                 toast.error("You already registered for one of these events");
             }
@@ -183,9 +224,9 @@ function ClubScreen() {
         // ],
       };
   return (
-    <div className='lg:pt-24 pt-8'>
+    <div className='lg:pt-24 pt-8 bg-[#fbe9e7]'>
         {clubs && clubs.filter((item)=>item.name===name).map((item,index)=>(
-            <div key={index} className=''>
+            <div key={index} className='mb-3'>
                 <Card className="flex sm:flex-row w-full mt-12  " >
                 <CardHeader shadow={false} floated={false} className="sm:w-1/4 shrink-0  rounded-r-none">
                 <img 
@@ -206,22 +247,28 @@ function ClubScreen() {
                 <Typography color="gray" className="font-normal mb-8">
                     {item.desc}
                 </Typography>
-                <a href="#" className="inline-block">
-                    <Button variant="text" className="flex items-center gap-2">
+                  <Button onClick={handleRegisterOpen} variant="text" className="flex items-center gap-2 bg-light-blue-100">
                     Register
-                    </Button>
-                </a>
+                  </Button>
                 </CardBody>
                 </Card>
             </div>
         ))} 
+        <Dialog
+          size="xs"
+          open={registeropen}
+          handler={handleRegisterOpen}
+          className="bg-white shadow-none"
+        >
+          <ClubRegistration value={handleRegisterOpen} club={name}/>
+        </Dialog>
         {events.filter((item)=>item.clubname===name).length>0 && 
         <Slider {...settings} className='mx-10 mb-10'>
         {events.filter((item)=>item.clubname===name).map((event,index)=>(
             <div key={index} className=' mt-16 '>
                 <Card
                     shadow={false}
-                    className="relative grid md:h-[40rem] sm:h-8 w-full max-w-[28rem] sm:max-w-full items-end justify-center overflow-hidden text-center"
+                    className="relative grid md:h-[40rem] h-full w-full max-w-[28rem] sm:max-w-full items-end justify-center overflow-hidden text-center"
                     >
                     <CardHeader
                         floated={false}
@@ -231,30 +278,30 @@ function ClubScreen() {
                         style={{ backgroundImage: `url('${event.eventimage}')` }}                    >
                         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/100 via-black/70" />
                     </CardHeader>
-                    <CardBody className="relative  px-6 md:px-12 ">
+                    <CardBody className="relative  px-6 md:px-12">
                         {userInfo && <Typography
                         variant="h2"
                         color="white"
-                        className="mb-3 font-bold leading-[1.5]"
+                        className="mb-3 font-bold leading-[1.5] text-sm lg:text-4xl"
                         >
                         Hey {userInfo.username}
                         </Typography>}
                         <Typography
                         variant="h2"
                         color="white"
-                        className="mb-3 font-bold lg:text-5xl leading-[1.5] text-gray-400"
+                        className="mb-3 font-bold lg:text-5xl leading-[1.5] text-white text-sm"
                         >
                         Be the face of VVIT Clubs
                         </Typography>
-                        <Typography variant="h5" className="mb-4 text-white">
+                        <Typography variant="h5" className="mb-4 text-white text-sm lg:text-3xl">
                         {event.eventname} Event
                         </Typography>
-                        {(registerInfo && userInfo && userInfo.rollno===registerInfo.roll && event.eventname===registerInfo.event) ? <button className='bg-red-500 px-8 py-2 text-white h-fit mt-10 ' onClick={()=>handleDeleteregister(registerInfo.roll)}>UnRegister</button>
-                            :<button className='bg-green-500 px-8 py-2 text-white h-fit mt-10 font-bold 'onClick={()=>handleRegister(event.clubname,event.eventname)}>Register</button>}
+                        {(registerInfo && registerInfo.club) ? <button className='bg-red-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 ' onClick={()=>handleDeleteregister(registerInfo.roll)}>UnRegister</button>
+                        : <button className='bg-green-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 lg:font-bold 'onClick={()=>handleRegister(event.clubname,event.eventname)}>Register</button>}
                         <Typography
                         variant="h5"
                         color="white"
-                        className="pt-5 pb-8 leading-[1.5] text-gray-400"
+                        className="pt-5 pb-8 leading-[1.5] text-gray-400 text-sm lg:text-xl"
                         >
                         {event.description}
                         </Typography>
@@ -263,9 +310,9 @@ function ClubScreen() {
             </div>)
         )}
         </Slider>}
-       {userInfo && currentProducts.length>0 && (userInfo.isAdmin || userInfo.category==="Coordinator") && <div>
-        <div className='flex flex-col md:flex-row justify-between mt-16 mb-5 items-center'>
-            <div className=" flex items-center mb-3 md:mb-0 flex-wrap lg:mx-10 flex-col sm:flex-row">
+       {userInfo &&  (userInfo.isAdmin || userInfo.category==="Coordinator") && <div>
+        <div className='flex flex-col md:flex-row justify-between mt-16 mb-5 items-center gap-2 '>
+            <div className=" flex items-center gap-3 md:mb-0 flex-wrap lg:mx-10 flex-col sm:flex-row ">
                   <div>
                     <label htmlFor="yearFilter" className="sm:mr-2">
                     Year:
@@ -327,8 +374,9 @@ function ClubScreen() {
                     />
                   </div>
             </div>
-             <div className="relative flex  md:w-max sm:mr-10 w-80 justify-between">
+             <div className="relative flex  md:w-max  justify-between ">
                 <Input
+                    color='brown'
                     type="search"
                     label="Type Rollno..."
                     className="pr-24 "
@@ -342,9 +390,9 @@ function ClubScreen() {
                 </Button>
             </div>
         </div>
-       <div className="overflow-x-auto lg:mx-10">
-        <table className="w-full border-collapse ">
-                <thead>
+       <div className="overflow-x-auto lg:mx-10 bg-white mx-2">
+        <table className="w-full border-collapse">
+                <thead className='top-0 sticky'>
                 <tr className="bg-primary text-secondary  ">
                     <th className="px-4 py-2">Image</th>
                     <th className="px-4 py-2">Name</th>
@@ -374,8 +422,8 @@ function ClubScreen() {
                     <td className="border text-center px-4 py-2">{product.branch}</td>
                     <td className="border text-center px-4 py-2">{product.roll}</td>
                     <td className="border text-center px-4 py-2">{product.section}</td>
-                    <td>{userInfo && userInfo.isAdmin && <div className="w-fit mx-auto cursor-pointer">{product.isWinner ? <img src={gold} className='w-10 h-10 object-cover'  onClick={()=>handleWinner(product.roll,product.isWinner)}/>:<Switch color='red' onClick={()=>handleWinner(product.roll,product.isWinner)}/>}</div>}</td>
-
+                    <td>{userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <div className="w-fit mx-auto cursor-pointer">{product.isWinner ? <img src={gold} className='w-10 h-10 object-cover'  onClick={()=>handleWinner(product.roll,product.isWinner)}/>:<Switch color='red' onClick={()=>handleWinner(product.roll,product.isWinner)}/>}</div>}</td>
+                    <td>{userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator")&& <div className="w-fit mx-auto cursor-pointer">{product.isRunner ? <img src={silver} className='w-10 h-10 object-cover'  onClick={()=>handleRunner(product.roll,product.isRunner)}/>:<Switch color='red' onClick={()=>handleRunner(product.roll,product.isRunner)}/>}</div>}</td>
                     </tr>
                 ))}
                 {currentProducts?.map((product) => (
@@ -393,8 +441,8 @@ function ClubScreen() {
                     <td className="border text-center px-4 py-2">{product.branch}</td>
                     <td className="border text-center px-4 py-2">{product.roll}</td>
                     <td className="border text-center px-4 py-2">{product.section}</td>
-                    <td>{userInfo && userInfo.isAdmin && <div className="w-fit mx-auto cursor-pointer">{product.isWinner ? <img src={gold} className='w-10 h-10 object-cover'  onClick={()=>handleWinner(product.roll,product.isWinner)}/>:<Switch color='red' onClick={()=>handleWinner(product.roll,product.isWinner)}/>}</div>}</td>
-                    <td>{userInfo && userInfo.isAdmin && <div className="w-fit mx-auto cursor-pointer">{product.isRunner ? <img src={silver} className='w-10 h-10 object-cover'  onClick={()=>handleRunner(product.roll,product.isRunner)}/>:<Switch color='red' onClick={()=>handleRunner(product.roll,product.isRunner)}/>}</div>}</td>
+                    <td>{userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <div className="w-fit mx-auto cursor-pointer">{product.isWinner ? <img src={gold} className='w-10 h-10 object-cover'  onClick={()=>handleWinner(product.roll,product.isWinner)}/>:<Switch color='red' onClick={()=>handleWinner(product.roll,product.isWinner)}/>}</div>}</td>
+                    <td>{userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator")&& <div className="w-fit mx-auto cursor-pointer">{product.isRunner ? <img src={silver} className='w-10 h-10 object-cover'  onClick={()=>handleRunner(product.roll,product.isRunner)}/>:<Switch color='red' onClick={()=>handleRunner(product.roll,product.isRunner)}/>}</div>}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -419,16 +467,16 @@ function ClubScreen() {
         />
          </div>}
          {currentProducts.filter((item) => item.isWinner || item.isRunner).length > 0 && (
-            <div className='my-16 mx-10 relative'>
+            <div className='my-16 mx-10 relative '>
                 <h1 className='text-center text-3xl font-bold mb-16'>Winners and Runners</h1>
                 <Slider {...settings}>
                 {currentProducts.filter((item) => item.isWinner || item.isRunner).map((item) => (
-                  <div key={item.id} className='relative'>
-                    <div className='bg-brown-900 h-full md:w-10 w-4 absolute top-0 left-0 transform -translate-x-1/2'></div>
+                  <div key={item.id} className='relative bg-white '>
+                    <div className='bg-brown-900 h-full md:w-10 w-4 absolute top-0 left-0 transform -translate-x-1/2 '></div>
                     <div className='bg-brown-900 h-10 w-full absolute bottom-0 left-0 transform translate-y-1/2'></div>
                     <div className='w-3/4 lg:w-1/2 mx-auto mb-10 relative overflow-hidden'>
-                      <div className='bg-white rounded-lg lg:p-6 shadow-lg flex justify-between flex-col md:flex-row-reverse items-center'>
-                        <div>
+                      <div className=' bg-white rounded-lg lg:p-10 shadow-lg flex justify-between flex-col md:flex-row-reverse items-center'>
+                        <div className='pt-5'>
                             <img src={item.userimage} alt='winorrun' className='w-60 h-60 object-cover rounded-full' />
                         </div>
                         <div className='mt-6'>                
@@ -465,7 +513,10 @@ function ClubScreen() {
               `}</style>
             </div>
           )}
-          {currentProducts.filter((item) =>item.category==="Coordinator").length>0 && <Team data={currentProducts}/>}
+          {clubregisters.filter((item) => item.category === "Coordinator" && item.club === name).length > 0 && (
+            <Team data={clubregisters.filter((item) => item.category === "Coordinator" && item.club === name)} />
+          )}
+          <Tutorials value={name}/>
          <Footer/>
          <Dialog
             open={open}
@@ -475,7 +526,7 @@ function ClubScreen() {
               unmount: { scale: 0.9, y: -100 },
             }}
           >
-            <DialogHeader>{dailogData["name"]}</DialogHeader>
+            <DialogHeader>{dailogData.name}</DialogHeader>
             <DialogBody divider>
               {dailogData["desc"]}  
             </DialogBody>

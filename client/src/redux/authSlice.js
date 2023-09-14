@@ -26,7 +26,48 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-
+export const resetPassword=createAsyncThunk(
+  "api/resetpassword",
+  async({password,id,token})=>{
+    try{
+      const res=await axios.patch(`${BASE_URL}/api/auth/resetpassword/${id}/${token}`,{password});
+      return res.data;
+    }catch(err){
+      console.log(err.message);
+    }
+  }
+)
+export const forgotPassword=createAsyncThunk(
+  "api/forgotpassword",
+  async({email})=>{
+    console.log("email",email);
+    try{
+      const res=await axios.post(`${BASE_URL}/api/auth/forgotpassword`,{email});
+      return res.data;
+    }catch(err){
+      console.log(err.message);
+    }
+  }
+)
+export const updateRegister=createAsyncThunk(
+  "api/updateRegister",
+  async(payload)=>{
+    console.log("payload",payload);
+    try{
+      const response=await axios.patch(`${BASE_URL}/api/auth/profile`,payload,{
+        headers:{
+          "Content-Type":"multipart/form-data",
+          Authorization:`Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const{user,message}=response.data;
+      toast.success(message);
+      localStorage.setItem("userInfo",JSON.stringify(user));
+    }catch(err){
+      throw new Error(err.message);
+    }
+  }
+)
 // Async thunk action to handle user signup
 export const signupUser = createAsyncThunk(
   "auth/signup",
@@ -40,6 +81,7 @@ export const signupUser = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
+      console.log("error",error);
       if (!error?.response) {
         throw error;
       }
@@ -101,6 +143,36 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
         toast.error("Signup failed!");
+      });
+    builder
+      .addCase(forgotPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(forgotPassword.fulfilled, (state,action) => {
+        state.loading = false;
+        const {message} = action.payload;
+        toast.success(message);
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = false;
+        const {message} = action.payload;
+        toast.error(message);
+      });
+    builder
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state,action) => {
+        state.loading = false;
+        const {message} = action.payload;
+        toast.success(message);
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        const {message} = action.payload;
+        toast.error(message);
       });
 
     builder.addCase(logoutUser.fulfilled, (state) => {

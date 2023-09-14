@@ -1,12 +1,14 @@
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
-import {getEvents} from '../../redux/eventSlice'
+import {deleteEvent, getEvents} from '../../redux/eventSlice'
 import Sidebar from "../../Components/Sidebar"
 import { Avatar, Button, Card, CardHeader, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { BiSolidAddToQueue } from "react-icons/bi";
+import { BiSolidAddToQueue, BiSolidEditAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { Rings } from "react-loader-spinner";
+import { MdDelete } from "react-icons/md";
+import { getRegisters } from "../../redux/registerSlice";
 
 function AllEvents() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +26,12 @@ function AllEvents() {
   const handlePageChange = (selectedPage) => {
       setCurrentPage(selectedPage.selected + 1);
   };
-  const TABLE_HEAD = ["EventImage", "ClubName", "Eventname", "Edit"];
+  const handleDelete=async(id)=>{
+    await dispatch(deleteEvent(id));
+    await dispatch(getEvents());
+  }
+
+  const TABLE_HEAD = ["EventImage", "ClubName", "Eventname", "Edit","Delete"];
   
   const totalPages = Math.ceil(events?.length / perPage);
   const currentProducts = events?.slice(
@@ -53,7 +60,7 @@ if (loading) {
       <div className="pt-10 lg:pl-80 lg:mr-32">
         <Card className="h-full w-full">
           <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-8 flex items-center justify-between gap-8">
+            <div className="mb-8 flex items-center justify-between gap-8 flex-col sm:flex-row">
               <div>
                 <Typography variant="h5" color="brown-gray">
                   Events List
@@ -62,7 +69,7 @@ if (loading) {
                   See Information about all events.
                 </Typography>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+              <div className="flex  flex-row gap-2 shrink-0">
                 <Button variant="outlined" color="brown" size="sm" >
                   view all
                 </Button>
@@ -77,57 +84,62 @@ if (loading) {
               </div>
             </div>
           </CardHeader>
-          <table className="w-full min-w-max table-auto text-left ">
-            <thead>
-              <tr>
-                {TABLE_HEAD.map((head) => (
-                  <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal leading-none opacity-70"
-                    >
-                      {head}
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {currentProducts.map(({eventimage,eventname,clubname }, index) => {
-                const isLast = index === events.length - 1;
-                const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-    
-                return (
-                  <tr key={eventname}>
-                    <td className={classes}>
-                      <Link to={`/${clubname}`}><Avatar src={eventimage} alt={eventname} size="sm" /></Link>
-                    </td>
-                    <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {clubname}
+          <div className="overflow-x-auto mx-2 sm:mx-0">
+            <table className="w-full min-w-max table-auto text-left ">
+              <thead>
+                <tr>
+                  {TABLE_HEAD.map((head) => (
+                    <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal leading-none opacity-70"
+                      >
+                        {head}
                       </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {eventname}
-                      </Typography>
-                    </td>
-                    {/* <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {working?"True":"False"}
-                      </Typography>
-                    </td> */}
-                    <td className={classes}>
-                      <Typography as="a" href="#" variant="small" color="blue" className="font-medium">
-                        Edit
-                      </Typography>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {currentProducts.map(({_id,eventimage,eventname,clubname }, index) => {
+                  const isLast = index === events.length - 1;
+                  const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+      
+                  return (
+                    <tr key={eventname}>
+                      <td className={classes}>
+                        <Link to={`/${clubname}`}><Avatar src={eventimage} alt={eventname} size="sm" /></Link>
+                      </td>
+                      <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {clubname}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {eventname}
+                        </Typography>
+                      </td>
+                      {/* <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {working?"True":"False"}
+                        </Typography>
+                      </td> */}
+                      <td className={classes}>
+                        <Link to={`/admin/updateEvent/${eventname}`}>
+                          <BiSolidEditAlt size={22}/>
+                        </Link>
+                      </td>
+                      <td className={classes}>
+                        <MdDelete size={20} color="red" className="cursor-pointer" onClick={()=>handleDelete(_id)}/>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </Card>
       </div>
       <ReactPaginate

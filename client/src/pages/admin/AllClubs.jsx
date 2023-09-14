@@ -1,13 +1,14 @@
-import { BiSolidAddToQueue } from "react-icons/bi";
+import { BiSolidAddToQueue, BiSolidEditAlt } from "react-icons/bi";
 import Sidebar from "../../Components/Sidebar"
 import { Avatar, Button, Card, CardHeader, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
-import { getClubs } from "../../redux/clubSlice";
-import { getRegister } from "../../redux/registerSlice";
+import { deleteClub, getClubs } from "../../redux/clubSlice";
+import { getRegisters } from "../../redux/registerSlice";
 import { Link } from "react-router-dom";
 import { Rings } from "react-loader-spinner";
+import { MdDelete } from "react-icons/md";
 function AllClubs() {
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 5; // Number of products per page
@@ -18,7 +19,8 @@ function AllClubs() {
   useEffect(()=>{
     const fetchClubs=async()=>{
       await dispatch(getClubs());
-      await dispatch(getRegister());
+      await dispatch(getRegisters());
+      console.log("registers",registers);
     };
     fetchClubs();
   },[dispatch])
@@ -38,12 +40,16 @@ function AllClubs() {
       </div>
     );
  }
-  
+  const handleDelete=async(id)=>{
+    console.log("id",id);
+    await dispatch(deleteClub(id));
+    await dispatch(getClubs());
+  }
         // Function to handle page change
   const handlePageChange = (selectedPage) => {
       setCurrentPage(selectedPage.selected + 1);
   };
-  const TABLE_HEAD = ["Image", "Name", "Working", "Edit"];
+  const TABLE_HEAD = ["Image", "Name", "Working", "Edit","Delete"];
   
   const totalPages = Math.ceil(clubs?.length / perPage);
   const currentProducts = clubs?.slice(
@@ -53,11 +59,11 @@ function AllClubs() {
   return (
     <div>
       <Sidebar/>
-      <div className="pt-10 lg:pl-80 lg:mr-32">
+      <div className="pt-5 lg:pl-80 lg:mr-32">
         <Card className="h-full w-full">
           <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-8 flex items-center justify-between gap-8">
-              <div>
+            <div className="mb-8 flex items-center justify-between gap-8 flex-col sm:flex-row">
+              <div >
                 <Typography variant="h5" color="brown-gray">
                   Clubs List
                 </Typography>
@@ -65,7 +71,7 @@ function AllClubs() {
                   See Information about all clubs.
                 </Typography>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+              <div className="flex flex-row gap-2 shrink-0">
                 <Button variant="outlined" color="brown" size="sm" >
                   view all
                 </Button>
@@ -80,52 +86,57 @@ function AllClubs() {
               </div>
             </div>
           </CardHeader>
-          <table className="w-full min-w-max table-auto text-left ">
-            <thead>
-              <tr>
-                {TABLE_HEAD.map((head) => (
-                  <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal leading-none opacity-70"
-                    >
-                      {head}
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {currentProducts.map(({image,name }, index) => {
-                const isLast = index === clubs.length - 1;
-                const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-    
-                return (
-                  <tr key={name}>
-                    <td className={classes}>
-                      <Link to={`/${name}`}><Avatar src={image} alt={name} size="sm" /></Link>
-                    </td>
-                    <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {name}
+          <div className="overflow-x-auto mx-2 sm:mx-0">
+            <table className="w-full min-w-max table-auto text-left ">
+              <thead>
+                <tr>
+                  {TABLE_HEAD.map((head) => (
+                    <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal leading-none opacity-70"
+                      >
+                        {head}
                       </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
-                        {registers.filter((item)=>item.club===name).length===0?"False":"True"}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography as="a" href="#" variant="small" color="blue" className="font-medium">
-                        Edit
-                      </Typography>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {currentProducts.map((item, index) => {
+                  const isLast = index === clubs.length - 1;
+                  const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+      
+                  return (
+                    <tr key={name}>
+                      <td className={classes}>
+                        <Link to={`/${item.name}`}><Avatar src={item.image} alt={name} size="sm" /></Link>
+                      </td>
+                      <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {item.name}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography variant="small" color="blue-gray" className="font-normal">
+                          {registers.filter((itm)=>itm.club===item.name).length===0?"False":"True"}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Link to={`/admin/updateClub/${item.name}`}>
+                          <BiSolidEditAlt size={22}/>
+                        </Link>
+                      </td>
+                      <td className={classes}>
+                        <MdDelete size={20} color="red" className="cursor-pointer" onClick={()=>handleDelete(item._id)}/>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </Card>
       </div>
       <ReactPaginate

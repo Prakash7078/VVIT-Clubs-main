@@ -9,6 +9,7 @@ const dotenv=require('dotenv');
 const uploadImage = require('../middleware/uploadMiddleware');
 const StatusCodes=require('http-status-codes');
 const Register = require('../models/registerModel');
+const Testimony=require("../models/testimonialModel");
 dotenv.config();
 const getDetails=async(req,res)=>{
     await User.deleteMany({});
@@ -18,47 +19,125 @@ const getDetails=async(req,res)=>{
 };
 const addEvent=(expressAsyncHandler(async(req,res)=>{
     const events=new Event({
-        clubname:req.body.clubName,
+        clubname:req.body.club,
         eventname:req.body.name,
-        description:req.body.description,
+        description:req.body.desc,
     });
     if (req.file) {
         // Uploading the profile image to AWS S3
-        await uploadImage(req.file);
+        await uploadImage("events",req.file);
   
         // Setting the cover image URL in the book model
-        events.eventimage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/profile-images/${events._id}/${req.file.originalname}`;
+        events.eventimage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/events/${req.file.originalname}`;
       }
     
     const event=await events.save();
     res.status(200).json({message:"add Event succesfully"});
 
 }))
+
+const deleteEvent=(expressAsyncHandler(async(req,res)=>{
+    const event=await Event.findById(req.params.id);
+    console.log("event",event);
+    await Register.deleteMany({event:event.eventname});
+    await Event.findByIdAndDelete(req.params.id);
+    res.status(StatusCodes.OK).json({message:"event delete succesfully"});
+}))
+
+const updateEvent=(expressAsyncHandler(async(req,res)=>{
+    const {id}=req.body;
+    const newOne=await Event.findByIdAndUpdate(id,{clubname:req.body.club,eventname:req.body.name,description:req.body.desc});
+    if(req.file){
+        await uploadImage("events",req.file);
+        newOne.eventimage= `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/events/${req.file.originalname}`;
+    }else{
+        newOne.image=req.body.image;
+    }
+    newOne.save();
+    console.log(newOne);
+    return res.status(StatusCodes.OK).json({message:"Event updated succesfully"});
+}))
+const updateClub=(expressAsyncHandler(async(req,res)=>{
+    const {id}=req.body;
+    const newOne=await Clubs.findByIdAndUpdate(id,{name:req.body.name,desc:req.body.desc},{new:true});
+    if(req.file){
+        await uploadImage("clubs",req.file);
+        newOne.image = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/clubs/${req.file.originalname}`;
+    }else{
+        newOne.image=req.body.image;
+    }
+    newOne.save();
+    console.log("newOne",newOne);
+    return res.status(StatusCodes.OK).json({message:"club update succesfully"});
+}))
+// const addTestimony=(expressAsyncHandler(async(req,res)=>{
+//     console.log("profileData",req.body);
+//     const {name,position,desc}=req.body;
+//     const testimonial=new Testimony({
+//         name:name,
+//         position:position,
+//         desc:desc,
+//     });
+//     if(req.file){
+//         await uploadImage("admins",req.file);
+//         testimonial.profile=`https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/admins/${req.file.originalname}`;
+//     }
+//     const test1=await testimonial.save();
+//     console.log(test1);
+//     return res.status(StatusCodes.OK).json({message:"Testimonial added succesfully"});
+// }));
 const addClub=(expressAsyncHandler(async(req,res)=>{
     const clubs=new Clubs({
         name:req.body.name,
-        desc:req.body.description,
+        desc:req.body.desc,
     });
     if (req.file) {
         // Uploading the profile image to AWS S3
-        await uploadImage(req.file);
+        await uploadImage("clubs",req.file);
   
         // Setting the cover image URL in the book model
-        clubs.image = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/profile-images/${clubs._id}/${req.file.originalname}`;
-      }
+        clubs.image = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/clubs/${req.file.originalname}`;
+    }
     const res1=await clubs.save();
     console.log(res1);
-    res.status(StatusCodes.OK).json({message:"club added succesfully"});
+    return res.status(StatusCodes.OK).json({message:"club added succesfully"});
 }));
-const addCoordinator=(expressAsyncHandler(async(req,res)=>{
-    const {roll}=req.body;
-    const existingRegister=await Register.findOne({roll})
-    if(existingRegister){
-        const updatedUser=await Register.findOneAndUpdate({roll},{category:"Coordinator"},{new:true});
-        console.log(updatedUser);
-        return res.status(StatusCodes.OK).json({message:"Registered User updated as Coordinator"});
-    }return res.status(StatusCodes.BAD_REQUEST).json({message:"User Not regisered"});
-}))
+const addTestimony=(expressAsyncHandler(async(req,res)=>{
+    const testimonial=new Testimony({
+        name:req.body.name,
+        position:req.body.position,
+        desc:req.body.desc,
+    })
+    if(req.file){
+        await uploadImage("admins",req.file);
+        testimonial.image=`https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/admins/${req.file.originalname}`;
+    }
+    const res1=await testimonial.save();
+    console.log(res1);
+    return res.status(StatusCodes.OK).json({message:"Testimonial added succesfully"});
+
+})) 
+
+
+
+const deleteClub=async(req,res)=>{
+    console.log("delete id",req.params.id);
+    const club=await Clubs.findById(req.params.id);
+    await Register.deleteMany({club:club.name});
+    await Event.deleteMany({clubname:club.name});
+    const result=await Clubs.findByIdAndDelete(req.params.id);
+    res.json({message:"Club deleted succesfully"});
+};
+
+// const addCoordinator=(expressAsyncHandler(async(req,res)=>{
+//     const {roll}=req.body;
+//     const existingRegister=await Register.findOne({roll})
+//     if(existingRegister){
+//         const updatedUser=await Register.findOneAndUpdate({roll},{category:"Coordinator"},{new:true});
+//         console.log(updatedUser);
+//         return res.status(StatusCodes.OK).json({message:"Registered User updated as Coordinator"});
+//     }return res.status(StatusCodes.BAD_REQUEST).json({message:"User Not regisered"});
+// }))
 const addAdmin=(expressAsyncHandler(async(req,res)=>{
     const{category,name,email,password,branch,year,section,rollno,admin}=req.body;
     console.log("admin",admin);
@@ -86,4 +165,4 @@ const addAdmin=(expressAsyncHandler(async(req,res)=>{
     const user=await newAdmin.save();
     return res.status(StatusCodes.CREATED).json({message:"admin added succesfully"});
 }))
-module.exports={getDetails,addEvent,addClub,addAdmin,addCoordinator};
+module.exports={getDetails,addEvent,addClub,addAdmin,updateClub,updateEvent,deleteClub,deleteEvent,addTestimony};

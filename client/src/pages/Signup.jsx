@@ -90,7 +90,7 @@ function Signup() {
                     <div>
                         <Input type="text" label="RollNo"name="rollno" onChange={handleChange} value={data.rollno}/>
                     </div>
-                    <Button color='brown'>SignUp</Button>
+                    <Button onClick={handleSignup} color='brown'>SignUp</Button>
                     <Typography className='mb-5'>Already have an account <Link className='font-semibold' to='/login'>Login</Link></Typography>
                 </form>
         </div>

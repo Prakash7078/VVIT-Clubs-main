@@ -3,14 +3,15 @@ import { Button,Card,CardHeader,Input, Typography} from "@material-tailwind/reac
 import ReactPaginate from "react-paginate"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { deleteRegister, getRegister } from "../../redux/registerSlice";
+import { deleteRegister} from "../../redux/registerSlice";
 import { MdDelete } from "react-icons/md";  
 import { AiOutlineDelete } from "react-icons/ai";  
 import { toast } from "react-hot-toast";
 import {  BsFillPersonDashFill, BsFillPersonPlusFill } from "react-icons/bs";
 import {  makeCoordinator } from "../../redux/adminSlice";
 import { Link } from "react-router-dom";
-// import { getRegister } from "../../redux/registerSlice";
+import { getClubRegisters } from "../../redux/clubSlice";
+// import { getClubRegisters } from "../../redux/registerSlice";
 // import { toast } from "react-hot-toast";
 
 function AllRegistrations() {
@@ -24,7 +25,7 @@ function AllRegistrations() {
     const dispatch=useDispatch();
     const[searchroll,setSearchroll]=useState("");
     // const dispatch = useDispatch();
-    const registers= useSelector((state) => state.register.registers);
+    const registers= useSelector((state) => state.clubs.clubregisters);
     const handleCategoryChange = (e) => {
       setYearFilter(e.target.value);
     };
@@ -72,14 +73,14 @@ function AllRegistrations() {
     }
     useEffect(()=>{
       const fetchData=async()=>{
-          await dispatch(getRegister());
+          await dispatch(getClubRegisters());
       }
       fetchData();
     },[dispatch]);
     // const handleDeleteregister=async(rollno)=>{
     //     try{
     //        await dispatch(deleteRegister(rollno));
-    //        await dispatch(getRegister());
+    //        await dispatch(getClubRegisters());
     //        toast.success("Unrgister succesfully");
     //     }catch(err){
     //         toast.error("Registration not deleted succesfully");
@@ -88,8 +89,8 @@ function AllRegistrations() {
     const handleDelete=async(rollno)=>{
       try{
          await dispatch(deleteRegister(rollno));
-         await dispatch(getRegister());
-         toast.success("Unrgister succesfully");
+         await dispatch(getClubRegisters());
+         toast.success("Unregister succesfully");
       }catch(err){
           toast.error("Registration not deleted succesfully");
       }
@@ -103,16 +104,16 @@ function AllRegistrations() {
       newCategory="Student";
     }
     await dispatch(makeCoordinator({newCategory,roll}));
-    await dispatch(getRegister());
+    await dispatch(getClubRegisters());
   }
   return (
     <div>
       <Sidebar/>
-      <div className="lg:pt-5 lg:pl-72 ">
+      <div className="lg:pt-5 lg:pl-72 pt-5">
             <div>
                 <CardHeader floated={false} shadow={false} className="rounded-none">
-                    <div className="mb-8 flex items-center justify-between gap-8">
-                      <div>
+                    <div className="mb-8 flex items-center justify-between gap-8 sm:flex-row flex-col">
+                      <div className="text-center sm:text-left">
                         <Typography variant="h5" color="brown-gray">
                           Registrations List
                         </Typography>
@@ -120,7 +121,7 @@ function AllRegistrations() {
                           See Information about all Registartions.
                         </Typography>
                       </div>
-                      <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+                      <div className="flex flex-row gap-2 ">
                         <Button variant="outlined" color="brown" size="sm" >
                           view all
                         </Button>
@@ -234,7 +235,6 @@ function AllRegistrations() {
                     <th className="px-4 py-2">Profile</th>
                     <th className="px-4 py-2">Name</th>
                     <th className="px-4 py-2">Category</th>
-                    <th className="px-4 py-2">Event</th>
                     <th className="px-4 py-2">Year</th>
                     <th className="px-4 py-2">Branch</th>
                     <th className="px-4 py-2">RollNo</th>
@@ -246,19 +246,18 @@ function AllRegistrations() {
                 <tbody>
                 {currentProducts?.filter((item)=>item.roll===searchroll).map((product) => (
                     
-                    <tr key={product.id} className='bg-brown-200 font-bold'>
+                    <tr key={product._id} className='bg-brown-200 font-bold'>
                     <td className="border-none text-center px-4 py-2"><Link to={`${product.roll}/profile`}><img className="rounded-full w-10 h-10 mx-auto"src={product.userimage}/></Link></td>
                     <td className="border-none text-center px-4 py-2">
                         {product.name}
                     </td>
                     <td className="border-none text-center px-4 py-2">{product.category}</td>
-                    <td className="border text-center px-4 py-2">{product.event}</td>
                     <td className="border-none text-center px-4 py-2">{product.year}</td>
                     <td className="border-none text-center px-4 py-2">{product.branch}</td>
                     <td className="border-none text-center px-4 py-2">{product.roll}</td>
                     <td className="border-none text-center px-4 py-2">{product.section}</td>
                     <td className="border text-center px-4 py-2"><div className="w-fit mx-auto cursor-pointer">{product.category==="Student"?<BsFillPersonPlusFill size={20} onClick={()=>handleUpdate(product.category,product.roll)}/>:<BsFillPersonDashFill size={20} onClick={()=>handleUpdate(product.category,product.roll)}/>}</div></td>
-                    <td className="border text-center px-4 py-2 "><AiOutlineDelete color="red" size={20} onClick={handleDelete} className="cursor-pointer"/></td>
+                    <td className="border text-center px-4 py-2 "><AiOutlineDelete color="red" size={20} onClick={()=>handleDelete(product.roll)} className="cursor-pointer"/></td>
                     </tr>
                 ))}
                 {currentProducts?.map((product) => (
@@ -269,13 +268,12 @@ function AllRegistrations() {
                         {product.name}
                     </td>
                     <td className="border text-center px-4 py-2">{product.category}</td>
-                    <td className="border text-center px-4 py-2">{product.event}</td>
                     <td className="border text-center px-4 py-2">{product.year}</td>
                     <td className="border text-center px-4 py-2">{product.branch}</td>
                     <td className="border text-center px-4 py-2">{product.roll}</td>
                     <td className="border text-center px-4 py-2">{product.section}</td>
                     <td className="border text-center px-4 py-2"><div className="w-fit mx-auto cursor-pointer">{product.category==="Student"?<BsFillPersonPlusFill size={20} onClick={()=>handleUpdate(product.category,product.roll)}/>:<BsFillPersonDashFill size={20} onClick={()=>handleUpdate(product.category,product.roll)}/>}</div></td>
-                    <td className="border text-center px-4 py-2 "><AiOutlineDelete color="red" size={20} onClick={handleDelete} className="cursor-pointer"/></td>
+                    <td className="border text-center px-4 py-2 "><AiOutlineDelete color="red" size={20} onClick={()=>handleDelete(product.roll)} className="cursor-pointer"/></td>
                     </tr>
                 ))}
                 </tbody>
