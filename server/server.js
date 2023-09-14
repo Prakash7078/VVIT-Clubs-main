@@ -11,8 +11,8 @@ const eventRouter=require('./routes/eventRoutes');
 const clubRouter=require('./routes/clubRoutes');
 const connectDB=require('./db/connectDB');
 const app = express();
-const { dirname, join}=require('path');
-const { fileURLToPath }=require('url');
+const path = require("path");
+
 dotenv.config();
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -31,12 +31,11 @@ app.use("/api/msgs",msgRouter);
 app.use("/api/clubs",clubRouter);
 app.use("/api/events",eventRouter);
 
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(join(__dirname, "../client/dist")));
-app.get("/", (req, res) => {
-  res.sendFile(join(__dirname, "../client/dist", "index.html"));
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
 });
+
 const port = process.env.PORT || 5000;
 
 // Start the server
