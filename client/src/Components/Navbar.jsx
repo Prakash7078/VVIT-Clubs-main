@@ -30,7 +30,7 @@ function Navbar() {
     }
   
   return (
-    <div  className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-4 sm:px-10 w-full bg-white'>
+    <div  className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-4 sm:px-10 w-full bg-[#fff3e0]'>
         <div className='flex gap-3 items-center'>
             <div className='md:hidden position:relative ml-2 '>
                 {!isMenuOpen ? <TiThMenu
