@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../config/url";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 
 export const getEvents=createAsyncThunk("api/getEvents",async()=>{
     try{

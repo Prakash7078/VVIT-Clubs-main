@@ -17,6 +17,7 @@ const getDetails=async(req,res)=>{
     
     res.send({createdUser});
 };
+
 const addEvent=(expressAsyncHandler(async(req,res)=>{
     const events=new Event({
         clubname:req.body.club,
@@ -34,7 +35,7 @@ const addEvent=(expressAsyncHandler(async(req,res)=>{
     const event=await events.save();
     res.status(200).json({message:"add Event succesfully"});
 
-}))
+}));
 
 const deleteEvent=(expressAsyncHandler(async(req,res)=>{
     const event=await Event.findById(req.params.id);
@@ -46,6 +47,15 @@ const deleteEvent=(expressAsyncHandler(async(req,res)=>{
 
 const updateEvent=(expressAsyncHandler(async(req,res)=>{
     const {id}=req.body;
+    const eve=await Event.findById(id);
+    const newReg=await Register.find({event:eve.eventname});
+    console.log("new Reg",newReg);
+    if(newReg.length>0){
+        for(const reg of newReg){
+            const updateReg=await Register.findByIdAndUpdate(reg._id,{club:req.body.club,event:req.body.name});
+            await updateReg.save();
+        }
+    }
     const newOne=await Event.findByIdAndUpdate(id,{clubname:req.body.club,eventname:req.body.name,description:req.body.desc});
     if(req.file){
         await uploadImage("events",req.file);
@@ -53,10 +63,11 @@ const updateEvent=(expressAsyncHandler(async(req,res)=>{
     }else{
         newOne.image=req.body.image;
     }
-    newOne.save();
+    await newOne.save();
     console.log(newOne);
     return res.status(StatusCodes.OK).json({message:"Event updated succesfully"});
 }))
+
 const updateClub=(expressAsyncHandler(async(req,res)=>{
     const {id}=req.body;
     const newOne=await Clubs.findByIdAndUpdate(id,{name:req.body.name,desc:req.body.desc},{new:true});

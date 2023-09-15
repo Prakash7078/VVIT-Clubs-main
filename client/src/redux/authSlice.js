@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { BASE_URL } from "../config/url";
 const token = localStorage.getItem("token");

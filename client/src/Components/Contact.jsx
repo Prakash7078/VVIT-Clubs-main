@@ -3,7 +3,7 @@ import  {useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 import { BASE_URL } from '../config/url';
 import { useSelector } from 'react-redux';
 function Contact() {
@@ -31,7 +31,8 @@ function Contact() {
             rollno,
             text,
         });
-        window.location.reload();
+        // window.location.reload();
+        setText("");
       }catch(err){
           toast.error("check details...");
       }

@@ -1,7 +1,7 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
 import axios from 'axios'
 import { BASE_URL } from "../config/url";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 export const addAdmin=createAsyncThunk(
     "api/addAdmin",
     async(data)=>{

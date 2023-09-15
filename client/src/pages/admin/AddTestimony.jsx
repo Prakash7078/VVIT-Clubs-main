@@ -5,7 +5,7 @@ import { BASE_URL } from "../../config/url";
 import { Button, Card, Input, Textarea, Typography } from '@material-tailwind/react';
 import thumps from '../../Images/thumbs-up.png';
 import upload from '../../Images/upload.png'
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 function AddTestimony(){
     const [profileData,setProfileData]=useState({name:"",position:"",desc:"",image:null});
     const handleFileChange=(e)=>{

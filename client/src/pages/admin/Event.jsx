@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {toast} from 'react-hot-toast';
+import {toast} from 'react-toastify';
 import Sidebar from '../../Components/Sidebar';
 import { Button, Card, Input, Textarea, Typography } from '@material-tailwind/react';
 import thumps from '../../Images/thumbs-up.png';

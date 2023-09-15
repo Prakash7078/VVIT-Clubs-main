@@ -11,7 +11,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { Rings } from "react-loader-spinner";
-import { toast } from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { resetPassword } from '../redux/authSlice';
 function ResetPassword() {
     const params=useParams();

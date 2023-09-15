@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { deleteRegister} from "../../redux/registerSlice";
 import { MdDelete } from "react-icons/md";  
 import { AiOutlineDelete } from "react-icons/ai";  
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import {  BsFillPersonDashFill, BsFillPersonPlusFill } from "react-icons/bs";
 import {  makeCoordinator } from "../../redux/adminSlice";
 import { Link } from "react-router-dom";

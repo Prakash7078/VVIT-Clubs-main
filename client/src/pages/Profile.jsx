@@ -1,7 +1,7 @@
 import {useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import thumps from '../Images/thumbs-up.png';
 import { updateRegister } from "../redux/authSlice";
 

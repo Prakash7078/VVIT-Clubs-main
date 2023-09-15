@@ -6,7 +6,10 @@ import Navbar from './Components/Navbar';
 import ClubScreen from './pages/ClubScreen';
 import Profile from './pages/Profile';
 import UserProfile from './Components/UserProfile';
-import { Toaster } from 'react-hot-toast';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Welcome from './pages/admin/Welcome';
 import AllClubs from './pages/admin/AllClubs';
 import AllEvents from './pages/admin/AllEvents';
@@ -15,9 +18,10 @@ import AddAdmin from './pages/admin/AddAdmin';
 import Club from './pages/admin/Club';
 import Event from './pages/admin/Event';
 import Reviews from './pages/admin/Reviews';
-import AddTestimony from './pages/admin/AddTestimony';
+// import AddTestimony from './pages/admin/AddTestimony';
 import PasswordRequest from './pages/PasswordRequest';
 import ResetPassword from './pages/ResetPassword';
+// import { Dialog } from '@material-tailwind/react';
 
 function App() {
   return (
@@ -50,7 +54,15 @@ function App() {
       </Routes>
       </BrowserRouter>
       <div>
-        <Toaster position="top-right"></Toaster>
+        {/* <Dialog
+            size="xs"
+            open={open}
+            handler={()=>setOpen(!open)}
+            className="bg-white shadow-none"
+          > */}
+              <ToastContainer position="bottom-center"  bodyClassName="font-bold text-blue-900 text-center"/>
+        {/* </Dialog> */}
+        {/* <Toaster position="top-right"></Toaster> */}
       </div>    
     </div>
   );
