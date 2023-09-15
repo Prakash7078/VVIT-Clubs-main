@@ -37,7 +37,7 @@ function App() {
         <Route path="/admin/clubs" element={<AllClubs/>}/>        
         <Route path="/admin/events" element={<AllEvents/>}/>        
         <Route path="/admin/registers" element={<AllRegistrations/>}/>        
-        <Route path="/admin/testimony" element={<AddTestimony/>}/>        
+        {/* <Route path="/admin/testimony" element={<AddTestimony/>}/>         */}
         {/* <Route path="/admin/registers/:rollno/profile" element={<UserProfile/>}/>         */}
         <Route path="/admin/addAdmin" element={<AddAdmin/>}/>        
         <Route path="/admin/addClub" element={<Club/>}/>        

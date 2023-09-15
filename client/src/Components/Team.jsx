@@ -42,8 +42,8 @@ const Team = (props) => {
               >
               {data.filter((item)=>item.category==="Coordinator").map((member, index) => {
                 return (
-                  <SplideSlide key={index} className="mx-auto md:mx-0">
-                    <div className="text-center text-gray-700 w-fit md:mr-5 mx-auto md:mx-0 bg-white shadow-2xl  ">
+                  <SplideSlide key={index} className="mx-auto md:mx-2">
+                    <div className="text-center text-gray-700 w-fit md:mr-5 mx-auto md:mx-0 bg-white ">
                       <img
                         className="h-80 md:h-60 w-96 md:w-80 object-fit mb-4"
                         src={member.userimage}

@@ -263,7 +263,7 @@ function ClubScreen() {
           <ClubRegistration value={handleRegisterOpen} club={name}/>
         </Dialog>
         {events.filter((item)=>item.clubname===name).length>0 && 
-        <Slider {...settings} className='mx-10 mb-10'>
+        <Slider {...settings} className='mx-8 mb-10'>
         {events.filter((item)=>item.clubname===name).map((event,index)=>(
             <div key={index} className=' mt-16 '>
                 <Card
@@ -296,7 +296,7 @@ function ClubScreen() {
                         <Typography variant="h5" className="mb-4 text-white text-sm lg:text-3xl">
                         {event.eventname} Event
                         </Typography>
-                        {(registerInfo && registerInfo.club) ? <button className='bg-red-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 ' onClick={()=>handleDeleteregister(registerInfo.roll)}>UnRegister</button>
+                        {(registerInfo && registerInfo.club && registerInfo.event===event.eventname) ? <button className='bg-red-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 ' onClick={()=>handleDeleteregister(registerInfo.roll)}>UnRegister</button>
                         : <button className='bg-green-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 lg:font-bold 'onClick={()=>handleRegister(event.clubname,event.eventname)}>Register</button>}
                         <Typography
                         variant="h5"
@@ -311,7 +311,8 @@ function ClubScreen() {
         )}
         </Slider>}
        {userInfo &&  (userInfo.isAdmin || userInfo.category==="Coordinator") && <div>
-        <div className='flex flex-col md:flex-row justify-between mt-16 mb-5 items-center gap-2 '>
+       <h1 className='font-bold  text-2xl sm:text-3xl pt-10 text-center'>Event Registrations</h1>
+        <div className='flex flex-col md:flex-row justify-between sm:mt-16 mt-10 mb-5 items-center gap-2 '>
             <div className=" flex items-center gap-3 md:mb-0 flex-wrap lg:mx-10 flex-col sm:flex-row ">
                   <div>
                     <label htmlFor="yearFilter" className="sm:mr-2">

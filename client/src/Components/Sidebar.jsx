@@ -14,10 +14,12 @@ import {
   Drawer,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
 function Sidebar() {   
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+  const clubs=useSelector((state)=>state.clubs.clubregisters);
   return (
       <div className='mt-24 '>
          <div className="hidden lg:block">
@@ -52,9 +54,9 @@ function Sidebar() {
                     <ListItemPrefix>
                         <ImEnter className="h-5 w-5" />
                     </ListItemPrefix>
-                    Registrations
+                    Club Registrations
                     <ListItemSuffix>
-                      <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
+                      <Chip value={clubs.length} size="sm" variant="ghost" color="white" className="rounded-full" />
                     </ListItemSuffix>
                   </ListItem>
                 </Link>
@@ -90,14 +92,7 @@ function Sidebar() {
                     Add Event
                   </ListItem>
                 </Link>
-                <Link to='/admin/testimony'>
-                  <ListItem >
-                    <ListItemPrefix>
-                        <MdEvent className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Add Testimonial
-                  </ListItem>
-                </Link>
+              
                 
               </List>
               </Card>
@@ -141,7 +136,7 @@ function Sidebar() {
                     </ListItemPrefix>
                     Registrations
                     <ListItemSuffix>
-                      <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
+                      <Chip value={clubs.length} size="sm" variant="ghost" color="white" className="rounded-full" />
                     </ListItemSuffix>
                   </ListItem>
                 </Link>
@@ -177,14 +172,7 @@ function Sidebar() {
                     Add Event
                   </ListItem>
                 </Link>
-                <Link to='/admin/testimony'>
-                  <ListItem >
-                    <ListItemPrefix>
-                        <MdEvent className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Add Testimonial
-                  </ListItem>
-                </Link>
+
               </List>
               </Card>
             </Drawer>
