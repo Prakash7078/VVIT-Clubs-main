@@ -1,6 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const ClubRegister = require('../models/clubRegisterModel');
 const Clubs=require('../models/clubsModel');
+const User=require('../models/userModel');
 const express=require('express');
 const clubRouter=express.Router();
 const getClubs=async(req,res)=>{
