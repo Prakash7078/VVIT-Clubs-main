@@ -99,7 +99,7 @@ function Brand() {
           </SpeedDialHandler>
           <SpeedDialContent >
             {userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <SpeedDialAction >
-              <Link to='https://chat-dude.netlify.app/' target='_blank'><BsChatTextFill className="h-5 w-5"  /></Link>
+              <Link to='/chat' ><BsChatTextFill className="h-5 w-5"  /></Link>
             </SpeedDialAction>}
             <SpeedDialAction>
             <AudioComponent isMuted={isMuted} />
