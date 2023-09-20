@@ -7,9 +7,11 @@ import { Card, CardHeader, CardBody } from '@material-tailwind/react';
 import io from 'socket.io-client';
 import { getChats} from '../redux/chatSlice';
 import axios from 'axios';
-import { BASE_URL } from '../config/url';
+import { BASE_URL} from '../config/url';
 
-const socket = io("http://localhost:5001");
+const socket = io("wss://vvitclubsapi.vercel.app", {
+  transport: ["websocket"],
+});
 
 const Chat = () => {
   // const [currentTime, setCurrentTime] = useState(new Date());

@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react'
 import small from '../Images/logo-small.jpg';
 import {TiThMenu} from 'react-icons/ti'
+import {FcAbout,FcHome, FcSearch} from 'react-icons/fc'
+import {BsSearchHeart} from 'react-icons/bs'
 import {Link as Route, useNavigate } from 'react-router-dom';
 import {Link} from 'react-scroll';
 // import { HashLink } from 'react-router-hash-link';
 import {motion} from 'framer-motion';
 import {useDispatch, useSelector } from 'react-redux';
 import {logoutUser} from '../redux/authSlice';
-import { Badge, Avatar, Dialog, Button } from "@material-tailwind/react";
+import { Badge, Avatar, Dialog, Button, IconButton, Input } from "@material-tailwind/react";
 import { FiLogOut } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 // import { BsChatTextFill } from "react-icons/bs";
 import Login from '../pages/Login';
-
+import clu from '../Images/dj.png'
+import tele from '../Images/telephone.png'
+import dash from '../Images/dashboard.png'
 function Navbar() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
+    const[search,setSearch]=useState("");
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate=useNavigate();
     const dispatch=useDispatch();
@@ -28,27 +32,29 @@ function Navbar() {
         await dispatch(logoutUser());
         navigate('/');
     }
-  
+    // bg-[#fff3e0]
+    const handleSearch=()=>{
+      navigate(`/${search}`);
+      setSearch("");
+    }
   return (
-    <div  className='shadow-md z-50 fixed top-0 left-0  grid grid-cols-3 py-4 sm:px-10 w-full bg-[#fff3e0] px-2'>
+      <div className='shadow-md z-50 fixed top-0 left-0 flex justify-between py-2 sm:px-10 w-full px-2 backdrop-blur-md'>
         <div className='flex gap-3 items-center'>
             <div className='md:hidden position:relative ml-2 '>
-                {!isMenuOpen ? <TiThMenu
+                {!isMenuOpen ? <TiThMenu color='brown'
                     className={`group ${isMenuOpen ? 'text-cyan-500' : 'text-gray-500'}`}
                     onClick={toggleMenu}
                 />:<RxCross2 onClick={toggleMenu}/>}
-                
                 <ul
                     className={`${
                     isMenuOpen ? 'visible' : 'hidden'
-                    } md:hidden group-hover:visible absolute left-0 top-16 font-semibold bg-[#fff3e0] w-full px-10 py-5 z-50 h-fit `}
+                    } md:hidden group-hover:visible absolute left-2 top-16 font-semibold z-50 flex flex-col gap-5  `}
                 >
-                    <li className='py-2'>{userInfo && userInfo.isAdmin && <button ><Route to='/dashboard'>DashBoard</Route></button>}</li>
-                    <li className='py-2'><Link smooth={true} duration={1000} to='#home'>Home</Link></li>
-                    <li className='py-2'><Link smooth={true} duration={1000} to='#about'>About</Link></li>
-                    <li className='py-2'><Link smooth={true} duration={1000} to='#category'>Clubs</Link></li>
-                    <li className='py-2'><Link smooth={true} duration={1000} to='#contact'>Contact</Link></li>
-                    
+                    <li className='cursor-pointer'>{userInfo && userInfo.isAdmin && <li><Route to='/dashboard'><IconButton variant="gradient"color='white' className="rounded-full"><img src={dash}/></IconButton></Route></li>}</li>
+                    <li className='cursor-pointer '><Link smooth={true} duration={1000} to='#home'> <IconButton variant="gradient" color='white' className="rounded-full"><FcHome size={25}/></IconButton></Link></li>
+                    <li className='cursor-pointer'><Link smooth={true} duration={1000}  to='#about'><IconButton variant="gradient"color='white' className="rounded-full"><FcAbout size={25}/></IconButton></Link></li>
+                    <li className='cursor-pointer'><Link smooth={true} duration={1000} to='#category'><IconButton variant="gradient"color='white' className="rounded-full"><img src={clu} /></IconButton></Link></li>
+                    <li className='cursor-pointer'><Link smooth={true} duration={1000} to='#contact'><IconButton variant="gradient"color='white' className="rounded-full"><img src={tele}/></IconButton></Link></li>
                 </ul>
                 
             </div>
@@ -60,19 +66,23 @@ function Navbar() {
             </motion.div>
             
         </div>
-        <div className='bg-brown-600 rounded-full w-fit'>
+        <div className='hidden md:flex w-fit gap-24 items-center'>
             <motion.ul
                 initial={{scale:0}}
                 whileInView={{scale:1}}
                 transition={{duration:0.7}}>
-            <ul className='hidden md:flex gap-2  px-5 py-2 rounded-full items-center bg-slate-500 w-fit text-white'>
-                <li className='cursor-pointer hover:font-bold mx-3 '><Link smooth={true} duration={1000} to='#home'>Home</Link></li>
-                <li className='cursor-pointer hover:font-bold mx-3'><Link smooth={true} duration={1000}  to='#about'>About</Link></li>
-                <li className='cursor-pointer hover:font-bold mx-3'><Link smooth={true} duration={1000} to='#category'>Clubs</Link></li>
-                <li className='cursor-pointer hover:font-bold mx-3'><Link smooth={true} duration={1000} to='#contact'>Contact</Link></li>
-                <li className='cursor-pointer hover:font-bold mx-3'>{userInfo && userInfo.isAdmin && <li><Route to='/dashboard'>Dashboard</Route></li>}</li>
+            <ul className='flex gap-5  px-5 py-2 rounded-full items-center bg-slate-500 w-fit text-black'>
+                <li className='cursor-pointer '><Link smooth={true} duration={1000} to='#home'> <IconButton variant="outlined" color='white' className="rounded-full"><FcHome size={25}/></IconButton></Link></li>
+                <li className='cursor-pointer'><Link smooth={true} duration={1000}  to='#about'><IconButton variant="outlined"color='white' className="rounded-full"><FcAbout size={25}/></IconButton></Link></li>
+                <li className='cursor-pointer'><Link smooth={true} duration={1000} to='#category'><IconButton variant="outlined"color='white' className="rounded-full"><img src={clu} /></IconButton></Link></li>
+                <li className='cursor-pointer'><Link smooth={true} duration={1000} to='#contact'><IconButton variant="outlined"color='white' className="rounded-full"><img src={tele}/></IconButton></Link></li>
+                <li className='cursor-pointer'>{userInfo && userInfo.isAdmin && <li><Route to='/dashboard'><IconButton variant="outlined"color='white' className="rounded-full"><img src={dash}/></IconButton></Route></li>}</li>
             </ul>
             </motion.ul>
+            <div className='flex items-center gap-2 border-b-2 border-blue-600'>
+            <input className='bg-transparent outline-none  px-2' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
+            <FcSearch className='cursor-pointer' color='white' size={25} onClick={handleSearch}/>
+            </div>
         </div>
         <div className='flex gap-3 items-center justify-end'>
           {/* <button><BsChatTextFill size={20}/></button> */}

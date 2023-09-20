@@ -3,7 +3,6 @@ import data from '../data';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 function Tutorials({ value }) {
   const settings = {
     dots: true,
@@ -45,7 +44,11 @@ function Tutorials({ value }) {
             <div key={item.id} className=''>
               <div className='flex flex-col items-center gap-10 pb-10'>
                 {/* Set a CSS class on the iframe */}
-                <iframe className="responsive-iframe" src="https://www.youtube.com/embed/dyqvPUxiqqc" allowFullScreen></iframe>
+                {/* <iframe className="responsive-iframe" src={item.url}  allowFullScreen autoPlay={false}></iframe> */}
+                <video width="480" height="270" controls>
+                  <source src={item.url} type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
                 <p className='sm:px-16'>{item.desc}</p>
               </div>
             </div>

@@ -12,12 +12,15 @@ import {
 import { BsChatTextFill } from 'react-icons/bs'
 import { AiOutlinePlus } from 'react-icons/ai';
 import AudioComponent from './AudioComponent';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {motion} from 'framer-motion';
+import { FcSearch } from 'react-icons/fc';
 function Brand() {
     const audio = document.getElementById("audiotag");
     const [isMuted, setIsMuted] = useState(true);
+    const[search,setSearch]=useState("");
+    const navigate=useNavigate();
     const handleButtonClick = () => {
         audio.play();
         setIsMuted(!isMuted);
@@ -32,6 +35,10 @@ function Brand() {
     //     // onabort: () => setOpenPopover(false),
     //     onClick: () => setOpenPopover(true),
     // };
+    const handleSearch=()=>{
+      navigate(`/${search}`);
+      setSearch("");
+    }
   return (
     <div id="#home" className=''>
         <Card
@@ -76,6 +83,10 @@ function Brand() {
                 </div>
                 </motion.div>
             </CardBody>
+            <div className='flex items-center gap-2 relative bottom-20  h-fit  md:hidden  w-fit border-b-2 border-white'>
+              <input className='bg-transparent w-full outline-none text-white  ' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
+              <FcSearch className='cursor-pointer' color='white' size={35} onClick={handleSearch}/>
+            </div>
             <span className='font-bold sm:text-2xl md:text-4xl font-serif text-black relative bottom-44 md:bottom-80 md:left-96 h-fit px-10 bg-white'>
                   {/* Style will be inherited from the parent element */}
                   

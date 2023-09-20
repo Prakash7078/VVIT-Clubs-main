@@ -25,17 +25,17 @@ const data={
     tutorials:[
       {
         id:"home",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"To achieve a zoom-in and zoom-out effect on the background image like a movie shot, you can use CSS animations and keyframes. Here's how you can modify the Brand component to achieve this effect:Here's how you can modify the Brand component to achieve this effect",
       },
       {
         id:"home",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"To achieve a zoom-in and zoom-out effect on the background image like a movie shot, you can use CSS animations and keyframes. Here's how you can modify the Brand component to achieve this effect:Here's how you can modify the Brand component to achieve this effect",
       },
       {
         id:"home",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"Previous dance tutorial",
       },
       {
