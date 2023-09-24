@@ -21,12 +21,11 @@ const getDetails=async(req,res)=>{
 };
 
 const addEvent=(expressAsyncHandler(async(req,res)=>{
-    const correctdate = moment(req.body.eventdate).utc().toDate();
-    console.log("correctdate",correctdate);
+    const formattedDate =req.body.eventdate;
     const events=new Event({
         clubname:req.body.club,
         eventname:req.body.name,
-        eventdate:correctdate,  
+        eventdate:formattedDate,  
         description:req.body.desc,
     });
     if (req.file) {

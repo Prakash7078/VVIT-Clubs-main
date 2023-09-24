@@ -19,6 +19,8 @@ import Footer from '../Components/Footer';
 import Team from '../Components/Team';
 import Tutorials from '../Components/Tutorials';
 import ClubRegistration from '../Components/ClubRegistration';
+import moment from 'moment'
+
 function ClubScreen() {
     const { pathname } = useLocation();
     useEffect(() => {
@@ -304,7 +306,8 @@ function ClubScreen() {
                         className="pt-5 pb-8 leading-[1.5] text-gray-400 text-sm lg:text-xl"
                         >
                         {event.description}<br/>
-                        {event.eventdate}
+                        
+                        {moment(event.eventdate).format("YYYY-MM-DD HH:mm:ss")}
                         </Typography>
                     </CardBody>
                 </Card>
