@@ -7,12 +7,16 @@ import { getEvents } from '../redux/eventSlice';
 import 'moment-timezone'; // Import moment-timezone
 
 function formatEvents(events) {
-    return events.map(event =>({
+    return events.map(event =>{
+      console.log("eventdate",event.eventdate);
+    //   const eventDate = new Date(event.eventdate);
+    // const formattedDate = eventDate.toISOString();
+      return{
       title: event.eventname,          // Event title
       start:moment(event.eventdate).toDate(),  // Event start date (as a Date object)
       end: moment(event.eventdate).toDate(),  // Event end date (as a Date object)
       allDay: false                    // Set to false if the event has a specific time
-    }));
+    }});
   }
 function Calender() {
     const events= useSelector((state) => state.events.events);
