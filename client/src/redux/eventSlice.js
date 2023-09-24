@@ -27,13 +27,14 @@ export const deleteEvent=createAsyncThunk("api/deleteEvent",async(id)=>{
     }
 })
 
-export const updateEvent=createAsyncThunk("api/updateEvent",async({id,club,name,image,desc})=>{
+export const updateEvent=createAsyncThunk("api/updateEvent",async({id,club,name,eventdate,image,desc})=>{
     try{
         console.log(image);
         const res=await axios.patch(`${BASE_URL}/api/admin/updateEvent`,{
             id,
             club,
             name,
+            eventdate,
             image,
             desc,
         },{
@@ -47,11 +48,12 @@ export const updateEvent=createAsyncThunk("api/updateEvent",async({id,club,name,
         console.log(err);
     }
 })
-export const addEvent=createAsyncThunk("api/addEvent",async({club,name,image,desc})=>{
+export const addEvent=createAsyncThunk("api/addEvent",async({club,name,eventdate,image,desc})=>{
     try{
         const result=await axios.post(`${BASE_URL}/api/admin/addEvent`,{
             club,
             name,
+            eventdate,
             image,
             desc,
         },{
@@ -62,7 +64,7 @@ export const addEvent=createAsyncThunk("api/addEvent",async({club,name,image,des
         });
         return result.data;
     }catch(err){
-        toast.error("Description max length 200 characters");
+        toast.error(err.message);
     }
 })
 const eventSlice=createSlice({

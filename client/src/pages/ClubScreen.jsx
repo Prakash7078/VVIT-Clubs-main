@@ -303,7 +303,8 @@ function ClubScreen() {
                         color="white"
                         className="pt-5 pb-8 leading-[1.5] text-gray-400 text-sm lg:text-xl"
                         >
-                        {event.description}
+                        {event.description}<br/>
+                        {event.eventdate}
                         </Typography>
                     </CardBody>
                 </Card>

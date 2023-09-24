@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 function Event() {
     const params=useParams();
     const {eventname}=params;
-    const[eventdata,setEventdata]=useState({id:"",club:"",image:null,name:"",desc:""});
+    const[eventdata,setEventdata]=useState({id:"",club:"",image:null,name:"",eventdate:"",desc:""});
     const events=useSelector((state)=>state.events.events);
     const dispatch=useDispatch();
     useEffect(()=>{
@@ -23,7 +23,7 @@ function Event() {
     useEffect(()=>{
         const updateEvent=events.filter((item)=>item.eventname===eventname)[0];
         if(updateEvent){
-            setEventdata({"id":updateEvent._id,"club":updateEvent.clubname,"image":updateEvent.eventimage,"name":updateEvent.eventname,"desc":updateEvent.description});
+            setEventdata({"id":updateEvent._id,"club":updateEvent.clubname,"image":updateEvent.eventimage,"date":updateEvent.eventdate,"name":updateEvent.eventname,"desc":updateEvent.description});
         }
     },[events])
     const handleFileChange=(e)=>{
@@ -31,6 +31,7 @@ function Event() {
         toast.success("Image uploaded successfully");
     }
     const handleEventSubmit=async(e)=>{
+        console.log("eventdata",eventdata);
         e.preventDefault();
         if(eventname){
             await dispatch(updateEvent(eventdata));
@@ -41,7 +42,7 @@ function Event() {
   return (
     <div >
         <Sidebar/>
-        <div className='pt-6 lg:pl-96 lg:flex items-center '>
+        <div className=' lg:pl-96 lg:flex items-center '>
             <Card shadow={true} className='lg:ml-10 lg:px-16 pb-10'>
                 <form className='text-center md:mt-10  flex sm:flex-row flex-col items-center gap-10 px-10 mx-auto' onSubmit={handleEventSubmit}>
                     <div>
@@ -72,8 +73,8 @@ function Event() {
                                 <option value="CULINARY">Culinary</option>
                             </select>
                         <Input label='Event Name' color='brown' type='text' value={eventdata?.name} onChange={(e)=>setEventdata({...eventdata,"name":e.target.value})}/>
-                        
-                        <Textarea label="Club Description" color='brown' type='text' maxLength={200} value={eventdata?.desc} onChange={(e)=>setEventdata({...eventdata,"desc":e.target.value})} />
+                        <Input type="datetime-local" label='Date' color='brown' value={eventdata?.eventdate} onChange={(e)=>setEventdata({...eventdata,"eventdate":e.target.value})} />
+                        <Textarea label="Event Description" color='brown' type='text' maxLength={200} value={eventdata?.desc} onChange={(e)=>setEventdata({...eventdata,"desc":e.target.value})} />
                         <Button  type='submit' color='brown'>Submit</Button>
                     </div>
                 </form>

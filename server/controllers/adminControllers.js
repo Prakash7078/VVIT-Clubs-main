@@ -19,9 +19,12 @@ const getDetails=async(req,res)=>{
 };
 
 const addEvent=(expressAsyncHandler(async(req,res)=>{
+    const correctdate=new Date(req.body.eventdate);
+    console.log("correctdate",correctdate);
     const events=new Event({
         clubname:req.body.club,
         eventname:req.body.name,
+        eventdate:correctdate,  
         description:req.body.desc,
     });
     if (req.file) {
@@ -33,13 +36,13 @@ const addEvent=(expressAsyncHandler(async(req,res)=>{
       }
     
     const event=await events.save();
+    console.log(event);
     res.status(200).json({message:"add Event succesfully"});
 
 }));
 
 const deleteEvent=(expressAsyncHandler(async(req,res)=>{
     const event=await Event.findById(req.params.id);
-    console.log("event",event);
     await Register.deleteMany({event:event.eventname});
     await Event.findByIdAndDelete(req.params.id);
     res.status(StatusCodes.OK).json({message:"event delete succesfully"});
@@ -56,7 +59,7 @@ const updateEvent=(expressAsyncHandler(async(req,res)=>{
             await updateReg.save();
         }
     }
-    const newOne=await Event.findByIdAndUpdate(id,{clubname:req.body.club,eventname:req.body.name,description:req.body.desc});
+    const newOne=await Event.findByIdAndUpdate(id,{clubname:req.body.club,eventname:req.body.name,eventdate:req.body.eventdate,description:req.body.desc});
     if(req.file){
         await uploadImage("events",req.file);
         newOne.eventimage= `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/events/${req.file.originalname}`;
