@@ -4,11 +4,13 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'
 import { getEvents } from '../redux/eventSlice';
+import 'moment-timezone'; // Import moment-timezone
+
 function formatEvents(events) {
     return events.map(event => ({
       title: event.eventname,          // Event title
-      start: new Date(event.eventdate),  // Event start date (as a Date object)
-      end: new Date(event.eventdate),    // Event end date (as a Date object)
+      start:moment(event.eventdate).tz("IST").toDate(),  // Event start date (as a Date object)
+      end: moment(event.eventdate).tz("IST").toDate(),  // Event end date (as a Date object)
       allDay: false                    // Set to false if the event has a specific time
     }));
   }
@@ -31,4 +33,4 @@ function Calender() {
   )
 }
 
-export default Calender
+export default Calender 

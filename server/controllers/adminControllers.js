@@ -10,6 +10,8 @@ const uploadImage = require('../middleware/uploadMiddleware');
 const StatusCodes=require('http-status-codes');
 const Register = require('../models/registerModel');
 const Testimony=require("../models/testimonialModel");
+const moment = require('moment-timezone'); // Import moment-timezone
+
 dotenv.config();
 const getDetails=async(req,res)=>{
     await User.deleteMany({});
@@ -19,7 +21,7 @@ const getDetails=async(req,res)=>{
 };
 
 const addEvent=(expressAsyncHandler(async(req,res)=>{
-    const correctdate=new Date(req.body.eventdate);
+    const correctdate = moment(req.body.eventdate).utc().toDate();
     console.log("correctdate",correctdate);
     const events=new Event({
         clubname:req.body.club,
