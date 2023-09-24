@@ -68,9 +68,9 @@ function Brand() {
                         <Typography variant="small" color="gray" className="font-normal mb-4">
                             Material Tailwind is an easy to use components library for Tailwind CSS and Material Design. 
                         </Typography>
-                        <a href="#" className="inline-block">
+                        <a href="/calender" className="inline-block">
                             <Button size="sm" variant="text" className="flex items-center gap-1 capitalize">
-                            Read More 
+                            View Calender
                             </Button>
                         </a>
                         </div>

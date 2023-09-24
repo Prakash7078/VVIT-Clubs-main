@@ -22,6 +22,7 @@ import Reviews from './pages/admin/Reviews';
 import PasswordRequest from './pages/PasswordRequest';
 import ResetPassword from './pages/ResetPassword';
 import Chat from './Components/Chat';
+import Calender from './Components/Calender';
 // import { Dialog } from '@material-tailwind/react';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/calender" element={<Calender/>}/>
         <Route path="/admin?/clubs?/events?/:name" element={<ClubScreen/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>
