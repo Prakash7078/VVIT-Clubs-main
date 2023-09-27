@@ -7,9 +7,9 @@ import { Card, CardHeader, CardBody } from '@material-tailwind/react';
 import io from 'socket.io-client';
 import { getChats} from '../redux/chatSlice';
 import axios from 'axios';
-import { BASE_URL} from '../config/url';
+import { SOCKET_URL} from '../config/url';
 
-const socket = io(`${BASE_URL}`, {
+const socket = io(`${SOCKET_URL}`, {
   transport: ["websocket"],
 });
 
