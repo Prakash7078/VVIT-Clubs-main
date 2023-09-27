@@ -9,7 +9,7 @@ import { getChats} from '../redux/chatSlice';
 import axios from 'axios';
 import { BASE_URL} from '../config/url';
 
-const socket = io("wss://vvitclubsapi.vercel.app", {
+const socket = io(`${BASE_URL}`, {
   transport: ["websocket"],
 });
 

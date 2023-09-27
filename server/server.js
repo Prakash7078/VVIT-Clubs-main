@@ -58,9 +58,7 @@ io.on("connection", (socket) => {
     console.log(socket.id, " disconnected");
   });
 });
-server.listen(5001, () => {
-  console.log("Server is running on port 5001");
-});
+
 
 
 
@@ -79,8 +77,8 @@ const port = process.env.PORT || 5000;
 // Start the server
 const start = async () => {
   try {
-    await connectDB(process.env.MONGODB_URL);
-    app.listen(port, () => {
+    await connectDB();
+    server.listen(port, () => {
       console.log(`Server listening on port ${port}`);
     });
   } catch (error) {
