@@ -25,14 +25,14 @@ const Team = (props) => {
                   rewind: true,
                   perPage:3,
                   breakpoints: {
-                    769: {
-                      perPage: 1,
+                    780: {
+                      perPage:1,
                     },
                     1000:{
                       perPage:2,
                     },
                     1024:{
-                      perPage:3,
+                      perPage:2,
                     }
                   },
                   arrows: true,
@@ -43,9 +43,9 @@ const Team = (props) => {
               {data.filter((item)=>item.category==="Coordinator").map((member, index) => {
                 return (
                   <SplideSlide key={index} className="mx-auto md:mx-2">
-                    <div className="text-center text-gray-700 w-fit md:mr-5 mx-auto md:mx-0 bg-white ">
+                    <div className="text-center text-gray-700 w-fit md:mr-5 mx-auto lg:mx-10 ">
                       <img
-                        className="h-80 md:h-60 w-96 md:w-80 object-fit mb-4"
+                        className="h-72 md:h-56 w-72 md:w-60 object-fit mb-4 rounded-full"
                         src={member.userimage}
                         alt="Bonnie Avatar"
                       />

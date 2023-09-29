@@ -43,7 +43,7 @@ function Brand() {
     <div id="#home" className=''>
         <Card
             shadow={false}
-            className="relative grid h-[25rem] md:h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center mt-5 md:mt-0"
+            className="relative rounded-none grid h-[25rem] lg:h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center mt-5 md:mt-0"
             >
             <CardHeader
                 floated={false}
@@ -62,7 +62,7 @@ function Brand() {
                     {/* <PopoverHandler >
                         <Button className=''color='white'>Basic Info</Button>
                     </PopoverHandler> */}
-                    <div className="w-[24rem] p-0 overflow-y-auto md:flex z-10 hidden">
+                    <div className="w-[24rem] p-0 overflow-y-auto lg:flex z-10 hidden">
                         <div className="p-4">
                         <Typography color="blue-gray" className="font-medium mb-2">VVIT Clubs</Typography>
                         <Typography variant="small" color="gray" className="font-normal mb-4">
@@ -83,11 +83,11 @@ function Brand() {
                 </div>
                 </motion.div>
             </CardBody>
-            <div className='flex items-center gap-2 relative bottom-20  h-fit  md:hidden  w-fit border-b-2 border-white'>
+            <div className='flex items-center gap-2 relative bottom-20  h-fit  lg:hidden  w-fit border-b-2 border-white'>
               <input className='bg-transparent w-full outline-none text-white  ' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
               <FcSearch className='cursor-pointer' color='white' size={35} onClick={handleSearch}/>
             </div>
-            <span className='font-bold sm:text-2xl md:text-4xl font-serif text-black relative bottom-44 md:bottom-80 md:left-96 h-fit px-10 bg-white'>
+            <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-black relative bottom-44 lg:bottom-80 lg:left-96 h-fit px-10 bg-white'>
                   {/* Style will be inherited from the parent element */}
                   
                   <Typewriter

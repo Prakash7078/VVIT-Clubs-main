@@ -84,7 +84,7 @@ function Categories() {
               {clubs.map((product, index) => {
                 return (
                   <div key={index} >
-                          <div key={index} onClick={()=>checkLogin(product.name)} className='m-0 sm:m-5 shadow-xl pb-4 bg-white hover:scale-105 transition-all duration-500'>
+                          <div key={index} onClick={()=>checkLogin(product.name)} className='m-0 sm:m-5 shadow-xl pb-4  bg-white hover:scale-105 transition-all duration-500'>
                             <img src={product.image} className=' cursor-pointer w-full h-60 object-cover  rounded-t-lg mb-10' alt='event'/>
                               <div className='flex justify-between items-center'>
                                 <h1 className='font-bold ml-4'>{product.name}</h1>

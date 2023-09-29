@@ -20,8 +20,8 @@ function Spliders() {
               initial={{y:100}}
               whileInView={{y:0}}
               transition={{duration:0.7}}>
-      <div className='flex flex-col items-center justify-center w-full sm:my-16'>
-        <h1 className='font-bold text-4xl pb-10'>Welcome</h1>
+      <div className='flex flex-col items-center  w-full lg:my-16'>
+        <h1 className='font-bold text-4xl '>Welcome</h1>
         <div className='flex flex-col'>
           <p className="w-full px-11">
             To achieve a zoom-in and zoom-out effect on the background image like a movie shot, you can use CSS animations and keyframes. Here's how you can modify the Brand component to achieve this effect:Here's how you can modify the Brand component to achieve this effect:<p className={`${showMore ? 'block' : 'hidden'}`}>Here's how you can modify the Brand component to achieve this effect:Here's how you can modify the Brand component to achieve this effect:Here's how you can modify the Brand component to achieve this effect:</p>
@@ -33,7 +33,7 @@ function Spliders() {
       </div>
       </motion.div>
 
-      <div className="md:block cursor-pointer sm:mx-28 pt-10">
+      <div className="md:block cursor-pointer mx-10 flex items-center justify-center">
         <Splide
           options={{
             rewind: true,

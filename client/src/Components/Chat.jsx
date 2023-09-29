@@ -80,7 +80,7 @@ const Chat = () => {
     }
   };
   const handleLike=async(id)=>{
-    await axios.patch(`${BASE_URL}/api/chat/${id}`);
+    await axios.patch(`${SOCKET_URL}/api/chat/${id}`);
     await dispatch(getChats());
   }
   const handleSelectEmoji = (emoji) => {

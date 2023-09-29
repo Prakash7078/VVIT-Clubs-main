@@ -43,8 +43,8 @@ function Contact() {
   }     
 
   return (
-    <div id="#contact" className="text-gray-600 body-font relative bg-[#fcf0cd]">
-         <div className="container px-5 py-24 mx-auto">
+    <div id="#contact" className="text-gray-600 body-font relative bg-[#fcf0cd] grid lg:grid-cols-2 grid-cols-1">
+         <div className="container px-5 py-5 mx-auto">
             <div className="flex flex-col text-center mb-12">
               <h1 className="sm:text-3xl text-2xl font-bold title-font mb-4 text-black">
                 Contact Us
@@ -132,6 +132,17 @@ function Contact() {
             </form>
             </div>
           </div>
+          <div className='hidden lg:flex justify-center items-center'>
+
+            <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3828.520042451368!2d80.52633517489959!3d16.34745013193009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a35f5c3ed3eb309%3A0x683acf350cc3161f!2sVVIT%20College%20Rd%2C%20Namburu%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1692440514886!5m2!1sen!2sin"
+            width="500"
+            height="550"
+            allowfullscreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>        
+        </div>
     </div>
   )
 }

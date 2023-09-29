@@ -40,7 +40,7 @@ function Navbar() {
   return (
       <div className='shadow-md z-50 fixed top-0 left-0 flex justify-between py-2 sm:px-10 w-full px-2 backdrop-blur-md'>
         <div className='flex gap-3 items-center'>
-            <div className='md:hidden position:relative ml-2 '>
+            <div className='lg:hidden position:relative ml-2 md:ml-0'>
                 {!isMenuOpen ? <TiThMenu color='brown'
                     className={`group ${isMenuOpen ? 'text-cyan-500' : 'text-gray-500'}`}
                     onClick={toggleMenu}
@@ -48,7 +48,7 @@ function Navbar() {
                 <ul
                     className={`${
                     isMenuOpen ? 'visible' : 'hidden'
-                    } md:hidden group-hover:visible absolute left-2 top-16 font-semibold z-50 flex flex-col gap-5  `}
+                    } lg:hidden group-hover:visible absolute left-2 top-16 font-semibold z-50 flex flex-col gap-5  `}
                 >
                     <li className='cursor-pointer'>{userInfo && userInfo.isAdmin && <li><Route to='/dashboard'><IconButton variant="gradient"color='white' className="rounded-full"><img src={dash}/></IconButton></Route></li>}</li>
                     <li className='cursor-pointer '><Link smooth={true} duration={1000} to='#home'> <IconButton variant="gradient" color='white' className="rounded-full"><FcHome size={25}/></IconButton></Link></li>
@@ -66,7 +66,7 @@ function Navbar() {
             </motion.div>
             
         </div>
-        <div className='hidden md:flex w-fit gap-24 items-center'>
+        <div className='hidden lg:flex w-fit gap-24 items-center'>
             <motion.ul
                 initial={{scale:0}}
                 whileInView={{scale:1}}
@@ -80,7 +80,7 @@ function Navbar() {
             </ul>
             </motion.ul>
             <div className='flex items-center gap-2 border-b-2 border-blue-600'>
-            <input className='bg-transparent outline-none  px-2' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
+            <input className='bg-transparent font-bold outline-none  px-2' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
             <FcSearch className='cursor-pointer' color='white' size={25} onClick={handleSearch}/>
             </div>
         </div>
@@ -110,3 +110,4 @@ function Navbar() {
 }
 
 export default Navbar
+
