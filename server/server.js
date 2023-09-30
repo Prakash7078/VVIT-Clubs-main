@@ -45,9 +45,10 @@ io.on("connection", (socket) => {
     }
     const result=new Chat({
       user:newMessage.user,
-      text:newMessage.message,
+      text:newMessage.text,
       likes:newMessage.likes,
-      image:newMessage.img,
+      image:newMessage.image,
+      date:newMessage.date,
     });
     await result.save();
     io.emit("message", newMessage);

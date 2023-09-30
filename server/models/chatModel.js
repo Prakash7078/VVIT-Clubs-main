@@ -4,6 +4,7 @@ const chatSchema=new mongoose.Schema({
     text:String,
     likes:Number,
     image:String,
+    date:Date,
 },{
     timestamps:true,
 });

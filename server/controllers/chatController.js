@@ -11,8 +11,10 @@ const updateChats=async(req,res)=>{
     const id=req.params.id;
     console.log("id",id);
     const chat=await Chat.findById(id);
-    const newchat=await Chat.findByIdAndUpdate(id,{likes:chat.likes+1});
-    console.log(newchat);
+    if(chat){
+        const newchat=await Chat.findByIdAndUpdate(id,{likes:chat.likes+1});
+        console.log(newchat);
+    }
 }
 // const sendChats=expressAsyncHandler(async(req,res)=>{
 //     const{user,message,likes}=req.body;

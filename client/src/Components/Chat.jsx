@@ -3,11 +3,12 @@ import { AiFillLike } from 'react-icons/ai';
 import { FaPaperPlane } from 'react-icons/fa';
 import {useDispatch, useSelector} from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
-import { Card, CardHeader, CardBody } from '@material-tailwind/react';
+import { Card, CardHeader, CardBody, Badge } from '@material-tailwind/react';
 import io from 'socket.io-client';
 import { getChats} from '../redux/chatSlice';
 import axios from 'axios';
-import { SOCKET_URL} from '../config/url';
+import { BASE_URL, SOCKET_URL} from '../config/url';
+import { Link, useNavigate } from 'react-router-dom';
 
 const socket = io(`${SOCKET_URL}`, {
   transport: ["websocket"],
@@ -15,58 +16,55 @@ const socket = io(`${SOCKET_URL}`, {
 
 const Chat = () => {
   // const [currentTime, setCurrentTime] = useState(new Date());
-  const dispatch=useDispatch();
   const [message, setMessage] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const msgs=useSelector((state)=>state.chats.chatsdata);
   const userInfo=useSelector((state)=>state.auth.userInfo);
   const[messages,setMessages]=useState([]);
   const chatContainerRef = useRef(null);
+  const navigate=useNavigate();
   // const emojiPickerRef = useRef(null);
+  const dispatch=useDispatch();
   useEffect(() => {
     const fetchChats = async () => {
-      try {
-        await dispatch(getChats());
-        console.log("setMessages",messages);
-      } catch (error) {
-        console.error(error);
-      }
+      await dispatch(getChats());
+      setMessages(msgs);
     };
     fetchChats();
-    setMessages(msgs);
   },[dispatch,msgs]);
   useEffect(() => {
     // Socket.IO event listeners
-    
+    if(!userInfo){
+      navigate("/login");
+    }
     // Listen for incoming messages
     socket.on("message", (message) => {
       setMessages([...messages, message]);
     });
-
     return () => {
       // Cleanup on component unmount
       socket.off("message");
     };
-  }, [messages]);
-  
-  
-
+  }, [messages,navigate,userInfo]);
+  // useEffect(()=>{
+  //   setMessages(msgs);
+  // },[msgs])
 
   const handleInputChange = (event) => {
     setMessage(event.target.value);
-    console.log("message",message);
   };
   const handleSendMessage =async () => {
     if (message.trim() !== '') {
       const newMessage = {
         user: userInfo.username,
-        message: message,
+        text: message,
         likes: 0,
-        img:userInfo.image,
+        image:userInfo.image,
+        date:new Date(),
       };
-      setMessages([...messages, newMessage]);
       // Add the new message to the chatMessages array
       socket.emit("message", newMessage);
+  
       setMessage('');
     }
   };
@@ -80,7 +78,7 @@ const Chat = () => {
     }
   };
   const handleLike=async(id)=>{
-    await axios.patch(`${SOCKET_URL}/api/chat/${id}`);
+    await axios.patch(`${BASE_URL}/api/chat/${id}`);
     await dispatch(getChats());
   }
   const handleSelectEmoji = (emoji) => {
@@ -96,7 +94,7 @@ const Chat = () => {
 
   return (
     <div className="bg-white sm:mt-40 mt-32  ">
-         <Card className='w-fit mx-auto bg-pink-700 text-white '>
+         <Card className='w-fit mx-auto shadow-2xl shadow-blue-gray-700 flex items-center flex-shrink'>
             <CardHeader
             variant='gradient'
             color='green'
@@ -105,33 +103,33 @@ const Chat = () => {
             </CardHeader>
             <CardBody className='md:w-[40rem]  flex flex-col justify-between'>
                 <div className="mb-10" ref={chatContainerRef}>
-                    {messages.length>0 && messages.map((chat, index) => (
-                    <div className="flex  justify-between gap-5 my-5" key={index}>
+                    {messages.length>0 && messages.map((chat) => (
+                    <div className="flex  justify-between gap-5 my-5" key={chat._id}>
                         <div className='flex flex-wrap gap-4'>
-                            <img className='w-6 h-6 rounded-full' src={chat.image} alt='userimage'/>
-                            <span className="font-bold ">{chat.user}:</span>
-                            <span className="" dangerouslySetInnerHTML={{ __html: chat.text }}></span>
-                                <button className="" >
-                                <AiFillLike color='gold' onClick={()=>handleLike(chat._id)} />
+                            <Link to={`${userInfo.rollno}/profile`}><img className='w-7 h-7 rounded-full' src={chat.image} alt='userimage'/></Link>
+                            <span className="font-bold hidden sm:block ">{chat.user}:</span>
+                            <span className="flex flex-shrink" dangerouslySetInnerHTML={{ __html: chat.text}}></span>
+                                <button className="hidden sm:block"onClick={()=>handleLike(chat._id)} >
+                                <Badge content={chat.likes} color='white' className='font-bold'>
+                                    <AiFillLike color='gold' size={25} className='border-none'  />
+                                </Badge>
                                 </button>
-                            <span className="">{chat.likes}</span>
                         </div>
-                        <br />
-                        <span className="">{new Date(chat.createdAt).toLocaleTimeString()}</span>
+                        <span className="text-xs sm:text-sm">{new Date(chat.date).toLocaleTimeString()}</span>
                     </div>
                     ))}
                 </div>
                 <div className="flex justify-between gap-5">
                     <input
-                    className="w-full text-black"
+                    className="w-full text-black p-2 border-2"
                     type="text"
                     placeholder="Type your message..."
                     value={message}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     />
-                    <div className='flex gap-2'>
-                      <button onClick={handleToggleEmojiPicker} className="">
+                    <div className='flex  gap-2'>
+                      <button onClick={handleToggleEmojiPicker} className="hidden sm:block">
                       😀
                       </button>
                       <button onClick={handleSendMessage}>
