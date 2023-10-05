@@ -53,7 +53,7 @@ function Brand() {
                 style={{ backgroundImage:`url(${vvit})`}}                    >
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/40 " />
             </CardHeader>
-            <CardBody className="relative px-6 md:px-12 top-24 md:right-96 hidden lg:block">
+            <CardBody className="relative px-6 md:px-12 top-24 md:right-96 xl:mr-24 hidden lg:block">
                 <motion.div
                 initial={{scale:0}}
                 whileInView={{scale:1}}
@@ -87,7 +87,7 @@ function Brand() {
               <input className='bg-transparent w-full outline-none text-white  ' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
               <FcSearch className='cursor-pointer' color='white' size={35} onClick={handleSearch}/>
             </div>
-            <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-black relative bottom-44 lg:bottom-80 lg:left-96 h-fit px-10 bg-white'>
+            <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-black relative bottom-44 lg:bottom-80 lg:left-96 xl:ml-24 h-fit px-10 bg-white'>
                   {/* Style will be inherited from the parent element */}
                   
                   <Typewriter

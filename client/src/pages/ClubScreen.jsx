@@ -226,7 +226,7 @@ function ClubScreen() {
         // ],
       };
   return (
-    <div className='lg:pt-24 pt-8 bg-[#fbe9e7]'>
+    <div className='lg:pt-24 pt-8 bg-[#fff3e0]'>
         {clubs && clubs.filter((item)=>item.name===name).map((item,index)=>(
             <div key={index} className='mb-3'>
                 <Card className="flex sm:flex-row w-full mt-12  " >
@@ -315,7 +315,7 @@ function ClubScreen() {
         )}
         </Slider>}
        {userInfo &&  (userInfo.isAdmin || userInfo.category==="Coordinator") && <div>
-       <h1 className='font-bold  text-2xl sm:text-3xl pt-10 text-center'>Event Registrations</h1>
+       <h1 className='font-bold  text-2xl sm:text-3xl pt-10 text-center text-brown-700'>Event Registrations</h1>
         <div className='flex flex-col md:flex-row justify-between sm:mt-16 mt-10 mb-5 items-center gap-2 '>
             <div className=" flex items-center gap-3 md:mb-0 flex-wrap lg:mx-10 flex-col sm:flex-row ">
                   <div>
@@ -473,7 +473,7 @@ function ClubScreen() {
          </div>}
          {currentProducts.filter((item) => item.isWinner || item.isRunner).length > 0 && (
             <div className='my-16 mx-10 relative '>
-                <h1 className='text-center text-3xl font-bold mb-16'>Winners and Runners</h1>
+                <h1 className='text-center text-3xl font-bold mb-16 text-brown-700'>Winners and Runners</h1>
                 <Slider {...settings}>
                 {currentProducts.filter((item) => item.isWinner || item.isRunner).map((item) => (
                   <div key={item.id} className='relative bg-white '>

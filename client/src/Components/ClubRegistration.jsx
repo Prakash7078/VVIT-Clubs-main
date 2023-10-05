@@ -21,7 +21,7 @@ function ClubRegistration({value,club}) {
           Club Registration
         </CardHeader>
         <CardBody>
-          <div className='grid sm:grid-cols-2 sm:pt-10 pt-3 sm:gap-5 gap-3 grid-cols-1'>
+          <div className='grid sm:grid-cols-2 xl:grid-cols-1 sm:pt-10 pt-3 sm:gap-5 gap-3 grid-cols-1'>
             <Input label='club' size='md' value={club} readOnly/>
             <Input label='name' size='md' value={userInfo.username} readOnly/>
             <Input label='year' size='md' value={userInfo.year} readOnly/>
