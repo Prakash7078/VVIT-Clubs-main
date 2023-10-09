@@ -43,7 +43,7 @@ function Brand() {
     <div id="#home" className=''>
         <Card
             shadow={false}
-            className="relative rounded-none grid h-[25rem] lg:h-[40rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center mt-5 md:mt-0"
+            className="relative rounded-none grid h-[25rem] lg:h-[40rem] xl:h-[60rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center mt-5 md:mt-0"
             >
             <CardHeader
                 floated={false}
@@ -51,25 +51,25 @@ function Brand() {
                 color="transparent"
                 className={`absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center zoom-in-out`}
                 style={{ backgroundImage:`url(${vvit})`}}                    >
-                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/40 " />
+                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/40 via-black/20 " />
             </CardHeader>
-            <CardBody className="relative px-6 md:px-12 top-24 md:right-96 xl:mr-24 hidden lg:block">
+            <CardBody className="relative px-6 md:px-12 top-24 md:right-96 xl:mr-60 xl:top-5 hidden lg:block ">
                 <motion.div
                 initial={{scale:0}}
                 whileInView={{scale:1}}
                 transition={{duration:0.7}}>
-                <div className='bg-white'>
+                <div className='backdrop-blur-md '>
                     {/* <PopoverHandler >
                         <Button className=''color='white'>Basic Info</Button>
                     </PopoverHandler> */}
                     <div className="w-[24rem] p-0 overflow-y-auto lg:flex z-10 hidden">
                         <div className="p-4">
-                        <Typography color="blue-gray" className="font-medium mb-2">VVIT Clubs</Typography>
-                        <Typography variant="small" color="gray" className="font-normal mb-4">
+                        <Typography color="white" className="font-medium mb-8">VVIT Clubs</Typography>
+                        <Typography variant="small" color="white" className="font-normal mb-12">
                             Material Tailwind is an easy to use components library for Tailwind CSS and Material Design. 
                         </Typography>
                         <Link to="/calender" className="inline-block">
-                            <Button size="sm" variant="text" className="flex items-center gap-1 capitalize">
+                            <Button size="sm" gradient="text"  className="flex items-center gap-1 capitalize">
                             View Calender
                             </Button>
                         </Link>
@@ -83,11 +83,11 @@ function Brand() {
                 </div>
                 </motion.div>
             </CardBody>
-            <div className='flex items-center gap-2 relative bottom-20  h-fit  lg:hidden  w-fit border-b-2 border-white'>
+            <div className='flex items-center gap-2 relative bottom-20   h-fit  lg:hidden  w-fit border-b-2 border-white'>
               <input className='bg-transparent w-full outline-none text-white  ' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
               <FcSearch className='cursor-pointer' color='white' size={35} onClick={handleSearch}/>
             </div>
-            <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-black relative bottom-44 lg:bottom-80 lg:left-96 xl:ml-24 h-fit px-10 bg-white'>
+            <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-white py-2 relative bottom-44 lg:bottom-80 xl:bottom-96  lg:left-96 xl:ml-48 h-fit px-10 backdrop-blur-md'>
                   {/* Style will be inherited from the parent element */}
                   
                   <Typewriter

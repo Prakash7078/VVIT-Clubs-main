@@ -43,8 +43,8 @@ function Club() {
   return (
     <div >
         <Sidebar/>
-        <div className='pt-10 lg:pl-96 lg:flex items-center '>
-            <Card shadow={true} className='lg:ml-20 lg:px-10 pb-10'>
+        <div className='pt-10 lg:pl-72 xl lg:flex items-center '>
+            <Card shadow={true} className='mx-auto lg:px-10 pb-10'>
                 <form className='text-center md:mt-10 flex sm:flex-row flex-col items-center gap-10 px-10 mx-auto' onSubmit={handleClubSubmit}>
                     <div>
                         <label htmlFor="fileInput"  className="p-2  rounded-md cursor-pointer">

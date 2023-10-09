@@ -20,7 +20,7 @@ function Spliders() {
               initial={{y:100}}
               whileInView={{y:0}}
               transition={{duration:0.7}}>
-      <div className='flex flex-col items-center gap-5 lg:px-5  w-full lg:my-10 xl:my-10'>
+      <div className='flex flex-col items-center gap-5 lg:px-5 xl:px-20 w-full lg:my-10 xl:my-10'>
         <h1 className='font-bold text-4xl  '>Welcome</h1>
         <div className='flex flex-col'>
           <p className="w-full px-11 lg:leading-loose">
@@ -33,7 +33,7 @@ function Spliders() {
       </div>
       </motion.div>
 
-      <div className="md:block cursor-pointer lg:mx-24 mx-12  flex items-center justify-center ">
+      <div className="md:block cursor-pointer lg:mx-24 mx-12 xl:mx-56 flex items-center justify-center ">
         <Splide
           options={{
             rewind: true,
@@ -49,7 +49,7 @@ function Spliders() {
           {images.map((image, index) => {
             return (
               <SplideSlide key={index} className=''>
-                <img className='object-cover rounded ' src={image} alt="Banner" />
+                <img className='object-cover rounded '  src={image} alt="Banner" />
               </SplideSlide>
             );
           })}

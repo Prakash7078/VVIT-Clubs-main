@@ -42,8 +42,8 @@ function Event() {
   return (
     <div >
         <Sidebar/>
-        <div className=' lg:pl-96 lg:flex items-center '>
-            <Card shadow={true} className='lg:ml-10 lg:px-16 pb-10'>
+        <div className=' lg:pl-72 lg:flex items-center '>
+            <Card shadow={true} className='mx-auto lg:px-16 pb-10'>
                 <form className='text-center md:mt-10  flex sm:flex-row flex-col items-center gap-10 px-10 mx-auto' onSubmit={handleEventSubmit}>
                     <div>
                         <label htmlFor="fileInput"  className="p-2  rounded-md cursor-pointer">

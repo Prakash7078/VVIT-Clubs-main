@@ -66,7 +66,7 @@ function Navbar() {
             </motion.div>
             
         </div>
-        <div className='hidden lg:flex w-fit gap-24 items-center'>
+        <div className='hidden lg:flex  justify-between w-3/4 items-center'>
             <motion.ul
                 initial={{scale:0}}
                 whileInView={{scale:1}}

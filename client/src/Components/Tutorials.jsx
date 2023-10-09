@@ -9,11 +9,11 @@ function Tutorials({ value }) {
     infinite: true,
     autoplay: true,
     autoplaySpeed: 1000,
-    slidesToShow: 2,
+    slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
       {
-        breakpoint: 1200,
+        breakpoint: 1240,
         settings: {
           slidesToShow: 1,
         },
@@ -32,6 +32,14 @@ function Tutorials({ value }) {
           slidesToScroll: 1,
         },
       },
+      {
+        breakpoint: 1440,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    
     ],
   };
 
