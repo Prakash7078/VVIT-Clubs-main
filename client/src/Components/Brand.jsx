@@ -50,7 +50,7 @@ function Brand() {
                 shadow={true}
                 color="transparent"
                 className={`absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center zoom-in-out`}
-                style={{ backgroundImage:`url(${vvit})`}}                    >
+                style={{ backgroundImage:`url(${vvit})`}}>
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/40 via-black/20 " />
             </CardHeader>
             <CardBody className="relative px-6 md:px-12 top-24 md:right-96 xl:mr-60 xl:top-5 hidden lg:block ">

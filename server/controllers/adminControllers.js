@@ -21,8 +21,8 @@ const getDetails=async(req,res)=>{
 };
 
 const addEvent=(expressAsyncHandler(async(req,res)=>{
-    // const correctdate = moment(req.body.eventdate).utc().toDate(); it is when I am in localhost
-    const correctdate =event.eventDate.subtract(5, 'hour').toDate();;
+    // const correctdate = moment(req.body.eventdate).utc().toDate(); 
+    const correctdate =moment(req.body.eventDate).subtract(5, 'hour').toDate();;
     console.log("correctdate",correctdate);
     const events=new Event({
         clubname:req.body.club,

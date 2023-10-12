@@ -24,17 +24,7 @@ ul {
 button {
   cursor: pointer;
 }
-@keyframes zoomInOut {
-  0%, 100% {
-    transform: scale(1.2); /* Normal size */
-  }
-  50% {
-    transform: scale(1); /* Zoom-in effect */
-  }
-}
-.zoom-in-out {
-  animation: zoomInOut 10s ease-in-out infinite; /* Adjust the animation duration as needed */
-}
+
 .custom-arrow {
   background-color: #efe9e9;
   color: #333;
