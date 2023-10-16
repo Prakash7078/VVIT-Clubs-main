@@ -22,7 +22,7 @@ const getDetails=async(req,res)=>{
 
 const addEvent=(expressAsyncHandler(async(req,res)=>{
     // const correctdate = moment(req.body.eventdate).utc().toDate(); 
-    const correctdate =moment(req.body.eventDate).toDate();;
+    const correctdate =moment(req.body.eventDate).utc().toDate();;
     console.log("correctdate",correctdate);
     const events=new Event({
         clubname:req.body.club,
