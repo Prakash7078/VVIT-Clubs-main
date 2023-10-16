@@ -11,6 +11,7 @@ const StatusCodes=require('http-status-codes');
 const Register = require('../models/registerModel');
 const Testimony=require("../models/testimonialModel");
 const moment = require('moment-timezone'); // Import moment-timezone
+const ClubRegister = require('../models/clubRegisterModel');
 
 dotenv.config();
 const getDetails=async(req,res)=>{
@@ -19,10 +20,22 @@ const getDetails=async(req,res)=>{
     
     res.send({createdUser});
 };
-
+const deleteClubregister=(expressAsyncHandler(async(req,res)=>{
+    const roll=req.params.rollno;
+    console.log("roll",roll);
+    const user1=await User.updateOne({rollno:roll},{category:"Student"},{new:true});
+    console.log("user",user1);
+    await Register.deleteOne({roll:roll});
+    const clubreg=await ClubRegister.findOneAndDelete({roll:roll});
+    res.status(StatusCodes.OK).json({message:`Remove ${clubreg.name} from ${clubreg.club} succesfully`});
+    // const eventregister=await Register.findOne({roll:rollno});
+    // if(eventregister){
+    //     await Register.deleteOne({roll:rollno});
+    // }
+}))
 const addEvent=(expressAsyncHandler(async(req,res)=>{
     // const correctdate = moment(req.body.eventdate).utc().toDate(); 
-    const correctdate =moment(req.body.eventDate).utc().toDate();;
+    const correctdate =moment(req.body.eventdate).utc().toDate();;
     console.log("correctdate",correctdate);
     const events=new Event({
         clubname:req.body.club,
@@ -182,4 +195,4 @@ const addAdmin=(expressAsyncHandler(async(req,res)=>{
     const user=await newAdmin.save();
     return res.status(StatusCodes.CREATED).json({message:"admin added succesfully"});
 }))
-module.exports={getDetails,addEvent,addClub,addAdmin,updateClub,updateEvent,deleteClub,deleteEvent,addTestimony};
+module.exports={getDetails,deleteClubregister,addEvent,addClub,addAdmin,updateClub,updateEvent,deleteClub,deleteEvent,addTestimony};

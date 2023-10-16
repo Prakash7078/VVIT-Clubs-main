@@ -16,6 +16,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {motion} from 'framer-motion';
 import { FcSearch } from 'react-icons/fc';
+import { SlCalender } from 'react-icons/sl';
 function Brand() {
     const audio = document.getElementById("audiotag");
     const [isMuted, setIsMuted] = useState(true);
@@ -112,6 +113,9 @@ function Brand() {
             {userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <SpeedDialAction >
               <Link to='/chat' ><BsChatTextFill className="h-5 w-5"  /></Link>
             </SpeedDialAction>}
+            <SpeedDialAction >
+              <Link to='/calender' ><SlCalender className="h-5 w-5"  /></Link>
+            </SpeedDialAction>
             <SpeedDialAction>
             <AudioComponent isMuted={isMuted} />
             <div onClick={handleButtonClick} className="cursor-pointer bg-green-400 rounded-full">

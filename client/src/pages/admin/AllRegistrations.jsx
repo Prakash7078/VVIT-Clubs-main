@@ -8,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";  
 import { toast } from "react-toastify";
 import {  BsFillPersonDashFill, BsFillPersonPlusFill } from "react-icons/bs";
-import {  makeCoordinator } from "../../redux/adminSlice";
+import {  deleteClubRegister, makeCoordinator } from "../../redux/adminSlice";
 import { Link } from "react-router-dom";
 import { getClubRegisters } from "../../redux/clubSlice";
 // import { getClubRegisters } from "../../redux/registerSlice";
@@ -88,9 +88,8 @@ function AllRegistrations() {
     // }
     const handleDelete=async(rollno)=>{
       try{
-         await dispatch(deleteRegister(rollno));
+         await dispatch(deleteClubRegister(rollno));
          await dispatch(getClubRegisters());
-         toast.success("Unregister succesfully");
       }catch(err){
           toast.error("Registration not deleted succesfully");
       }
@@ -234,11 +233,11 @@ function AllRegistrations() {
                 <tr className="bg-primary text-secondary">
                     <th className="px-4 py-2">Profile</th>
                     <th className="px-4 py-2">Name</th>
+                    <th className="px-4 py-2">Club</th>
                     <th className="px-4 py-2">Category</th>
                     <th className="px-4 py-2">Year</th>
                     <th className="px-4 py-2">Branch</th>
                     <th className="px-4 py-2">RollNo</th>
-                    <th className="px-4 py-2">Section</th>
                     <th className="px-4 py-2">Add Coordinator</th>
                     <th className="px-4 py-2">Delete</th>
                 </tr>
@@ -251,11 +250,11 @@ function AllRegistrations() {
                     <td className="border-none text-center px-4 py-2">
                         {product.name}
                     </td>
+                    <td className="border-none text-center px-4 py-2">{product.club}</td>
                     <td className="border-none text-center px-4 py-2">{product.category}</td>
                     <td className="border-none text-center px-4 py-2">{product.year}</td>
                     <td className="border-none text-center px-4 py-2">{product.branch}</td>
                     <td className="border-none text-center px-4 py-2">{product.roll}</td>
-                    <td className="border-none text-center px-4 py-2">{product.section}</td>
                     <td className="border text-center px-4 py-2"><div className="w-fit mx-auto cursor-pointer">{product.category==="Student"?<BsFillPersonPlusFill size={20} onClick={()=>handleUpdate(product.category,product.roll)}/>:<BsFillPersonDashFill size={20} onClick={()=>handleUpdate(product.category,product.roll)}/>}</div></td>
                     <td className="border text-center px-4 py-2 "><AiOutlineDelete color="red" size={20} onClick={()=>handleDelete(product.roll)} className="cursor-pointer"/></td>
                     </tr>
@@ -267,11 +266,11 @@ function AllRegistrations() {
                     <td className="border text-center px-4 py-2">
                         {product.name}
                     </td>
+                    <td className="border text-center px-4 py-2">{product.club}</td>
                     <td className="border text-center px-4 py-2">{product.category}</td>
                     <td className="border text-center px-4 py-2">{product.year}</td>
                     <td className="border text-center px-4 py-2">{product.branch}</td>
                     <td className="border text-center px-4 py-2">{product.roll}</td>
-                    <td className="border text-center px-4 py-2">{product.section}</td>
                     <td className="border text-center px-4 py-2"><div className="w-fit mx-auto cursor-pointer">{product.category==="Student"?<BsFillPersonPlusFill size={20} onClick={()=>handleUpdate(product.category,product.roll)}/>:<BsFillPersonDashFill size={20} onClick={()=>handleUpdate(product.category,product.roll)}/>}</div></td>
                     <td className="border text-center px-4 py-2 "><AiOutlineDelete color="red" size={20} onClick={()=>handleDelete(product.roll)} className="cursor-pointer"/></td>
                     </tr>

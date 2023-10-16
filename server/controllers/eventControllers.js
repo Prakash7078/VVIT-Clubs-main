@@ -5,6 +5,7 @@ const Register = require('../models/registerModel');
 const User = require('../models/userModel');
 const { StatusCodes } = require('http-status-codes');
 const ClubRegister = require('../models/clubRegisterModel');
+const { sendMail } = require('../middleware/sendMail');
 
 const getClubevents=async(req,res)=>{
     const event=await Event.find({});
@@ -47,6 +48,8 @@ const eventRegistration=(expressAsyncHandler(async(req,res)=>{
     try{
         //Here first we are checking user registers list and after check club registartion for event register.
             const rollnum = await Register.findOne({ roll: rollno });
+            const user1=await User.findOne({rollno:rollno});
+            const event1=await Event.findOne({eventname:event});
             if (rollnum) {
             res.json({ error:true,message: `You already registered for ${rollnum.event} event` });
             return;
@@ -70,6 +73,7 @@ const eventRegistration=(expressAsyncHandler(async(req,res)=>{
             isRunner:false,
         });
         const res1=await newRegister.save();
+        await sendMail(user1.email,`You succesfully registered for ${event} event of ${club} club. The event is scheduled at ${event1.eventdate}.`)
         res.send(res1);
     }catch(err){
         console.log(err);

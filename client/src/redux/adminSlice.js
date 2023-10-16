@@ -35,6 +35,22 @@ export const getReviews=createAsyncThunk(
         }
     }
 )
+export const deleteClubRegister=createAsyncThunk(
+    "api/clubregister",
+    async(rollno)=>{
+        try{
+            console.log("clubregister",rollno)
+            const res=await axios.delete(`${BASE_URL}/api/admin/deleteClubregister/${rollno}`,{
+                headers:{
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            return res.data;
+        }catch(error){
+            throw new Error(error.message);
+        }
+    }
+)
 export const makeRunner=createAsyncThunk(
     "api/makeRunner",
     async({rollno,runner})=>{
@@ -166,6 +182,15 @@ const adminSlice=createSlice({
             toast.success(message);
         }).addCase(makeRunner.rejected,()=>{
             toast.error("He is already winner");
+        });
+        builder
+        .addCase(deleteClubRegister.pending,(state)=>{
+            state.loading=true;
+        }).addCase(deleteClubRegister.fulfilled,(state,action)=>{
+            const {message}=action.payload;
+            toast.success(message);
+        }).addCase(deleteClubRegister.rejected,()=>{
+            toast.error("unable to delete user from club");
         });
     }
 })
