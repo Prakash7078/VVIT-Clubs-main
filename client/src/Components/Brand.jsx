@@ -84,11 +84,11 @@ function Brand() {
                 </div>
                 </motion.div>
             </CardBody>
-            <div className='flex items-center gap-2 relative bottom-20   h-fit  lg:hidden  w-fit border-b-2 border-white'>
+            <div className='flex items-center gap-2 relative bottom-20 mx-10 h-fit  lg:hidden  w-fit border-b-2 border-white'>
               <input className='bg-transparent w-full outline-none text-white  ' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
               <FcSearch className='cursor-pointer' color='white' size={35} onClick={handleSearch}/>
             </div>
-            <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-white py-2 relative bottom-44 lg:bottom-80 xl:bottom-96  lg:left-96 xl:ml-48 h-fit px-10 backdrop-blur-md'>
+            <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-white py-2 relative bottom-44 lg:bottom-80 xl:bottom-96  lg:left-96 xl:ml-48 h-fit mx-10 backdrop-blur-md'>
                   {/* Style will be inherited from the parent element */}
                   
                   <Typewriter

@@ -38,7 +38,7 @@ function Navbar() {
       setSearch("");
     }
   return (
-      <div className='shadow-md z-50 fixed top-0 left-0 flex justify-between py-2 sm:px-10 w-full px-2 backdrop-blur-md'>
+      <div className='shadow-md z-50 fixed top-0 left-0 flex justify-between py-3 sm:px-10 w-full px-2 backdrop-blur-md'>
         <div className='flex gap-3 items-center'>
             <div className='lg:hidden position:relative ml-2 md:ml-0'>
                 {!isMenuOpen ? <TiThMenu color='brown'

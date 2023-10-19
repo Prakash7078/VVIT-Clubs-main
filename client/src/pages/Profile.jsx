@@ -23,7 +23,7 @@ function Profile() {
   return (
     <div >
       <form  className="sm:mt-36 mt-20 mx-auto flex flex-col gap-12 mb-10">
-        <div className={`flex justify-center items-center ${edit?"gap-20":"gap-16"} sm:flex-row flex-col`}>
+        <div className={`flex justify-center items-center ${edit?"gap-20":"gap-10"} sm:flex-row  flex-col`}>
               <div className={`flex flex-col ${edit?"gap-10":"gap-12"}`}>
                 <label htmlFor="fileInput"  className=" cursor-pointer">
                   <img src={profiledata.image?profiledata.image:thumps} alt='updateImage' className={`rounded-full object-cover w-52 h-52 text-center ${edit?'sm:mb-10':'mb-0'}`}/></label>
@@ -41,12 +41,12 @@ function Profile() {
                   </div>}
                 </div>
               </div>
-          <div className="flex flex-col gap-3  items-start  ">
-            <p ><span className="font-bold pr-2">Category</span>{userInfo.category}</p>
-            <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">UserName</p><input className={`${edit?'border-2 p-2 w-52 border-black':'border-none w-40'}`} type="text" value={profiledata?.name} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["name"]:e.target.value})}/></span>
-            <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">Email</p><input className={`${edit?'border-2 p-2 w-52 border-black':'border-none '}`}  type="email" value={profiledata?.email} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["email"]:e.target.value})}/></span>
-            <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">Roll No</p><input className={`${edit?'border-2 p-2 w-52 border-black':'border-none'}`}  type="text" value={profiledata?.rollno} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["rollno"]:e.target.value})}/></span>
-            <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">Branch</p> <select id="branchselect" disabled={edit?false:true} name="branch" onChange={(e)=>setProfiledata({...profiledata,["branch"]:e.target.value})} value={profiledata?.branch}className={`${edit?'border-2 p-2 w-52 border-black':'border-none'} px-2 py-1`}>
+          <div className="flex flex-col gap-3  ">
+            <p className={`flex mx-12 w-56  ${edit ? 'flex-col gap-2' : ' grid grid-cols-2'}`}><span className="font-bold">Category</span>{userInfo.category}</p>
+            <span className={`flex mx-12 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2 '}`}><p className="font-bold ">UserName</p><input className={`${edit?'border-2 p-2 w-52 border-black':'border-none w-40'}`} type="text" value={profiledata?.name} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["name"]:e.target.value})}/></span>
+            <span className={`flex mx-12 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2'}`}><p className="font-bold ">Email</p><input className={`${edit?'border-2 p-2 w-52 border-black':'border-none '}`}  type="email" value={profiledata?.email} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["email"]:e.target.value})}/></span>
+            <span className={`flex mx-12 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2 '}`}><p className="font-bold ">Roll No</p><input className={`${edit?'border-2 p-2 w-52 border-black':'border-none'}`}  type="text" value={profiledata?.rollno} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["rollno"]:e.target.value})}/></span>
+            <span className={`flex mx-12 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2 '}`}><p className="font-bold ">Branch</p> <select id="branchselect" disabled={edit?false:true} name="branch" onChange={(e)=>setProfiledata({...profiledata,["branch"]:e.target.value})} value={profiledata?.branch}className={`${edit?'border-2 p-2 w-52 border-black':'border-none'} px-2 py-1`}>
                 <option value="" disabled>
                 select Branch
                 </option>
@@ -57,7 +57,7 @@ function Profile() {
                 <option value="CIVIL">CIVIL</option>
                 <option value="MECH">MECH</option>
             </select></span>
-            <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">Year</p>  <select id="yearselect" disabled={edit?false:true}  name="year" onChange={(e)=>setProfiledata({...profiledata,["year"]:e.target.value})} value={profiledata?.year}className={`${edit?'border-2 p-2 w-52 border-black':'border-none'} px-2 py-1`}>
+            <span className={`flex mx-12 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2'}`}><p className="font-bold ">Year</p>  <select id="yearselect" disabled={edit?false:true}  name="year" onChange={(e)=>setProfiledata({...profiledata,["year"]:e.target.value})} value={profiledata?.year}className={`${edit?'border-2 p-2 w-52 border-black':'border-none'} px-2 py-1`}>
                               <option value="0" disabled>
                               select Year
                               </option>
@@ -66,7 +66,7 @@ function Profile() {
                               <option value="3">3</option>
                               <option value="4">4</option>
                           </select></span>
-            <span className={`flex ${edit ? 'flex-col gap-2' : 'flex-row'}`}><p className="font-bold pr-2">Section</p><select id="sectionselect" disabled={edit?false:true} name="section"  onChange={(e)=>setProfiledata({...profiledata,["section"]:e.target.value})} value={profiledata?.section}className={`${edit?'border-2 p-2 w-52 border-black':'border-none'} px-2 py-1`}>
+            <span className={`flex mx-12 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2'}`}><p className="font-bold ">Section</p><select id="sectionselect" disabled={edit?false:true} name="section"  onChange={(e)=>setProfiledata({...profiledata,["section"]:e.target.value})} value={profiledata?.section}className={`${edit?'border-2 p-2 w-52 border-black':'border-none'} px-2 py-1`}>
                               <option value="" disabled>
                               select Section
                               </option>
