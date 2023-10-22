@@ -13,7 +13,7 @@ export default withMT({
         sm: "576px", // Small screens
         md: "768px", // Medium screens
         lg: "1200px", // Large screens
-        xl: "1440px", // Extra-large screens
+        xl: "2560px", // Extra-large screens
       },
      
     },

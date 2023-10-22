@@ -33,7 +33,7 @@ function Tutorials({ value }) {
         },
       },
       {
-        breakpoint: 1440,
+        breakpoint: 2560,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
