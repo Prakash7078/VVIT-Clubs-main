@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/authSlice";
+// import LiaEye from 'react-icons/lia'
 import {Link, useNavigate } from 'react-router-dom'
 import {
   Button,
@@ -64,7 +65,7 @@ function Login(props) {
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
             <Input label="Email" size="lg" onChange={handleChange} value={data.email} name='email' />
-            <Input label="Password" size="lg" onChange={handleChange} value={data.password} name='password'/>
+            <Input label="Password" type='password' size="lg" onChange={handleChange} value={data.password} name='password'/>
             <div className="-ml-2.5 ">
               <Link to="/passwordrequest"><Checkbox label="Forget Password ?" onClick={value} /></Link>
             </div>
