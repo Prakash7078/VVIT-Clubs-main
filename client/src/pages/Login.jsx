@@ -30,6 +30,10 @@ function Login(props) {
          dispatch(loginUser(data));
          value();
     };
+    const handleSignup=()=>{
+      navigate("/signup");
+      value();
+    }
     useEffect(()=>{
         if(userInfo){
             navigate('/');
@@ -77,11 +81,10 @@ function Login(props) {
             <Typography variant="small" className="mt-6 flex justify-center">
               Don&apos;t have an account?
               <Typography
-                as="a"
-                href="/signup"
+                onClick={handleSignup}
                 variant="small"
                 color="brown"
-                className="ml-1 font-bold"
+                className="ml-1 font-bold cursor-pointer"
               >
                 Sign up
               </Typography>

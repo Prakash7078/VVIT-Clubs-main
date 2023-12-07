@@ -131,7 +131,7 @@ const clubSlice=createSlice({
         });
         builder
         .addCase(getClubRegisters.pending, (state) => {
-            state.load = true;
+            state.load = true;``
           })
         .addCase(getClubRegisters.fulfilled, (state,{payload}) => {
             state.loading=false;

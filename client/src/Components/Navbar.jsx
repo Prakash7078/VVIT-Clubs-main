@@ -48,7 +48,7 @@ function Navbar() {
                 <ul
                     className={`${
                     isMenuOpen ? 'visible' : 'hidden'
-                    } lg:hidden group-hover:visible absolute left-2 top-16 font-semibold z-50 flex flex-col gap-5  `}
+                    } lg:hidden group-hover:h-full absolute left-2 top-16 h-0 font-semibold z-50 flex flex-col gap-5 transition-[height_0.5s]  duration-500  `}
                 >
                     <li className='cursor-pointer'>{userInfo && userInfo.isAdmin && <li><Route to='/dashboard'><IconButton variant="gradient"color='white' className="rounded-full"><img src={dash}/></IconButton></Route></li>}</li>
                     <li className='cursor-pointer '><Link smooth={true} duration={1000} to='#home'> <IconButton variant="gradient" color='white' className="rounded-full"><FcHome size={25}/></IconButton></Link></li>
