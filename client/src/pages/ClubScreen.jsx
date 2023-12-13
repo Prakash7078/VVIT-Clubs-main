@@ -228,7 +228,7 @@ function ClubScreen() {
   return (
     <div className='lg:pt-24 pt-8 bg-[#fff3e0]'>
         {clubs && clubs.filter((item)=>item.name===name).map((item,index)=>(
-            <div key={index} className='mb-3'>
+            <div key={index} className='m-3 lg:m-2'>
                 <Card className="flex sm:flex-row w-full mt-12  " >
                 <CardHeader shadow={false} floated={false} className="sm:w-1/4 shrink-0  rounded-r-none">
                 <img 

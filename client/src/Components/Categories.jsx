@@ -75,7 +75,7 @@ function Categories() {
   return (
     // <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay:0.1  }}>
       <div id='#category' className='bg-[#fff3e0] pb-20 pt-5 '>
-          <div className='mb-10 mt-8 flex flex-col gap-2 items-center'>
+          <div className='mb-10 mt-8 lg:mt-3 flex flex-col gap-2 items-center'>
               <h1 className='font-bold text-4xl'>Club Events</h1>
               <h3>Choose Event</h3>
           </div>
