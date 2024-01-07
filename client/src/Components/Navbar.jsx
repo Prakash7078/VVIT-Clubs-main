@@ -37,17 +37,17 @@ function Navbar() {
       setSearch("");
     }
   return (
-      <div className='shadow-md z-50 fixed top-0 left-0 flex items-center justify-between py-3 sm:px-10 w-full px-4 backdrop-blur-md'>
+      <div className='shadow-md z-50 fixed top-0 left-0 flex items-center justify-between py-3 sm:px-8 w-full px-4 backdrop-blur-md'>
         <div className='flex gap-20'>
-          <Route to="/"><img className='sm:w-15 sm:h-10 w-14 h-10 xl:h-14 xl:w-20 col-span-2 cursor-pointer'src={small} alt='logo' /></Route>
+          <Route to="/"><img className='sm:w-15 border-2 rounded-sm sm:h-10 w-14 h-10 xl:h-14 xl:w-20 col-span-2 cursor-pointer'src={small} alt='logo' /></Route>
         
-          <div className='hidden  lg:flex items-center gap-2 border-b-2 border-blue-600'>
+          <div className='hidden  md:flex items-center gap-2 border-b-2 border-blue-600'>
                   <input className='bg-transparent font-bold outline-none  px-2' placeholder='Search Club' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
                   <FcSearch className='cursor-pointer' color='white' size={25} onClick={handleSearch}/>
           </div>
         </div>
       
-        <div className='lg:hidden'>
+        <div className='md:hidden'>
                 {!isMenuOpen ? <TiThMenu size={25} color='brown'
                     className={`${isMenuOpen ? 'text-cyan-500' : 'text-gray-500'}`}
                     onClick={toggleMenu}
@@ -75,7 +75,7 @@ function Navbar() {
                 </div>
                 
           </div>
-          <div className='hidden lg:flex gap-4 items-center'>
+          <div className='hidden md:flex gap-4 items-center'>
             {userInfo && userInfo.image!="" && <Route to='/profile'><Badge overlap="circular" placement="bottom-end" className='bg-green-600'>
                               <Avatar
                                 size="sm"

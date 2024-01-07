@@ -28,7 +28,7 @@ function Categories() {
     },[dispatch]);
     if (load) {
         return (
-          <div className="flex justify-center items-center h-screen">
+          <div className="flex justify-center items-center h-screen bg-[#fff3e0]">
             <Rings
               height="80"
               width="80"
@@ -74,38 +74,38 @@ function Categories() {
   
   return (
     // <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay:0.1  }}>
-      <div id='#category' className='bg-[#fff3e0] pb-20 pt-5 '>
-          <div className='mb-10 mt-8 lg:mt-3 flex flex-col gap-2 items-center'>
-              <h1 className='font-bold text-4xl'>Club Events</h1>
-              <h3>Choose Event</h3>
-          </div>
-         <div className='mx-8'>
+      <div id='#category' className='bg-[#fff3e0] py-20 pt-5 '>
+         <h1 className='font-bold px-2 text-2xl md:text-4xl text-center '>Choose your clubs based on categories</h1>
+
+         <div className='md:mx-10 mx-6 mt-16'>
           <Slider {...settings}>
               {clubs.map((product, index) => {
                 return (
                   <div key={index} >
-                          <div key={index} onClick={()=>checkLogin(product.name)} className='m-0 sm:m-5 shadow-xl pb-4  bg-white hover:scale-105 transition-all duration-500'>
-                            <img src={product.image} className=' cursor-pointer w-full h-60 xl:h-72 object-cover  rounded-t-lg mb-10' alt='event'/>
-                              <div className='flex justify-between items-center'>
-                                <h1 className='font-bold ml-4'>{product.name}</h1>
-                                <Button onClick={()=>checkLogin(product.name)} className='bg-[#8d6e63] text-white py-2 px-2 mr-4 rounded-md'>Know More&gt;&gt;</Button>
+                          <div key={index} onClick={()=>checkLogin(product.name)} className='m-0 sm:m-5 shadow-xl  relative'>
+                            <img src={product.image} className='  w-full h-80 xl:h-72 object-fill rounded-t-lg mb-10' alt='event'/>
+                              <div className='absolute cursor-pointer left-0 top-0 right-0 bottom-0 backdrop-brightness-50'>
+                                <div className='absolute bottom-12 inset-x-0 flex flex-col gap-5 text-white items-center'>
+                                  <h1 className='font-bold text-xl'>{product.name}</h1>
+                                  <Button onClick={()=>checkLogin(product.name)} className='bg-transparent border py-2 px-4 rounded-md'>Know More</Button>
+                                </div>
                               </div>
                           </div>
                   </div>
                 );
               })}
               </Slider>
-              <style>{`
-                /* Left Arrow */
-                .slick-prev:before {
-                  color: #9C1137;
-                }
+                <style >{`
+                  /* Left Arrow */
+                  .slick-prev:before {
+                    color: #9C1137;
+                  }
 
-                /* Right Arrow */
-                .slick-next:before {
-                  color: #9C1137;
-                }
-              `}</style>
+                  /* Right Arrow */
+                  .slick-next:before {
+                    color: #9C1137;
+                  }
+                `}</style>
          </div>
       </div>
     // </motion.div>
