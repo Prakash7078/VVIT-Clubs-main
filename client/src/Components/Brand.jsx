@@ -2,6 +2,7 @@ import { Button,Card,CardHeader,CardBody,Typography, Popover, PopoverHandler,Pop
 import vvit from '../Images/vvit-main.jpeg'
 import { useEffect, useState } from 'react';
 import { Typewriter } from 'react-simple-typewriter'
+import dash from '../Images/dashboard.png'
 import {
     IconButton,
     SpeedDial,
@@ -52,7 +53,7 @@ function Brand() {
                 color="transparent"
                 className={`absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center zoom-in-out`}
                 style={{ backgroundImage:`url(${vvit})`}}>
-                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/40 via-black/20 " />
+                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/40 via-black/20" />
             </CardHeader>
             <CardBody className="relative px-6 md:px-12 top-24 md:right-96 xl:mr-60 xl:top-5 hidden lg:block ">
                 <motion.div
@@ -89,7 +90,6 @@ function Brand() {
               <FcSearch className='cursor-pointer' color='white' size={35} onClick={handleSearch}/>
             </div>
             <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-white py-2 relative bottom-44 lg:bottom-80 xl:bottom-96  lg:left-96 xl:ml-48 h-fit mx-10 backdrop-blur-md'>
-                  {/* Style will be inherited from the parent element */}
                   
                   <Typewriter
                     words={['WELCOME', 'TO','VVIT', 'WELCOME TO VVIT']}
@@ -100,7 +100,7 @@ function Brand() {
                 />
                 <br />
                 <h1>JOIN THE CLUB</h1>
-                </span>
+              </span>
         </Card>
         <div className='fixed lg:top-3/4 sm:top-80 right-8 z-50'>
         <SpeedDial>
@@ -113,10 +113,11 @@ function Brand() {
             {userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <SpeedDialAction >
               <Link to='/chat' ><BsChatTextFill className="h-5 w-5"  /></Link>
             </SpeedDialAction>}
-            <SpeedDialAction >
-              <Link to='/calender' ><SlCalender className="h-5 w-5"  /></Link>
-            </SpeedDialAction>
-            <SpeedDialAction>
+            {userInfo && userInfo.isAdmin && <SpeedDialAction>
+              <Link to='/dashboard'><IconButton variant="outlined" color='white' className="rounded-full"><img src={dash} alt='dash'/></IconButton></Link>
+            </SpeedDialAction>}
+            {/* <SpeedDialAction>
+
             <AudioComponent isMuted={isMuted} />
             <div onClick={handleButtonClick} className="cursor-pointer bg-green-400 rounded-full">
               {isMuted ? (
@@ -185,7 +186,7 @@ function Brand() {
                     </svg>
               )}
             </div>
-            </SpeedDialAction>
+            </SpeedDialAction> */}
            </SpeedDialContent>
         </SpeedDial>
         </div>

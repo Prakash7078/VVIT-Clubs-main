@@ -16,8 +16,8 @@ const About = () => {
         ></iframe>         */}
         </div>
 
-        <div className="flex flex-col justify-center px-4 py-12 md:py-10 lg:col-span-7 lg:gap-x-6 lg:px-6 lg:py-10 xl:col-span-7">
-          <h1 className="mt-4 text-2xl font-bold tracking-tight  lg:text-4xl">
+        <div className="flex flex-col px-4 py-12 md:py-10 lg:col-span-7 lg:gap-x-6 lg:px-6 lg:py-10 xl:col-span-7">
+          <h1 className=" text-2xl font-bold tracking-tight  lg:text-4xl">
             Welcome to VVIT CLUBS
           </h1>
           <p className="mt-8 text-lg ">
