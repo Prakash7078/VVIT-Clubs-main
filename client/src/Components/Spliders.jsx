@@ -16,7 +16,7 @@ function Spliders() {
   // };
 
   return (
-    <div id="home" className='bg-[#fff3e0] grid md:grid-cols-2 gap-5 py-16'>
+    <div id="home" className='bg-[#fff3e0] grid md:grid-cols-2 gap-5 md:px-10 py-16'>
       <motion.div
               initial={{x:-100}}
               whileInView={{x:0}}

@@ -39,8 +39,8 @@ function App() {
         <Route path="/chat" element={<Chat/>}/>
         <Route path="/passwordrequest" element={<PasswordRequest/>}/>
         <Route path="/reset-password/:id/:token" element={<ResetPassword/>}/>
-        <Route path="/profile" element={<Profile/>}/>
-        <Route path="/admin?/registers?/:name?/:rollno/profile" element={<UserProfile/>} />
+        {/* <Route path="/profile" element={<Profile/>}/> */}
+        <Route path="/profile" element={<UserProfile/>} />
         <Route path="/dashboard" element={<Welcome/>}/>        
         <Route path="/admin/clubs" element={<AllClubs/>}/>        
         <Route path="/admin/events" element={<AllEvents/>}/>        
