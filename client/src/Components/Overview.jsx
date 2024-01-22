@@ -8,8 +8,8 @@ const About = () => {
   return (
     // <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }}>
     <div id="#about" className="bg-[#ffcc80] py-16">
-      <h1 className='text-center font-bold md:text-4xl text-2xl '>Why to Choose</h1>
-      <div className="grid grid-cols-1 mt-16 md:grid-cols-2 lg:gap-0 lg:grid-cols-4">
+      <h1 className='text-center font-bold md:text-4xl text-3xl '>Why to Choose</h1>
+      <div className="grid grid-cols-1 mt-16 md:grid-cols-2 lg:gap-0 lg:grid-cols-4 gap-14 md:gap-0">
         <div className='w-3/4 mx-auto flex flex-col gap-4 items-center'>
           <img src={events} className='w-10 h-10' alt="clubs"/>
           <p className='leading-normal sm:px-2'>You can register for clubs and events which one you would like to join. Explore about the clubs and events.</p>

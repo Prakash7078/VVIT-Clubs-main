@@ -4,7 +4,6 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Navbar from './Components/Navbar';
 import ClubScreen from './pages/ClubScreen';
-import Profile from './pages/Profile';
 import UserProfile from './Components/UserProfile';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,6 +15,7 @@ import AllEvents from './pages/admin/AllEvents';
 import AllRegistrations from './pages/admin/AllRegistrations';
 import AddAdmin from './pages/admin/AddAdmin';
 import Club from './pages/admin/Club';
+import Profile from './pages/Profile';
 import Event from './pages/admin/Event';
 import Reviews from './pages/admin/Reviews';
 // import AddTestimony from './pages/admin/AddTestimony';
@@ -39,8 +39,8 @@ function App() {
         <Route path="/chat" element={<Chat/>}/>
         <Route path="/passwordrequest" element={<PasswordRequest/>}/>
         <Route path="/reset-password/:id/:token" element={<ResetPassword/>}/>
-        {/* <Route path="/profile" element={<Profile/>}/> */}
-        <Route path="/profile" element={<UserProfile/>} />
+        <Route path="/:rollno/profile" element={<Profile/>}/>
+        <Route path="/myprofile" element={<UserProfile/>} />
         <Route path="/dashboard" element={<Welcome/>}/>        
         <Route path="/admin/clubs" element={<AllClubs/>}/>        
         <Route path="/admin/events" element={<AllEvents/>}/>        

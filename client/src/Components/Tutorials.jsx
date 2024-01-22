@@ -44,16 +44,16 @@ function Tutorials({ value }) {
   };
 
   return (
-    <div className={`${value=='home' ? 'bg-[#fff3e0]':'bg-transparent'}`}>
-      <h1 className='text-center font-bold text-2xl p-10 text-brown-700'>Memories</h1>
-      <div className='sm:mx-20 mx-8 '>
+    <div className={`py-6 ${value=='home' ? 'bg-[#fff3e0]':'bg-transparent'}`}>
+      <h1 className='text-center font-bold text-3xl md:text-4xl p text-brown-700'>Memories</h1>
+      <div className='sm:mx-20 mx-8 pb-10 sm:mt-20 mt-10'>
         <Slider {...settings}>
           {data.tutorials && data.tutorials.filter((item) => item.id ===value).map((item) => (
             <div key={item.id} className=''>
               <div className='flex flex-col items-center gap-10 pb-10'>
                 {/* Set a CSS class on the iframe */}
                 {/* <iframe className="responsive-iframe" src={item.url}  allowFullScreen autoPlay={false}></iframe> */}
-                <video width="480" height="270" controls className='border-2 border-brown-900'>
+                <video width="480" height="270" controls className='rounded-md'>
                   <source src={item.url} type="video/mp4"/>
                   Your browser does not support the video tag.
                 </video>

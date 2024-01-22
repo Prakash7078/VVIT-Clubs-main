@@ -33,7 +33,11 @@ function Navbar() {
     }
     // bg-[#fff3e0]
     const handleSearch=()=>{
-      navigate(`/${search}`);
+      if(userInfo){
+        navigate(`/${search}`);
+      }else{
+        navigate("/login")
+      }
       setSearch("");
     }
   return (
@@ -42,7 +46,7 @@ function Navbar() {
           <Route to="/"><img className='sm:w-15 border-2 rounded-sm sm:h-10 w-14 h-10 xl:h-14 xl:w-20 col-span-2 cursor-pointer'src={small} alt='logo' /></Route>
         
           <div className='hidden  md:flex items-center gap-2 border-b-2 border-blue-600'>
-                  <input className='bg-transparent font-bold outline-none  px-2' placeholder='Search Club' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
+                  <input className='bg-transparent font-bold outline-none text-white px-2' placeholder='Search Club' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
                   <FcSearch className='cursor-pointer' color='white' size={25} onClick={handleSearch}/>
           </div>
         </div>
@@ -62,7 +66,7 @@ function Navbar() {
                       {userInfo && <li onClick={toggleMenu} className='cursor-pointer'><IconButton variant="outlined" color='white' className="rounded-full mr-3"><img src={clu} alt='clu'/></IconButton>My Events</li>}
                       <li  className='cursor-pointer'><Link onClick={toggleMenu} smooth={true} duration={1000} to='#about'><IconButton variant="outlined" color='white' className="rounded-full mr-3"><FcAbout size={25}/></IconButton>About</Link></li>
                       <li  className='cursor-pointer'><Link onClick={toggleMenu} smooth={true} duration={1000} to='#category'><IconButton variant="outlined" color='white' className="rounded-full mr-3"><img src={clu} alt='clu'/></IconButton>Categories</Link></li><hr/>
-                      {userInfo && <div onClick={toggleMenu} className='flex items-center gap-4'><Route to='/profile'><Badge overlap="circular" placement="bottom-end" className='bg-green-600'>
+                      {userInfo && <div onClick={toggleMenu} className='flex items-center gap-4'><Route to='/myprofile'><Badge overlap="circular" placement="bottom-end" className='bg-green-600'>
                             <Avatar
                               size="sm"
                               src={userInfo.image}
@@ -76,7 +80,7 @@ function Navbar() {
                 
           </div>
           <div className='hidden md:flex gap-4 items-center'>
-            {userInfo && userInfo.image!="" && <Route to='/profile'><Badge overlap="circular" placement="bottom-end" className='bg-green-600'>
+            {userInfo && userInfo.image!="" && <Route to='/myprofile'><Badge overlap="circular" placement="bottom-end" className='bg-green-600'>
                               <Avatar
                                 size="sm"
                                 src={userInfo.image}

@@ -4,19 +4,26 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import thumps from '../Images/thumbs-up.png';
 import { updateRegister } from "../redux/authSlice";
+import axios from "axios";
+import { BASE_URL } from "../config/url";
+import { useParams } from "react-router-dom";
 
 function Profile() {
-  const userInfo = useSelector((state) => state.auth.userInfo);
+  const params=useParams();
+  const {rollno}=params;
    const[edit,setEdit]=useState(false);
+   const userInfo=useSelector((state)=>state.auth.userInfo);
    const dispatch=useDispatch();
    const[profiledata,setProfiledata]=useState({id:"",image:null,name:"",email:"",branch:"",rollno:"",section:"",year:0});
    const handleFileChange=(e)=>{
     setProfiledata({...profiledata,["image"]:e.target.files[0]});
     toast.success("Image uploaded succesfully");
    }
-   useEffect(()=>{
+   useEffect(async()=>{
+    // const userInfo=await axios.get(`${BASE_URL}/api/users/${roll}`);
+    // console.log(userInfo.data);
     setProfiledata({id:userInfo._id,image:userInfo.image,name:userInfo.username,email:userInfo.email,branch:userInfo.branch,rollno:userInfo.rollno,section:userInfo.section,year:userInfo.year});
-   },[userInfo])
+   },[rollno])
    const handleUpdate=()=>{
     dispatch(updateRegister(profiledata));
    }
@@ -41,7 +48,7 @@ function Profile() {
                             
           <div className="grid grid-cols-1 gap-5 md:gap-0 md:grid-cols-2 md:w-full">
             <div className="flex flex-col gap-3 md:items-center md:gap-5">
-              <p className='mx-10 grid grid-cols-2 md:gap-14'><span className="font-bold">Category</span>{userInfo.category}</p>
+              <p className='mx-10 grid grid-cols-2 md:gap-14'><span className="font-bold">Category</span>{profiledata.category}</p>
               <span className={`flex mx-10 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2'}`}><p className="font-bold ">UserName</p><input className={`${edit?'border-2 p-2 w-60 border-gray-200 rounded-lg':'border-none'}`} type="text" value={profiledata?.name} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["name"]:e.target.value})}/></span>
               <span className={`flex mx-10 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2'}`}><p className="font-bold ">Email</p><input className={`${edit?'border-2 p-2 w-60 border-gray-200 rounded-lg':'border-none '}`}  type="email" value={profiledata?.email} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["email"]:e.target.value})}/></span>
               <span className={`flex mx-10 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2 '}`}><p className="font-bold ">Roll No</p><input className={`${edit?'border-2 p-2 w-60 border-gray-200 rounded-lg':'border-none'}`}  type="text" value={profiledata?.rollno} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["rollno"]:e.target.value})}/></span>

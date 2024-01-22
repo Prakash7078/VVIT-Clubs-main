@@ -43,10 +43,10 @@ function Contact() {
   }     
 
   return (
-    <div id="#contact" className="text-gray-600 body-font relative bg-[#fcf0cd] grid lg:grid-cols-2 grid-cols-1">
+    <div id="#contact" className="text-gray-600 body-font relative bg-[#fcf0cd] grid lg:grid-cols-2 grid-cols-1 py-5">
          <div className="px-5  mx-auto">
             <div className="flex flex-col text-center py-10">
-              <h1 className="sm:text-3xl text-2xl font-bold title-font text-black">
+              <h1 className="sm:text-4xl text-3xl font-bold title-font text-black">
                 Contact Us
               </h1>
             </div >

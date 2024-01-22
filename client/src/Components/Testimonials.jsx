@@ -17,7 +17,7 @@ const testimonials = [
   },
   {
     quote:
-      "“Club Teams is a reliable partner that has transformed our digital marketing efforts. Their team's expertise and innovative solutions have significantly increased our online reach and conversions. We're thrilled with the results.”",
+      "“Club Teams is a reliable partner that has transformed our digital marketing efforts. Their team's expertise and innovative solutions have significantly increased our online reach and conversions.”",
     author: "Club Incharge",
     position: "Marketing Director, ABC Company",
     avatar: "https://booktalks.s3.ap-south-1.amazonaws.com/istockphoto-1305665241-1024x1024.jpg",
@@ -28,36 +28,34 @@ const Testimonial = () => {
   return (
     <section className="py-12 bg-[#fff3e0] item" id="testimonials">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">
+        <h2 className="md:text-4xl text-3xl font-semibold text-center text-gray-800 mt-10 mb-16">
           Our Client&apos;s Words
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 ">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="max-w-md mx-auto rounded-md border-2 border-brown-400 shadow-md overflow-hidden"
+              className=" relative pb-10"
             >
-              <div className="p-6">
-                <div className="mb-4 flex space-x-1">
-                  <Rating value={5} readonly/>
+              <div className="shadow-lg bg-[#fde6be] p-4 flex flex-col h-96 sm:h-80 gap-4 mx-auto rounded-md  overflow-hidden">
+                <div className=" mx-auto tracking-wider px-2">
+                  <p className=" text-gray-600">{testimonial.quote}</p>
                 </div>
-                <p className="text-lg text-gray-800">{testimonial.quote}</p>
+                <div className="text-center">
+                    <Rating value={5} readonly/>
+                  </div>
+                <div className=" text-center">
+                    <h1 className="font-bold">{testimonial.author}</h1>
+                    <p>{testimonial.position}</p>
+                </div>
               </div>
-              <div className="border-t border-gray-200 py-4 px-6 flex items-center">
+              <div className="absolute w-full bottom-0 ">
                 <img
-                  className="h-10 w-10 rounded-full object-cover mr-4"
-                  src={testimonial.avatar}
-                  alt="Testimonial Avatar"
-                />
-                <div>
-                  <p className="text-base font-semibold text-gray-800">
-                    {testimonial.author}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {testimonial.position}
-                  </p>
+                    className="h-20 bottom-0  w-20 rounded-full object-cover mx-auto"
+                    src={testimonial.avatar}
+                    alt="Testimonial Avatar"
+                  />
                 </div>
-              </div>
             </div>
           ))}
         </div>

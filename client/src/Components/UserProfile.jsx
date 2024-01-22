@@ -14,8 +14,6 @@ import {
 import Profile from '../pages/Profile';
 
 function UserProfile() {
-    // const params=useParams();
-    // const {rollno}=params;
     const dispatch=useDispatch();
     const userInfo = useSelector((state) => state.auth.userInfo);
     const[profileuser,setProfileuser]=useState(null);
