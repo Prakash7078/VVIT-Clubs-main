@@ -41,7 +41,7 @@ function Navbar() {
       setSearch("");
     }
   return (
-      <div className='shadow-md z-50 fixed top-0 left-0 flex items-center justify-between py-3 sm:px-8 w-full px-4 backdrop-blur-md'>
+      <div className='shadow-md z-50 fixed top-0 left-0 flex items-center justify-between py-4 sm:px-8 w-full px-4 backdrop-blur-md'>
         <div className='flex gap-20'>
           <Route to="/"><img className='sm:w-15 border-2 rounded-sm sm:h-10 w-14 h-10 xl:h-14 xl:w-20 col-span-2 cursor-pointer'src={small} alt='logo' /></Route>
         

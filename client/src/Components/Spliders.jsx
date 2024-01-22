@@ -4,7 +4,7 @@ import "@splidejs/react-splide/css";
 import vvit from '../Images/vvit-main.jpeg';
 import dance from '../Images/dance1.avif';
 import music from '../Images/music.jpg';
-import {motion} from 'framer-motion'
+// import {motion} from 'framer-motion'
 import { Button} from "@material-tailwind/react";
 
 function Spliders() {
@@ -16,12 +16,9 @@ function Spliders() {
   // };
 
   return (
-    <div id="home" className='bg-[#fff3e0] grid md:grid-cols-2 gap-5 md:px-10 py-16'>
-      <motion.div
-              initial={{x:-100}}
-              whileInView={{x:0}}
-              transition={{duration:0.7}}>
-      <div className='flex flex-col md:items-start items-center md:gap-6 gap-4 w-3/4 mx-auto font-medium'>
+    <div id="home" className='bg-[#fff3e0] grid md:grid-cols-2 gap-5  md:px-10 py-20'>
+      
+      <div className='flex flex-col md:items-start items-center md:gap-6 gap-4 lg:w-3/4 mx-auto font-medium'>
           <h1 className='text-2xl font-bold'>Celebrity Visits of College</h1>
           <p className="w-full lg:leading-loose text-gray-700">
             Experience the vibrant tapestry of talent as our college clubs take center stage during celebrity visits! From electrifying dance performances that defy gravity to soul-stirring musical renditions that captivate the senses, our clubs showcase unparalleled skills and creativity.
@@ -31,7 +28,6 @@ function Spliders() {
             {showMore ? 'Read Less' : 'Read More'}
           </button> */}
       </div>
-      </motion.div>
 
       <div className="md:block cursor-pointer w-3/4  mx-auto  ">
         <Splide
