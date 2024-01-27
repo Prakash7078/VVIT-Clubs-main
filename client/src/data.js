@@ -40,32 +40,32 @@ const data={
       },
       {
         id:"DANCE",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"Previous dance tutorial",
       },
       {
         id:"DANCE",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"Previous dance tutorial",
       },
       {
         id:"DANCE",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"Previous dance tutorial",
       },
       {
         id:"MUSIC",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"Previous dance tutorial",
       },
       {
         id:"MUSIC",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"Previous dance tutorial",
       },
       {
         id:"MUSIC",
-        url:"https://www.youtube.com/watch?v=dyqvPUxiqqc",
+        url:"./saipallavi.mp4",
         desc:"Previous dance tutorial",
       },
     ]

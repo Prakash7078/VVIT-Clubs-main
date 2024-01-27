@@ -8,7 +8,7 @@ const Team = (props) => {
     const {data}=value;
   return (
     // <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-      <div id="team" className="bg-transparent pb-10 shadow-inner">
+      <div id="team" className="bg-transparent pb-10">
         <section className="">
           <div className=" px-4 mx-auto max-w-screen-xl text-center pt-10 ">
             <div className="mx-auto mb-8 max-w-screen-sm ">

@@ -23,6 +23,7 @@ import PasswordRequest from './pages/PasswordRequest';
 import ResetPassword from './pages/ResetPassword';
 import Chat from './Components/Chat';
 import Calender from './Components/Calender';
+import Allevents from './Components/AllEvents';
 // import { Dialog } from '@material-tailwind/react';
 
 function App() {
@@ -41,7 +42,8 @@ function App() {
         <Route path="/reset-password/:id/:token" element={<ResetPassword/>}/>
         <Route path="/:rollno/profile" element={<Profile/>}/>
         <Route path="/myprofile" element={<UserProfile/>} />
-        <Route path="/dashboard" element={<Welcome/>}/>        
+        <Route path="/dashboard" element={<Welcome/>}/>  
+
         <Route path="/admin/clubs" element={<AllClubs/>}/>        
         <Route path="/admin/events" element={<AllEvents/>}/>        
         <Route path="/admin/registers" element={<AllRegistrations/>}/>        
@@ -52,8 +54,9 @@ function App() {
         <Route path="/admin/updateClub/:clubname" element={<Club/>}/>        
         <Route path="/admin/addEvent" element={<Event/>}/>   
         <Route path="/admin/updateEvent/:eventname" element={<Event/>}/>   
-        <Route path="/admin/reviews" element={<Reviews/>}/>   
-             
+        <Route path="/admin/reviews" element={<Reviews/>}/>
+
+        <Route path="/allEvents" element={<Allevents/>}/>
 
       </Routes>
       </BrowserRouter>

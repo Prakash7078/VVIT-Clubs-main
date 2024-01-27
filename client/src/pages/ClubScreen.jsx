@@ -20,7 +20,8 @@ import Team from '../Components/Team';
 import Tutorials from '../Components/Tutorials';
 import ClubRegistration from '../Components/ClubRegistration';
 import moment from 'moment'
-
+import { formatedDateTime } from '../config/datetimeConverter';
+import congrats from '../Images/congrats-1.jpg';
 function ClubScreen() {
     const { pathname } = useLocation();
     useEffect(() => {
@@ -247,7 +248,7 @@ function ClubScreen() {
                     One of the famous club
                 </Typography>
                 <Typography color="gray" className="font-normal mb-8">
-                    {item.desc}
+                    {item.desc.length>500?item.desc.substring(0,500)+"...":item.desc}
                 </Typography>
                   <Button onClick={handleRegisterOpen} variant="text" className="flex items-center gap-2 bg-light-blue-100">
                     Register
@@ -306,8 +307,9 @@ function ClubScreen() {
                         className="pt-5 pb-8 leading-[1.5] text-gray-400 text-sm lg:text-xl"
                         >
                         {event.description}<br/>
-                        
-                        {moment(event.eventdate).format("YYYY-MM-DD HH:mm:ss")}
+
+                        {formatedDateTime(event.eventdate)}
+                        {/* {moment(event.eventdate).format("YYYY-MM-DD HH:mm:ss")} */}
                         </Typography>
                     </CardBody>
                 </Card>
@@ -317,7 +319,7 @@ function ClubScreen() {
        {userInfo &&  (userInfo.isAdmin || userInfo.category==="Coordinator") && <div>
        <h1 className='font-bold  text-2xl sm:text-3xl pt-10 text-center text-brown-700'>Event Registrations</h1>
         <div className='flex flex-col md:flex-row justify-between sm:mt-16 mt-10 mb-5 items-center gap-2 '>
-            <div className=" flex items-center gap-3 md:mb-0 flex-wrap lg:mx-10 flex-col sm:flex-row ">
+            <div className=" flex items-center gap-3 md:mb-0 flex-wrap md:mx-10 flex-col sm:flex-row ">
                   <div>
                     <label htmlFor="yearFilter" className="sm:mr-2">
                     Year:
@@ -398,7 +400,7 @@ function ClubScreen() {
        <div className="overflow-x-auto lg:mx-10 bg-white mx-2">
         <table className="w-full border-collapse">
                 <thead className='top-0 sticky'>
-                <tr className="bg-primary text-secondary  ">
+                <tr className="bg-orange-500 text-secondary  ">
                     <th className="px-4 py-2">Image</th>
                     <th className="px-4 py-2">Name</th>
                     <th className="px-4 py-2">EventName</th>
@@ -472,36 +474,31 @@ function ClubScreen() {
         />
          </div>}
          {currentProducts.filter((item) => item.isWinner || item.isRunner).length > 0 && (
-            <div className='my-16 mx-10 relative '>
+            <div className='my-20 lg:mx-32 mx-10 '>
                 <h1 className='text-center text-3xl font-bold mb-16 text-brown-700'>Winners and Runners</h1>
                 <Slider {...settings}>
                 {currentProducts.filter((item) => item.isWinner || item.isRunner).map((item) => (
-                  <div key={item.id} className='relative bg-white '>
-                    <div className='bg-brown-900 h-full md:w-10 w-4 absolute top-0 left-0 transform -translate-x-1/2 '></div>
-                    <div className='bg-brown-900 h-10 w-full absolute bottom-0 left-0 transform translate-y-1/2'></div>
-                    <div className='w-3/4 lg:w-1/2 mx-auto mb-10 relative overflow-hidden'>
-                      <div className=' bg-white rounded-lg lg:p-10 shadow-lg flex justify-between flex-col md:flex-row-reverse items-center'>
-                        <div className='pt-5'>
-                            <img src={item.userimage} alt='winorrun' className='w-60 h-60 object-cover rounded-full' />
+                  <div key={item.id} className=' '>
+                      <div className={`bg-orange-200 rounded-lg py-20 shadow-lg flex bg-cover bg-center `} style={{ backgroundImage: `url(${congrats})` }} >
+                        <div className='flex md:flex-row mx-auto w-fit flex-col items-center lg:gap-10 gap-6'>    
+                          <img src={item.userimage} alt='winorrun' className='w-60 h-60 object-cover rounded-full' />   
+                          <div className='flex flex-col items-center gap-2'>
+                            <h1 className='text-3xl font-semibold pb-3'>{item.isWinner ? <span className='flex gap-2'>Winner <img src={gold} alt='gold' className='w-10 h-10 object-cover'/></span>:<span className='flex gap-2'>Runner <img src={silver} alt='silver' className='w-10 h-10 object-cover'/></span>}</h1>
+                            <h1 className='text-xl font-semibold mt-5'>{item.name}</h1>
+                            <p className='text-gray-600'>{item.roll}</p>
+                            <p className='text-gray-600'>Year {item.year}</p>
+                            <p className='text-gray-600'>Branch {item.branch}</p>
+                            <p className='text-gray-600'>Section {item.section}</p>
+                            <div className='mt-4'>
+                              <Link to={`${item.roll}/profile`}>
+                                <button className='px-4 py-2 bg-brown-900 text-white rounded-lg'>
+                                  View Profile
+                                </button>
+                              </Link>
+                            </div>
+                          </div>         
                         </div>
-                        <div className='mt-6'>                
-                          <h1 className='text-2xl font-semibold pb-5'>{item.isWinner ? <span className='flex gap-2'>Winner <img src={gold} alt='gold' className='w-10 h-10 object-cover'/></span>:<span className='flex gap-2'>Runner <img src={silver} alt='silver' className='w-10 h-10 object-cover'/></span>}</h1>
-                          <h1 className='text-xl font-semibold'>{item.name}</h1>
-                          <p className='text-gray-600'>{item.roll}</p>
-                          <p className='text-gray-600'>Year {item.year}</p>
-                          <p className='text-gray-600'>Branch {item.branch}</p>
-                          <p className='text-gray-600'>Section {item.section}</p>
-                          <div className='mt-4'>
-                            <Link to={`${item.roll}/profile`}>
-                              <button className='px-4 py-2 bg-brown-900 text-white rounded-lg'>
-                                View Profile
-                              </button>
-                            </Link>
-                          </div>
-                        </div>
-                        
                       </div>
-                    </div>
                   </div>
                 ))}
               </Slider>

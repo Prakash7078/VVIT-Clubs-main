@@ -1,10 +1,21 @@
 
 // import { motion } from "framer-motion";
+import {useNavigate } from 'react-router-dom';
 import cord from '../Images/add-friend.png'
 import see from '../Images/binoculars.png';
 import events from '../Images/event.png';
 import schedule from '../Images/schedule.png';
+import { useSelector } from 'react-redux';
 const About = () => {
+  const userInfo = useSelector((state) => state.auth.userInfo);
+  const navigate=useNavigate();
+  const showAllevents=()=>{
+    if(userInfo){
+      navigate("/allEvents");
+    }else{
+      navigate("/login");
+    }
+  }
   return (
     // <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }}>
     <div id="#about" className="bg-[#ffcc80] py-16">
@@ -13,7 +24,7 @@ const About = () => {
         <div className='w-3/4 mx-auto flex flex-col gap-4 items-center'>
           <img src={events} className='w-10 h-10' alt="clubs"/>
           <p className='leading-normal sm:px-2'>You can register for clubs and events which one you would like to join. Explore about the clubs and events.</p>
-          <button className="font-bold text-lg mt-4">Start now &gt;</button>
+          <button className="font-bold text-lg mt-4"onClick={showAllevents}>Start now &gt;</button>
         </div>   
         <div className='w-3/4 mx-auto flex flex-col gap-4 items-center'>
           <img src={see} className='w-10 h-10' alt="frds"/>
