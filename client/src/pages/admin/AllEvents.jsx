@@ -121,11 +121,6 @@ if (loading) {
                           {eventname}
                         </Typography>
                       </td>
-                      {/* <td className={classes}>
-                        <Typography variant="small" color="blue-gray" className="font-normal">
-                          {working?"True":"False"}
-                        </Typography>
-                      </td> */}
                       <td className={classes}>
                         <Link to={`/admin/updateEvent/${eventname}`}>
                           <BiSolidEditAlt size={22}/>
