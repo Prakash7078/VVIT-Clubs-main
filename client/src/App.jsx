@@ -23,7 +23,7 @@ import PasswordRequest from './pages/PasswordRequest';
 import ResetPassword from './pages/ResetPassword';
 import Chat from './Components/Chat';
 import Calender from './Components/Calender';
-import Allevents from './Components/AllEvents';
+import Allevents from './Components/Allevents';
 // import { Dialog } from '@material-tailwind/react';
 
 function App() {
