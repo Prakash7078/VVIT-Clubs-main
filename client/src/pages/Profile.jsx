@@ -21,7 +21,7 @@ function Profile() {
     // const userInfo=await axios.get(`${BASE_URL}/api/users/${roll}`);
     // console.log(userInfo.data);
     setProfiledata({id:userInfo._id,image:userInfo.image,name:userInfo.username,email:userInfo.email,branch:userInfo.branch,rollno:userInfo.rollno,section:userInfo.section,year:userInfo.year});
-   },[rollno])
+   },[])
    const handleUpdate=()=>{
     dispatch(updateRegister(profiledata));
    }
@@ -34,7 +34,7 @@ function Profile() {
         <div className={`flex justify-center md:items-start items-center gap-10  flex-col`}>
               <div className={`flex flex-col md:w-full border-b-2 pb-5 border-gray-400 md:items-center ${edit?"gap-10":"gap-12"}`}>
                 <label htmlFor="fileInput"  className=" cursor-pointer">
-                  <img src={profiledata.image?profiledata.image:thumps} alt='updateImage' className={`rounded-full object-cover w-52 h-52 text-center ${edit?'md:mb-10':'mb-0'}`}/></label>
+                  <img src={profiledata?.image?profiledata.image:thumps} alt='updateImage' className={`rounded-full object-cover w-52 h-52 text-center ${edit?'md:mb-10':'mb-0'}`}/></label>
                 <input
                   id="fileInput"
                   type="file"
@@ -46,7 +46,7 @@ function Profile() {
                             
           <div className="grid grid-cols-1 gap-5 md:gap-0 md:grid-cols-2 md:w-full">
             <div className="flex flex-col gap-3 md:items-center md:gap-5">
-              <p className='mx-10 grid grid-cols-2 md:gap-14'><span className="font-bold">Category</span>{profiledata.category}</p>
+              <p className='mx-10 grid grid-cols-2 md:gap-14'><span className="font-bold">Category</span>{profiledata?.category}</p>
               <span className={`flex mx-10 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2'}`}><p className="font-bold ">UserName</p><input className={`${edit?'border-2 p-2 w-60 border-gray-200 rounded-lg':'border-none'}`} type="text" value={profiledata?.name} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["name"]:e.target.value})}/></span>
               <span className={`flex mx-10 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2'}`}><p className="font-bold ">Email</p><input className={`${edit?'border-2 p-2 w-60 border-gray-200 rounded-lg':'border-none '}`}  type="email" value={profiledata?.email} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["email"]:e.target.value})}/></span>
               <span className={`flex mx-10 w-56  ${edit ? 'flex-col gap-2' : 'grid grid-cols-2 '}`}><p className="font-bold ">Roll No</p><input className={`${edit?'border-2 p-2 w-60 border-gray-200 rounded-lg':'border-none'}`}  type="text" value={profiledata?.rollno} disabled={edit?false:true} onChange={(e)=>setProfiledata({...profiledata,["rollno"]:e.target.value})}/></span>
