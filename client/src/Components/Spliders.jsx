@@ -18,9 +18,9 @@ function Spliders() {
   return (
     <div id="home" className='bg-[#fff3e0] grid md:grid-cols-2 gap-5  md:px-10 py-20'>
       
-      <div className='flex flex-col md:items-start items-center md:gap-6 gap-4 lg:w-3/4 mx-auto font-medium'>
+      <div className='flex flex-col md:items-start  items-center md:gap-6 gap-4 lg:w-3/4 mx-auto font-medium'>
           <h1 className='text-2xl font-bold'>Celebrity Visits of College</h1>
-          <p className="w-full lg:leading-loose text-gray-700">
+          <p className="w-full lg:leading-loose px-10 md:px-0 text-gray-700">
             Experience the vibrant tapestry of talent as our college clubs take center stage during celebrity visits! From electrifying dance performances that defy gravity to soul-stirring musical renditions that captivate the senses, our clubs showcase unparalleled skills and creativity.
           </p>
           <Button color='brown'>Visit Glory</Button>

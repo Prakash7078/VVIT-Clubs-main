@@ -22,6 +22,7 @@ import ClubRegistration from '../Components/ClubRegistration';
 import moment from 'moment'
 import { formatedDateTime } from '../config/datetimeConverter';
 import congrats from '../Images/congrats-1.jpg';
+import ProfileDialog from '../Components/ProfileDialog';
 function ClubScreen() {
     const { pathname } = useLocation();
     useEffect(() => {
@@ -33,6 +34,16 @@ function ClubScreen() {
     const [studentFilter, setStudentFilter] = useState(false);
     const [coordinatorFilter, setCoordinatorFilter] = useState(false);
 
+    const[profileroll,setProfileroll]=useState("");
+    const[dialog,setDialog]=useState(false);
+    const handleDialog=()=>{
+      setDialog(!dialog);
+    }
+    const handleDialogData=(rollno)=>{
+      setProfileroll(rollno);
+      handleDialog();
+      console.log(profileroll,rollno)
+    }
     const [open, setOpen] = useState(false);
     const [registeropen, setRegisteropen] = useState(false);
     const [dailogData,setDailogData]=useState({name:"",desc:""});
@@ -417,7 +428,7 @@ function ClubScreen() {
                 {currentProducts?.filter((item)=>item.roll===searchroll).map((product) => (
                     
                     <tr key={product.id} className='bg-slate-300'>
-                    <td className="border text-center px-4 py-2"><Link to={`${product.roll}/profile`}><img className="rounded-full w-10 h-10 mx-auto"src={product.userimage}/></Link></td>
+                    <td className="border text-center px-4 py-2"><img onClick={()=>handleDialogData(product.roll)} className="rounded-full w-10 cursor-pointer h-10 mx-auto"src={product.userimage}/></td>
                     <td className="border text-center px-4 py-2">
                         {product.name}
                     </td>
@@ -436,7 +447,7 @@ function ClubScreen() {
                 {currentProducts?.map((product) => (
                     
                     <tr key={product.id}>
-                    <td className="border text-center px-4 py-2"><Link to={`${product.roll}/profile`}><img className="rounded-full w-10 h-10 mx-auto"src={product.userimage}/></Link></td>
+                    <td className="border text-center px-4 py-2"><img onClick={()=>handleDialogData(product.roll)} className="rounded-full cursor-pointer w-10 h-10 mx-auto"src={product.userimage}/></td>
                     <td className="border text-center px-4 py-2">
                         {product.name}
                     </td>
@@ -490,11 +501,9 @@ function ClubScreen() {
                             <p className='text-gray-600'>Branch {item.branch}</p>
                             <p className='text-gray-600'>Section {item.section}</p>
                             <div className='mt-4'>
-                              <Link to={`${item.roll}/profile`}>
-                                <button className='px-4 py-2 bg-brown-900 text-white rounded-lg'>
+                            <button onClick={()=>handleDialogData(item.roll)} className='px-4 py-2 bg-brown-900 text-white rounded-lg'>
                                   View Profile
-                                </button>
-                              </Link>
+                              </button>
                             </div>
                           </div>         
                         </div>
@@ -545,6 +554,14 @@ function ClubScreen() {
                 <span>Confirm</span>
               </Button>
             </DialogFooter>
+          </Dialog>
+          <Dialog
+            size="xs"
+            open={dialog}
+            handler={handleDialog}
+            className="bg-transparent shadow-none"
+          >
+            <ProfileDialog rollno={profileroll} handle={handleDialog}/>
           </Dialog>
     </div>
   )

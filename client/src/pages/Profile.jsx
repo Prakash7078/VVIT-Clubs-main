@@ -9,8 +9,6 @@ import { BASE_URL } from "../config/url";
 import { useParams } from "react-router-dom";
 
 function Profile() {
-  const params=useParams();
-  const {rollno}=params;
    const[edit,setEdit]=useState(false);
    const userInfo=useSelector((state)=>state.auth.userInfo);
    const dispatch=useDispatch();
