@@ -1,121 +1,160 @@
-import { Button,Card,CardHeader,CardBody,Typography, Popover, PopoverHandler,PopoverContent} from '@material-tailwind/react';
-import vvit from '../Images/vvit-main.jpeg'
-import { useEffect, useState } from 'react';
-import { Typewriter } from 'react-simple-typewriter'
-import dash from '../Images/dashboard.png'
 import {
-    IconButton,
-    SpeedDial,
-    SpeedDialHandler,
-    SpeedDialContent,
-    SpeedDialAction,
-  } from "@material-tailwind/react";
-import { BsChatTextFill } from 'react-icons/bs'
-import { AiOutlinePlus } from 'react-icons/ai';
-import AudioComponent from './AudioComponent';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import {motion} from 'framer-motion';
-import { FcSearch } from 'react-icons/fc';
-import { SlCalender } from 'react-icons/sl';
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  Typography,
+  Popover,
+  PopoverHandler,
+  PopoverContent,
+} from "@material-tailwind/react";
+import vvit from "../Images/vvit-main.jpeg";
+import { useEffect, useState } from "react";
+import { Typewriter } from "react-simple-typewriter";
+import dash from "../Images/dashboard.png";
+import {
+  IconButton,
+  SpeedDial,
+  SpeedDialHandler,
+  SpeedDialContent,
+  SpeedDialAction,
+} from "@material-tailwind/react";
+import { BsChatTextFill } from "react-icons/bs";
+import { AiOutlinePlus } from "react-icons/ai";
+import AudioComponent from "./AudioComponent";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { FcSearch } from "react-icons/fc";
+import { SlCalender } from "react-icons/sl";
+import chotu from "../Images/chota.gif";
 function Brand() {
-    const audio = document.getElementById("audiotag");
-    const [isMuted, setIsMuted] = useState(true);
-    const[search,setSearch]=useState("");
-    const navigate=useNavigate();
-    const handleButtonClick = () => {
-        audio.play();
-        setIsMuted(!isMuted);
-      };
-      const userInfo = useSelector((state) => state.auth.userInfo);
-      console.log(userInfo);
-      useEffect(() => {
-        // Trigger audio playback when component mounts
-      }, [isMuted]);
-    // const [openPopover, setOpenPopover] = useState(true);
-    // const triggers = {
-    //     // onabort: () => setOpenPopover(false),
-    //     onClick: () => setOpenPopover(true),
-    // };
-    const handleSearch=()=>{
-      navigate(`/${search}`);
-      setSearch("");
-    }
+  const audio = document.getElementById("audiotag");
+  const [isMuted, setIsMuted] = useState(true);
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    audio.play();
+    setIsMuted(!isMuted);
+  };
+  const userInfo = useSelector((state) => state.auth.userInfo);
+  console.log(userInfo);
+  useEffect(() => {
+    // Trigger audio playback when component mounts
+  }, [isMuted]);
+  // const [openPopover, setOpenPopover] = useState(true);
+  // const triggers = {
+  //     // onabort: () => setOpenPopover(false),
+  //     onClick: () => setOpenPopover(true),
+  // };
+  const handleSearch = () => {
+    navigate(`/${search}`);
+    setSearch("");
+  };
   return (
-    <div id="#home" className=''>
-        <Card
-            shadow={false}
-            className="relative rounded-none grid h-[25rem] lg:h-[40rem] xl:h-[60rem] w-full  sm:max-w-full items-end justify-center overflow-hidden text-center mt-5 md:mt-0"
-            >
-            <CardHeader
-                floated={false}
-                shadow={true}
-                color="transparent"
-                className={`absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center zoom-in-out`}
-                style={{ backgroundImage:`url(${vvit})`}}>
-                <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/40 via-black/20" />
-            </CardHeader>
-            <CardBody className="relative px-6 md:px-12 top-24 md:right-96 xl:mr-60 xl:top-5 hidden lg:block ">
-                <motion.div
-                initial={{scale:0}}
-                whileInView={{scale:1}}
-                transition={{duration:0.7}}>
-                <div className='backdrop-blur-md '>
-                    {/* <PopoverHandler >
+    <div
+      id="#home"
+      className=" m-0 pt-28 lg:pb-52  lg:pt-40 to-bg-black-20 bg-gradient-to-t from-black/70 via-black/30  h-full w-full rounded-none bg-cover bg-center zoominout"
+      style={{ backgroundImage: `url(${vvit})` }}
+    >
+      <div className="flex items-center md:justify-between justify-center mx-16">
+        <motion.div
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className=" ">
+            {/* <PopoverHandler >
                         <Button className=''color='white'>Basic Info</Button>
                     </PopoverHandler> */}
-                    <div className="w-[24rem] p-0 overflow-y-auto lg:flex z-10 hidden">
-                        <div className="p-4">
-                        <Typography color="white" className="font-medium mb-8">VVIT Clubs</Typography>
-                        <Typography variant="small" color="white" className="font-normal mb-12">
-                            Material Tailwind is an easy to use components library for Tailwind CSS and Material Design. 
-                        </Typography>
-                        <Link to="/calender" className="inline-block">
-                            <Button size="sm" gradient="text"  className="flex items-center gap-1 capitalize">
-                            View Calender
-                            </Button>
-                        </Link>
-                        </div>
-                        <img 
-                        src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhbSUyMGJ1aWxkaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                        alt="image"
-                        className="w-1/2 h-full object-cover"
-                        />
-                    </div>
-                </div>
-                </motion.div>
-            </CardBody>
-            <div className='flex items-center gap-2 relative bottom-20 mx-10 h-fit  md:hidden  w-fit border-b-2 border-white'>
-              <input className='bg-transparent w-full outline-none text-white  ' placeholder='Club...' value={search} onChange={(e)=>setSearch(e.target.value.toUpperCase())}/>
-              <FcSearch className='cursor-pointer' color='white' size={35} onClick={handleSearch}/>
+            <div className="lg:w-[22rem] w-[20rem] backdrop-blur-md p-0 overflow-y-auto md:flex z-10 hidden">
+              <div className="p-4">
+                <Typography color="white" className="font-medium mb-8">
+                  VVIT Clubs
+                </Typography>
+                <Typography
+                  variant="small"
+                  color="white"
+                  className="font-normal mb-12"
+                >
+                  Material Tailwind is an easy to use components library for
+                  Tailwind CSS and Material Design.
+                </Typography>
+                <Link to="/calender" className="inline-block">
+                  <Button
+                    size="sm"
+                    gradient="text"
+                    className="flex items-center gap-1 capitalize"
+                  >
+                    View Calender
+                  </Button>
+                </Link>
+              </div>
+              <img
+                src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhbSUyMGJ1aWxkaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                alt="image"
+                className="w-1/2  object-cover"
+              />
             </div>
-            <span className='font-bold sm:text-2xl lg:text-4xl font-serif text-white py-2 relative bottom-44 lg:bottom-80 xl:bottom-96  lg:left-96 xl:ml-48 h-fit mx-10 backdrop-blur-md'>
-                  
-                  <Typewriter
-                    words={['WELCOME', 'TO','VVIT', 'WELCOME TO VVIT']}
-                    loop={3}
-                    typeSpeed={70}
-                    deleteSpeed={50}
-                    delaySpeed={1000}
-                />
-                <br />
-                <h1>JOIN THE CLUB</h1>
-              </span>
-        </Card>
-        <div className='fixed lg:top-3/4 sm:top-80 right-8 z-50'>
+          </div>
+        </motion.div>
+        <div className="flex flex-col gap-16 items-center  lg:pb-0 pb-20">
+          <div className="flex items-center gap-2    md:hidden  border-b-2 border-white">
+            <input
+              className="bg-transparent w-full outline-none text-white  "
+              placeholder="Club..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value.toUpperCase())}
+            />
+            <FcSearch
+              className="cursor-pointer"
+              color="white"
+              size={35}
+              onClick={handleSearch}
+            />
+          </div>
+          <span className="font-bold flex flex-col items-center sm:text-2xl lg:text-4xl font-serif text-white py-10  h-fit  ">
+            {/* <Typewriter
+                      words={['WELCOME', 'TO','VVIT', 'WELCOME TO VVIT']}
+                      loop={3}
+                      typeSpeed={70}
+                      deleteSpeed={50}
+                      delaySpeed={1000}
+                  /> */}
+            <img src={chotu} className="lg:w-96 w-72" alt="gif" />
+            {/* <h1 >See All Events</h1> */}
+          </span>
+        </div>
+      </div>
+      <div className="fixed lg:top-3/4 sm:top-80 right-8 z-50">
         <SpeedDial>
           <SpeedDialHandler>
-            <IconButton color='brown' size="lg" className="rounded-full">
-              <AiOutlinePlus  className="h-5 w-5 transition-transform group-hover:rotate-45 " />
+            <IconButton color="brown" size="lg" className="rounded-full">
+              <AiOutlinePlus className="h-5 w-5 transition-transform group-hover:rotate-45 " />
             </IconButton>
           </SpeedDialHandler>
-          <SpeedDialContent >
-            {userInfo && (userInfo.isAdmin || userInfo.category==="Coordinator") && <SpeedDialAction >
-              <Link to='/chat' ><BsChatTextFill className="h-5 w-5"  /></Link>
-            </SpeedDialAction>}
-            {userInfo && userInfo.isAdmin && <SpeedDialAction>
-              <Link to='/dashboard'><IconButton variant="outlined" color='white' className="rounded-full"><img src={dash} alt='dash'/></IconButton></Link>
-            </SpeedDialAction>}
+          <SpeedDialContent>
+            {userInfo &&
+              (userInfo.isAdmin || userInfo.category === "Coordinator") && (
+                <SpeedDialAction>
+                  <Link to="/chat">
+                    <BsChatTextFill className="h-5 w-5" />
+                  </Link>
+                </SpeedDialAction>
+              )}
+            {userInfo && userInfo.isAdmin && (
+              <SpeedDialAction>
+                <Link to="/dashboard">
+                  <IconButton
+                    variant="outlined"
+                    color="white"
+                    className="rounded-full"
+                  >
+                    <img src={dash} alt="dash" />
+                  </IconButton>
+                </Link>
+              </SpeedDialAction>
+            )}
             {/* <SpeedDialAction>
 
             <AudioComponent isMuted={isMuted} />
@@ -187,12 +226,11 @@ function Brand() {
               )}
             </div>
             </SpeedDialAction> */}
-           </SpeedDialContent>
+          </SpeedDialContent>
         </SpeedDial>
-        </div>
-
+      </div>
     </div>
-  )
+  );
 }
 
-export default Brand
+export default Brand;
