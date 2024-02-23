@@ -31,7 +31,7 @@ function Calender() {
         fetchData();
    },[dispatch]);
   return (
-    <div className='mt-28 h-[30rem] md:my-28 md:mx-5  shadow-lg p-5 shadow-blue-400'>
+    <div className='mt-28 h-[30rem] md:my-28 md:mx-5  shadow-lg p-5 bg-orange-100'>
         <Calendar localizer={localizer} events={formattedEvents} />
     </div>
   )
