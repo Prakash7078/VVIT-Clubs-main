@@ -1,6 +1,9 @@
 import React, { useState } from 'react'; // Import useState for managing the showMore state
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import YouTube from 'react-youtube';
 import vvit from '../Images/vvit-main.jpeg';
 import dance from '../Images/dance1.avif';
 import music from '../Images/music.jpg';
@@ -9,6 +12,14 @@ import { Button} from "@material-tailwind/react";
 
 function Spliders() {
   const images = [vvit,dance,music, vvit,dance];
+  const opts = {
+    height: '390',
+    width: '640',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
   // const [showMore, setShowMore] = useState(false); // Initialize the showMore state
 
   // const toggleShowMore = () => {
@@ -23,7 +34,9 @@ function Spliders() {
           <p className="w-full lg:leading-loose text-gray-700">
             Experience the vibrant tapestry of talent as our college clubs take center stage during celebrity visits! From electrifying dance performances that defy gravity to soul-stirring musical renditions that captivate the senses, our clubs showcase unparalleled skills and creativity.
           </p>
+          <Link to="/gallery">
           <Button color='brown'>Visit Glory</Button>
+        </Link>
           {/* <button onClick={toggleShowMore} className='text-blue-300 font-bold text-sm hover:bg-blue-gray-300 w-fit mx-auto p-1 rounded-lg mt-2'>
             {showMore ? 'Read Less' : 'Read More'}
           </button> */}

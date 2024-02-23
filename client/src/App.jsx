@@ -5,10 +5,11 @@ import Login from './pages/Login';
 import Navbar from './Components/Navbar';
 import ClubScreen from './pages/ClubScreen';
 import UserProfile from './Components/UserProfile';
-
+import ClubDetails from './Components/ClubDetails.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Spliders from './Components/Spliders.jsx';
+import Gallery from './Components/Gallery.jsx';
 import Welcome from './pages/admin/Welcome';
 import AllClubs from './pages/admin/AllClubs';
 import AllEvents from './pages/admin/AllEvents';
@@ -21,8 +22,9 @@ import Reviews from './pages/admin/Reviews';
 import PasswordRequest from './pages/PasswordRequest';
 import ResetPassword from './pages/ResetPassword';
 import Chat from './Components/Chat';
-import Calender from './Components/Calender';
+import Calender from './Components/Calender.jsx';
 import Allevents from './Components/Allevents';
+import EventGuestList from './Components/EventGuestList.jsx';
 // import { Dialog } from '@material-tailwind/react';
 
 function App() {
@@ -41,7 +43,7 @@ function App() {
         <Route path="/reset-password/:id/:token" element={<ResetPassword/>}/>
         <Route path="/myprofile" element={<UserProfile/>} />
         <Route path="/dashboard" element={<Welcome/>}/>  
-
+        <Route path="/clubDetails" element={<ClubDetails />} />
         <Route path="/admin/clubs" element={<AllClubs/>}/>        
         <Route path="/admin/events" element={<AllEvents/>}/>        
         <Route path="/admin/registers" element={<AllRegistrations/>}/>        
@@ -53,9 +55,11 @@ function App() {
         <Route path="/admin/addEvent" element={<Event/>}/>   
         <Route path="/admin/updateEvent/:eventname" element={<Event/>}/>   
         <Route path="/admin/reviews" element={<Reviews/>}/>
+        <Route path="/eventGuestList" element={<EventGuestList/>}/>
 
         <Route path="/allEvents" element={<Allevents/>}/>
-
+        <Route path="/" exact component={Spliders} />
+        <Route path="/gallery" exact component={Gallery} />
       </Routes>
       </BrowserRouter>
       <div>
