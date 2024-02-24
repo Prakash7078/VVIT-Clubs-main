@@ -16,18 +16,35 @@ function Signup() {
         rollno:"",
         admin:false,
     });
+    const [error, setError] = useState('');
     const dispatch = useDispatch();
 	const navigate = useNavigate();
     const userInfo = useSelector((state) => state.auth.userInfo);
     
 	const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
+        setError(''); // Clear any previous error when the user makes changes
     };
     const handleFile=(e)=>{
         setData({...data,image:e.target.files[0]});
     }
+
+    const validateRollNo = (rollno) => {
+        const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+        return rollno.length === 10 && alphanumericRegex.test(rollno);
+      };
     const handleSignup=async(e)=>{
         e.preventDefault();
+
+        if (!validateRollNo(data.rollno)) {
+            // Rollno doesn't meet the constraints
+            // You can show an error message or handle it as needed
+            setError('Invalid rollno. Please enter a 10-digit alphanumeric rollno.');
+            return;
+          }
+          // Include image in data only if a file is selected
+        
+
         await dispatch(signupUser(data));
         navigate('/');
     }
@@ -89,6 +106,7 @@ function Signup() {
 
                     <div>
                         <Input type="text" label="RollNo"name="rollno" onChange={handleChange} value={data.rollno}/>
+                        {error && <Typography className='text-red-500'>{error}</Typography>}
                     </div>
                     <Button onClick={handleSignup} color='brown'>SignUp</Button>
                     <Typography className='mb-5'>Already have an account <Link className='font-semibold ml-3' to='/login'>Login</Link></Typography>

@@ -5,6 +5,8 @@ import clubSlice from "./clubSlice";
 import adminSlice from "./adminSlice";
 import eventSlice from "./eventSlice";
 import chatSlice from "./chatSlice";
+
+
 const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -13,6 +15,7 @@ const store = configureStore({
         chats:chatSlice,
         admin:adminSlice,
         events:eventSlice,
+        
     },
   });
   

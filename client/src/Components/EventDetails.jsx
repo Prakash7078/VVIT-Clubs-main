@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../redux/eventSlice";
 import { MdOutlineEvent } from "react-icons/md";
 import { IoTimeOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
-import { formatedDate, formatedDateTime } from "../config/datetimeConverter";
+import { formatedDateTime } from "../config/datetimeConverter";
 import { getRegisters } from "../redux/registerSlice";
+import EventRegistrations from "./EventRegistrations";
 
 function EventDetails() {
   const { id } = useParams();
@@ -26,16 +27,16 @@ function EventDetails() {
     fetchEvents();
   }, [dispatch]);
   return (
-    <div className="mt-32 grid grid-cols-2">
+    <div className="lg:mt-32 mt-24 grid lg:grid-cols-2 grid-cols-1">
       <div className=" ">
-        <div className="flex justify-center">
+        <div className="flex mx-3 lg:mx-0 justify-center">
           <img
             src={event?.eventimage}
-            className="w-2/3 object-cover rounded-md h-72"
+            className="lg:w-2/3  object-cover rounded-md h-72"
             alt="event"
           />
         </div>
-        <div className="flex shadow-md py-10 px-4 w-2/3 mx-auto my-16 flex-col gap-5 ">
+        <div className="flex shadow-md py-10 px-4 lg:w-2/3 lg:mx-auto mx-4 my-16 flex-col gap-5 ">
           <h1 className="font-bold text-2xl">{event?.eventname} Event</h1>
           <div className="flex items-center gap-3">
             <MdOutlineEvent size={20} className="text-gray-500" />
@@ -51,17 +52,8 @@ function EventDetails() {
           </div>
         </div>
       </div>
-      <div className="">
-        {registers
-          .filter((item) => item.event === event.eventname)
-          .map((register) => (
-            <div>
-              <img src={register.userimage} className="w-20 h-20" alt="user" />
-              <h1>{register.name}</h1>
-              <h1>{register.event}</h1>
-              <h1>{register.isWinner ? "winner" : ""}</h1>
-            </div>
-          ))}
+      <div className="mx-4 relative">
+        <EventRegistrations club={event?.clubname} event={event?.eventname} />
       </div>
     </div>
   );

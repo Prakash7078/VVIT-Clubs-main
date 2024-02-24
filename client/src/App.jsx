@@ -6,7 +6,7 @@ import Navbar from "./Components/Navbar";
 import ClubScreen from "./pages/ClubScreen";
 import UserProfile from "./Components/UserProfile";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Welcome from "./pages/admin/Welcome";
@@ -17,15 +17,15 @@ import AddAdmin from "./pages/admin/AddAdmin";
 import Club from "./pages/admin/Club";
 import Event from "./pages/admin/Event";
 import Reviews from "./pages/admin/Reviews";
-// import AddTestimony from './pages/admin/AddTestimony';
 import PasswordRequest from "./pages/PasswordRequest";
 import ResetPassword from "./pages/ResetPassword";
 import Chat from "./Components/Chat";
 import Calender from "./Components/Calender";
 import Allevents from "./Components/Allevents";
+import EventGuestList from "./Components/EventGuestList";
+import Gallery from "./Components/Gallery";
 import EventDetails from "./Components/EventDetails";
-// import { Dialog } from '@material-tailwind/react';
-
+import ClubDetails from "./Components/ClubDetails";
 function App() {
   return (
     <div className="">
@@ -57,9 +57,11 @@ function App() {
           <Route path="/admin/addEvent" element={<Event />} />
           <Route path="/admin/updateEvent/:eventname" element={<Event />} />
           <Route path="/admin/reviews" element={<Reviews />} />
-
+          <Route path="/eventGuestList" element={<EventGuestList />} />
+          <Route path="/clubdetails" element={<ClubDetails />} />
           <Route path="/allEvents" element={<Allevents />} />
           <Route path="/allEvents/:id/details" element={<EventDetails />} />
+          <Route path="/gallery" exact component={Gallery} />
         </Routes>
       </BrowserRouter>
       <div>
