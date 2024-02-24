@@ -57,7 +57,7 @@ function Brand() {
       className=" m-0 pt-28 lg:pb-52  lg:pt-40 to-bg-black-20 bg-gradient-to-t from-black/70 via-black/30  h-full w-full rounded-none bg-cover bg-center zoominout"
       style={{ backgroundImage: `url(${vvit})` }}
     >
-      <div className="flex items-center md:justify-between justify-center mx-16">
+      <div className="flex items-center md:justify-between justify-center mx-20 my-auto">
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
@@ -69,7 +69,10 @@ function Brand() {
                     </PopoverHandler> */}
             <div className="lg:w-[22rem] w-[20rem] backdrop-blur-md p-0 overflow-y-auto md:flex z-10 hidden">
               <div className="p-4">
-                <Typography color="white" className="font-medium mb-8">
+                <Typography
+                  color="white"
+                  className="font-medium font-bold mb-8"
+                >
                   VVIT Clubs
                 </Typography>
                 <Typography
