@@ -14,18 +14,17 @@ function EventDetails() {
   const events = useSelector((state) => state.events.events);
   const dispatch = useDispatch();
   const [event, setEvent] = useState([]);
-  const registers = useSelector((state) => state.register.registers);
 
   useEffect(() => {
     const fetchEvents = async () => {
-      await dispatch(getEvents());
-      await dispatch(getRegisters());
+      dispatch(getEvents());
+      dispatch(getRegisters());
       const eventdetails = events.find((item) => item._id === id);
-      console.log(eventdetails);
+      console.log("eventdetails", eventdetails);
       setEvent(eventdetails);
     };
     fetchEvents();
-  }, [dispatch]);
+  }, [dispatch,id]);
   return (
     <div className="lg:mt-32 mt-24 grid lg:grid-cols-2 grid-cols-1">
       <div className=" ">
@@ -52,9 +51,11 @@ function EventDetails() {
           </div>
         </div>
       </div>
+      
       <div className="mx-4 relative">
-        <EventRegistrations club={event?.clubname} event={event?.eventname} />
+        <EventRegistrations club={event?.clubname} event={event?._id} />
       </div>
+      
     </div>
   );
 }

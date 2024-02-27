@@ -10,7 +10,8 @@ import { useParams } from 'react-router-dom';
 function Club() {
     const params=useParams();
     const {clubname}=params;
-    const[clubdata,setClubdata]=useState({id:"",image:null,name:"",desc:""});
+    const userInfo=useSelector((state)=>state.auth.userInfo);
+    const[clubdata,setClubdata]=useState({id:"",user:userInfo,image:null,name:"",desc:""});
     const clubs=useSelector((state)=>state.clubs.clubs);
     const dispatch=useDispatch();
     useEffect(()=>{

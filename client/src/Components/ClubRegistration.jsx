@@ -1,12 +1,14 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Input } from '@material-tailwind/react'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { clubRegister } from '../redux/clubSlice';
 
 function ClubRegistration({value,club}) {
   const userInfo = useSelector((state) => state.auth.userInfo);
   const dispatch=useDispatch();
-  const[data,setData]=useState({clubname:club,category:userInfo.category,username:userInfo.username,year:userInfo.year,branch:userInfo.branch,rollno:userInfo.rollno,section:userInfo.section,image:userInfo.image})
+  const clubs=useSelector((state) => state.clubs.clubs);
+  const clubdetails=clubs.find((item)=>item.name===club);
+  const[data,setData]=useState({club:clubdetails,user:userInfo});
   const handleRegister=()=>{
     dispatch(clubRegister({data}));
     value();

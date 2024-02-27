@@ -33,11 +33,12 @@ export const deleteClub=createAsyncThunk("api/deleteClub",async(id)=>{
         toast.error("Club not deleted");
     }
 })
-export const updateClub=createAsyncThunk("api/updateClub",async({id,name,image,desc})=>{
+export const updateClub=createAsyncThunk("api/updateClub",async({id,user, name,image,desc})=>{
     try{
         console.log(image);
         const result=await axios.patch(`${BASE_URL}/api/admin/updateClub`,{
             id,
+            user,
             name,
             image,
             desc,
@@ -52,9 +53,10 @@ export const updateClub=createAsyncThunk("api/updateClub",async({id,name,image,d
         console.log(err);
     }
 })
-export const addClub=createAsyncThunk("api/addClub",async({name,image,desc})=>{
+export const addClub=createAsyncThunk("api/addClub",async({user, name,image,desc})=>{
     try{
         const result=await axios.post(`${BASE_URL}/api/admin/addClub`,{
+            user,
             name,
             image,
             desc,

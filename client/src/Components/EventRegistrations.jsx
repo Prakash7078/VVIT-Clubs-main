@@ -6,8 +6,10 @@ import { Input, Button, Switch } from "@material-tailwind/react";
 import ReactPaginate from "react-paginate";
 import gold from "../Images/gold-medal.png";
 import silver from "../Images/silver-medal.png";
-import { BsXLg } from "react-icons/bs";
-function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
+import { Dialog } from "@material-tailwind/react";
+import ProfileDialog from "../Components/ProfileDialog";
+
+function EventRegistrations({ club, handleOpen, event_id }) {
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 10; // Number of products per page
   const [yearFilter, setYearFilter] = useState("All");
@@ -15,9 +17,14 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
   const [studentFilter, setStudentFilter] = useState(false);
   const [coordinatorFilter, setCoordinatorFilter] = useState(false);
   const [searchroll, setSearchroll] = useState("");
+  const[profileroll,setProfileroll]=useState("");
   const userInfo = useSelector((state) => state.auth.userInfo);
   const dispatch = useDispatch();
   const registers = useSelector((state) => state.register.registers);
+  const [dialog, setDialog] = useState(false);
+  const handleDialog = () => {
+    setDialog(!dialog);
+  };
   useEffect(() => {
     const fetchData = async () => {
       console.log("user", userInfo);
@@ -28,7 +35,11 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
   const handleCategoryChange = (e) => {
     setYearFilter(e.target.value);
   };
-
+  const handleDialogData = (rollno) => {
+    setProfileroll(rollno);
+    handleDialog();
+    console.log(profileroll, rollno);
+  };
   const handleBranchChange = (e) => {
     setBranchFilter(e.target.value);
   };
@@ -41,13 +52,25 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
     setCoordinatorFilter(e.target.checked);
   };
   const filteredProducts = registers?.filter((product) => {
-    if (product.club !== club) return false;
-    if (event && product.event !== event) return false;
-    if (yearFilter !== "All" && String(product.year) !== yearFilter)
+    if (product.clubname !== club) return false;
+    if (event_id && product.event._id !== event_id) return false;
+    if (
+      yearFilter !== "All" &&
+      String(product?.eventregisteruser?.year) !== yearFilter
+    )
       return false;
-    if (branchFilter !== "All" && product.branch !== branchFilter) return false;
-    if (studentFilter && product.category !== "Student") return false;
-    if (coordinatorFilter && product.category !== "Coordinator") return false;
+    if (
+      branchFilter !== "All" &&
+      product?.eventregisteruser?.branch !== branchFilter
+    )
+      return false;
+    if (studentFilter && product?.eventregisteruser?.category !== "Student")
+      return false;
+    if (
+      coordinatorFilter &&
+      product?.eventregisteruser?.category !== "Coordinator"
+    )
+      return false;
     return true;
   });
   // Calculate the number of pages
@@ -183,36 +206,40 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
             </thead>
             <tbody>
               {currentProducts
-                ?.filter((item) => item.roll === searchroll)
+                ?.filter(
+                  (item) => item?.eventregisteruser?.rollno === searchroll
+                )
                 .map((product) => (
-                  <tr key={product?.id} className="bg-slate-300">
+                  <tr key={product?._id} className="bg-slate-300">
                     <td className="border text-center px-4 py-2">
                       <img
-                        onClick={() => handleDialogData(product.roll)}
+                        onClick={() =>
+                          handleDialogData(product?.eventregisteruser?.rollno)
+                        }
                         className="rounded-full w-10 cursor-pointer h-10 mx-auto"
-                        src={product.userimage}
+                        src={product?.eventregisteruser?.image}
                       />
                     </td>
                     <td className="border text-center px-4 py-2">
-                      {product?.name}
+                      {product?.eventregisteruser?.name}
                     </td>
                     <td className="border text-center px-4 py-2">
-                      {product?.event}
+                      {product?.event?.eventname}
                     </td>
                     <td className="border text-center px-4 py-2">
-                      {product?.category}
+                      {product?.eventregisteruser?.category}
                     </td>
                     <td className="border text-center px-4 py-2">
-                      {product?.year}
+                      {product?.eventregisteruser?.year}
                     </td>
                     <td className="border text-center px-4 py-2">
-                      {product?.branch}
+                      {product?.eventregisteruser?.branch}
                     </td>
                     <td className="border text-center px-4 py-2">
-                      {product?.roll}
+                      {product?.eventregisteruser?.rollno}
                     </td>
                     <td className="border text-center px-4 py-2">
-                      {product?.section}
+                      {product?.eventregisteruser?.section}
                     </td>
                     <td>
                       {userInfo &&
@@ -224,14 +251,20 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
                                 src={gold}
                                 className="w-10 h-10 object-cover"
                                 onClick={() =>
-                                  handleWinner(product.roll, product.isWinner)
+                                  handleWinner(
+                                    product?.eventregisteruser?.rollno,
+                                    product.isWinner
+                                  )
                                 }
                               />
                             ) : (
                               <Switch
                                 color="red"
                                 onClick={() =>
-                                  handleWinner(product.roll, product.isWinner)
+                                  handleWinner(
+                                    product?.eventregisteruser?.rollno,
+                                    product.isWinner
+                                  )
                                 }
                               />
                             )}
@@ -248,14 +281,20 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
                                 src={silver}
                                 className="w-10 h-10 object-cover"
                                 onClick={() =>
-                                  handleRunner(product.roll, product.isRunner)
+                                  handleRunner(
+                                    product?.eventregisteruser?.rollno,
+                                    product.isRunner
+                                  )
                                 }
                               />
                             ) : (
                               <Switch
                                 color="red"
                                 onClick={() =>
-                                  handleRunner(product.roll, product.isRunner)
+                                  handleRunner(
+                                    product?.eventregisteruser?.rollno,
+                                    product.isRunner
+                                  )
                                 }
                               />
                             )}
@@ -265,34 +304,36 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
                   </tr>
                 ))}
               {currentProducts?.map((product) => (
-                <tr key={product.id}>
+                <tr key={product?.eventregisteruser?._id}>
                   <td className="border text-center px-4 py-2">
                     <img
-                      onClick={() => handleDialogData(product.roll)}
+                      onClick={() =>
+                        handleDialogData(product?.eventregisteruser?.rollno)
+                      }
                       className="rounded-full cursor-pointer w-10 h-10 mx-auto"
-                      src={product.userimage}
+                      src={product?.eventregisteruser?.image}
                     />
                   </td>
                   <td className="border text-center px-4 py-2">
-                    {product.name}
+                    {product?.eventregisteruser?.username}
                   </td>
                   <td className="border text-center px-4 py-2">
-                    {product.event}
+                    {product?.event?.eventname}
                   </td>
                   <td className="border text-center px-4 py-2">
-                    {product.category}
+                    {product?.eventregisteruser?.category}
                   </td>
                   <td className="border text-center px-4 py-2">
-                    {product.year}
+                    {product?.eventregisteruser?.year}
                   </td>
                   <td className="border text-center px-4 py-2">
-                    {product.branch}
+                    {product?.eventregisteruser?.branch}
                   </td>
                   <td className="border text-center px-4 py-2">
-                    {product.roll}
+                    {product?.eventregisteruser?.rollno}
                   </td>
                   <td className="border text-center px-4 py-2">
-                    {product.section}
+                    {product?.eventregisteruser?.section}
                   </td>
                   <td>
                     {userInfo &&
@@ -304,14 +345,20 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
                               src={gold}
                               className="w-10 h-10 object-cover"
                               onClick={() =>
-                                handleWinner(product.roll, product.isWinner)
+                                handleWinner(
+                                  product?.eventregisteruser?.rollno,
+                                  product.isWinner
+                                )
                               }
                             />
                           ) : (
                             <Switch
                               color="red"
                               onClick={() =>
-                                handleWinner(product.roll, product.isWinner)
+                                handleWinner(
+                                  product?.eventregisteruser?.rollno,
+                                  product.isWinner
+                                )
                               }
                             />
                           )}
@@ -328,14 +375,20 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
                               src={silver}
                               className="w-10 h-10 object-cover"
                               onClick={() =>
-                                handleRunner(product.roll, product.isRunner)
+                                handleRunner(
+                                  product?.eventregisteruser?.rollno,
+                                  product.isRunner
+                                )
                               }
                             />
                           ) : (
                             <Switch
                               color="red"
                               onClick={() =>
-                                handleRunner(product.roll, product.isRunner)
+                                handleRunner(
+                                  product?.eventregisteruser?.rollno,
+                                  product.isRunner
+                                )
                               }
                             />
                           )}
@@ -375,6 +428,14 @@ function EventRegistrations({ club, handleOpen, handleDialogData, event }) {
         nextClassName="px-2 cursor-pointer"
         breakClassName="px-2"
       />
+      <Dialog
+        size="xs"
+        open={dialog}
+        handler={handleDialog}
+        className="bg-transparent shadow-none"
+      >
+        <ProfileDialog rollno={profileroll} handle={handleDialog} />
+      </Dialog>
     </div>
   );
 }

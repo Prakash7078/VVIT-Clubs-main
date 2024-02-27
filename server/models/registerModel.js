@@ -1,14 +1,8 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 const registerModel=new mongoose.Schema({
-    club:{type:String,required:true},
-    event:{type:String,required:true},
-    category:{type:String,required:true},
-    name:{type:String,required:true},
-    userimage:{type:String},
-    year:{type:Number,required:true},
-    branch:{type:String,required:true},
-    roll:{type:String,required:true,unique:true},
-    section:{type:String,required:true},
+    clubname: {type: String, required: true},
+    event:{type: Object, required: true},
+    eventregisteruser:{type: Object,required: true},
     isWinner:{type:Boolean,required:true},
     isRunner:{type:Boolean,required:true},
 },{

@@ -111,7 +111,8 @@ function ClubScreen() {
     if (userInfo && registers.length > 0) {
       const res = registers.find(
         (register) =>
-          register.roll === userInfo.rollno && register.club === name
+          register.eventregisteruser.rollno === userInfo.rollno &&
+          register.clubname === name
       );
 
       // Check if a matching register object was found
@@ -130,25 +131,17 @@ function ClubScreen() {
   // const handleSelected=(rollno)=>{
   //      setSelectedRegisteredroll((prevRegistration) => (prevRegistration === rollno ? null : rollno));
   // }
-  const filteRegisters = registers?.filter((product) => product.club === name);
-  const handleRegister = async (clubname, eventname) => {
-    const club = clubname;
-    const event = eventname;
+  const filteRegisters = registers?.filter(
+    (product) => product.clubname === name
+  );
+  const handleRegister = async (clubname, event) => {
     if (userInfo) {
-      const { category, username, image, branch, year, section, rollno } =
-        userInfo;
       try {
         const res1 = await dispatch(
           addRegister({
-            club,
+            clubname,
             event,
-            category,
-            username,
-            image,
-            branch,
-            year,
-            section,
-            rollno,
+            userInfo,
           })
         );
         await dispatch(getRegisters());
@@ -305,20 +298,22 @@ function ClubScreen() {
                       {event.eventname} Event
                     </Typography>
                     {registerInfo &&
-                    registerInfo.club &&
-                    registerInfo.event === event.eventname ? (
+                    registerInfo?.clubname &&
+                    registerInfo?.event?._id === event?._id ? (
                       <button
                         className="bg-red-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 "
-                        onClick={() => handleDeleteregister(registerInfo.roll)}
+                        onClick={() =>
+                          handleDeleteregister(
+                            registerInfo?.eventregisteruser?.rollno
+                          )
+                        }
                       >
                         UnRegister
                       </button>
                     ) : (
                       <button
                         className="bg-green-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 lg:font-bold "
-                        onClick={() =>
-                          handleRegister(event.clubname, event.eventname)
-                        }
+                        onClick={() => handleRegister(event.clubname, event)}
                       >
                         Register
                       </button>
@@ -348,7 +343,6 @@ function ClubScreen() {
           <EventRegistrations
             club={name}
             handleOpen={handleOpen}
-            handleDialogData={handleDialogData}
           />
         </div>
       )}
@@ -362,18 +356,21 @@ function ClubScreen() {
             {filteRegisters
               .filter((item) => item.isWinner || item.isRunner)
               .map((item) => (
-                <div key={item._id} className=" ">
+                <div key={item?.eventregisteruser?._id} className=" ">
                   <div
                     className={`bg-orange-200 rounded-lg py-20 shadow-lg flex bg-cover bg-center `}
                     style={{ backgroundImage: `url(${congrats})` }}
                   >
                     <div className="flex md:flex-row mx-auto w-fit flex-col items-center lg:gap-10 gap-6">
                       <img
-                        src={item.userimage}
+                        src={item?.eventregisteruser?.image}
                         alt="winorrun"
                         className="w-60 h-60 object-cover rounded-full"
                       />
                       <div className="flex flex-col items-center gap-2">
+                        <h1 className="text-3xl font-semibold pb-3">
+                          {item?.event?.eventname} Event
+                        </h1>
                         <h1 className="text-3xl font-semibold pb-3">
                           {item.isWinner ? (
                             <span className="flex gap-2">
@@ -396,15 +393,25 @@ function ClubScreen() {
                           )}
                         </h1>
                         <h1 className="text-xl font-semibold mt-5">
-                          {item.name}
+                          {item?.eventregisteruser?.username}
                         </h1>
-                        <p className="text-gray-600">{item.roll}</p>
-                        <p className="text-gray-600">Year {item.year}</p>
-                        <p className="text-gray-600">Branch {item.branch}</p>
-                        <p className="text-gray-600">Section {item.section}</p>
+                        <p className="text-gray-600">
+                          {item?.eventregisteruser?.rollno}
+                        </p>
+                        <p className="text-gray-600">
+                          Year {item?.eventregisteruser?.year}
+                        </p>
+                        <p className="text-gray-600">
+                          Branch {item?.eventregisteruser?.branch}
+                        </p>
+                        <p className="text-gray-600">
+                          Section {item?.eventregisteruser?.section}
+                        </p>
                         <div className="mt-4">
                           <button
-                            onClick={() => handleDialogData(item.roll)}
+                            onClick={() =>
+                              handleDialogData(item?.eventregisteruser?.rollno)
+                            }
                             className="px-4 py-2 bg-brown-900 text-white rounded-lg"
                           >
                             View Profile
@@ -430,11 +437,15 @@ function ClubScreen() {
         </div>
       )}
       {clubregisters.filter(
-        (item) => item.category === "Coordinator" && item.club === name
+        (item) =>
+          item?.eventregisteruser?.category === "Coordinator" &&
+          item.clubname === name
       ).length > 0 && (
         <Team
           data={clubregisters.filter(
-            (item) => item.category === "Coordinator" && item.club === name
+            (item) =>
+              item?.eventregisteruser?.category === "Coordinator" &&
+              item.clubname === name
           )}
         />
       )}

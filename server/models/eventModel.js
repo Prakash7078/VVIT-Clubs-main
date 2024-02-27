@@ -1,6 +1,7 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 const eventModel=new mongoose.Schema({
-    clubname:{type:String,required:true},
+    clubname:{type: String, required:true},
+    user:{type: Object, required:true},
     eventname:{type:String,required:true,unique:true},
     eventdate: {
         type:Date,

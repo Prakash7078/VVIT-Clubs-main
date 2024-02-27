@@ -48,11 +48,12 @@ export const updateEvent=createAsyncThunk("api/updateEvent",async({id,club,name,
         console.log(err);
     }
 })
-export const addEvent=createAsyncThunk("api/addEvent",async({club,name,eventdate,image,desc})=>{
+export const addEvent=createAsyncThunk("api/addEvent",async({club,name,user,eventdate,image,desc})=>{
     try{
         const result=await axios.post(`${BASE_URL}/api/admin/addEvent`,{
             club,
             name,
+            user,
             eventdate,
             image,
             desc,
