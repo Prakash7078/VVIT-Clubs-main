@@ -45,7 +45,7 @@ function Allevents() {
   }
 
   return (
-    <div className="mt-32 md:mx-20 mx-8  ">
+    <div className="mt-32 md:mx-20 mx-5  ">
       <div className="font-bold md:text-4xl text-2xl">All Events</div>
       <div className="my-10 bg-[#fff3e0] md:p-8 p-6">
         <div className="flex md:flex-row gap-6 items-center flex-col justify-between border pb-5 border-b-gray-400">
@@ -97,11 +97,11 @@ function Allevents() {
                         <h1>{item?.clubname}</h1>
                       </div>
                       <div className="flex items-center gap-3">
-                        <CiLocationOn className="text-gray-600" size={20} />
+                        <CiLocationOn className="text-gray-600" size={28} />
                         <h1>{item?.description}</h1>
                       </div>
                       <div className="flex items-center gap-3">
-                        <IoTimeOutline size={20} className="text-gray-600" />
+                        <IoTimeOutline size={30} className="text-gray-600" />
                         <h1>{formatedDateTime(item?.eventdate)}</h1>
                       </div>
                     </div>

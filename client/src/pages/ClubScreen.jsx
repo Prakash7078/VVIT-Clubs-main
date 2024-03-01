@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addRegister, getRegisters } from "../redux/registerSlice";
+import { getRegisters } from "../redux/registerSlice";
 import { Rings } from "react-loader-spinner";
 import { getClubRegisters, getClubs } from "../redux/clubSlice";
-import { deleteRegister } from "../redux/registerSlice";
 import {
   Button,
   Card,
@@ -73,12 +71,9 @@ function ClubScreen() {
   const load = useSelector((state) => state.clubs.loading);
   const loading = useSelector((state) => state.auth.loading);
   const userInfo = useSelector((state) => state.auth.userInfo);
-  const [registerInfo, setRegisterInfo] = useState(null);
-  // const registerInfo = useSelector((state) => state.register.registerInfo);
-  const registers = useSelector((state) => state.register.registers);
   const clubregisters = useSelector((state) => state.clubs.clubregisters);
   const events = useSelector((state) => state.events.events);
-
+  const registers = useSelector((state) => state.register.registers);
   //fetch event data
   useEffect(() => {
     const fetchData = async () => {
@@ -90,41 +85,6 @@ function ClubScreen() {
     };
     fetchData();
   }, [dispatch]);
-  useEffect(() => {
-    findRegister();
-  }, [events]);
-
-  const handleDeleteregister = async (rollno) => {
-    try {
-      await dispatch(deleteRegister(rollno));
-      await dispatch(getRegisters());
-      await findRegister();
-      setRegisterInfo(null);
-      console.log("delete", registerInfo);
-    } catch (err) {
-      toast.error("Registration not deleted succesfully");
-    }
-  };
-  //Find the specific register of club .
-  const findRegister = async () => {
-    await dispatch(getRegisters());
-    if (userInfo && registers.length > 0) {
-      const res = registers.find(
-        (register) =>
-          register.eventregisteruser.rollno === userInfo.rollno &&
-          register.clubname === name
-      );
-
-      // Check if a matching register object was found
-      if (res) {
-        setRegisterInfo(res);
-      } else {
-        // Handle the case where no matching register was found
-        console.log("No matching register found.");
-        setRegisterInfo(null);
-      }
-    }
-  };
 
   //fetch clubs and registers
 
@@ -134,27 +94,7 @@ function ClubScreen() {
   const filteRegisters = registers?.filter(
     (product) => product.clubname === name
   );
-  const handleRegister = async (clubname, event) => {
-    if (userInfo) {
-      try {
-        const res1 = await dispatch(
-          addRegister({
-            clubname,
-            event,
-            userInfo,
-          })
-        );
-        await dispatch(getRegisters());
-        console.log(res1.payload);
-        setRegisterInfo(res1.payload);
-        console.log("registerInfo", registerInfo);
-      } catch (err) {
-        toast.error("You already registered for one of these events");
-      }
-    } else {
-      navigate("/login");
-    }
-  };
+
   if (loading || load) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -269,12 +209,12 @@ function ClubScreen() {
                     floated={false}
                     shadow={false}
                     color="transparent"
-                    className={`absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center`}
+                    className={`absolute inset-0  m-0 h-full w-full rounded-none bg-cover bg-center`}
                     style={{ backgroundImage: `url('${event.eventimage}')` }}
                   >
                     <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/100 via-black/70" />
                   </CardHeader>
-                  <CardBody className="relative  px-6 md:px-12">
+                  <CardBody className="relative mt-12 sm:mt-0  px-6 md:px-12">
                     {userInfo && (
                       <Typography
                         variant="h2"
@@ -297,31 +237,18 @@ function ClubScreen() {
                     >
                       {event.eventname} Event
                     </Typography>
-                    {registerInfo &&
-                    registerInfo?.clubname &&
-                    registerInfo?.event?._id === event?._id ? (
-                      <button
-                        className="bg-red-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 "
-                        onClick={() =>
-                          handleDeleteregister(
-                            registerInfo?.eventregisteruser?.rollno
-                          )
-                        }
-                      >
-                        UnRegister
-                      </button>
-                    ) : (
-                      <button
-                        className="bg-green-500 md:px-8 px-2 lg:py-2 text-white h-fit mt-10 lg:font-bold "
-                        onClick={() => handleRegister(event.clubname, event)}
-                      >
-                        Register
-                      </button>
-                    )}
+                    <button
+                      onClick={() =>
+                        navigate(`/allEvents/${event?._id}/details`)
+                      }
+                      className="bg-[#fd8748] md:px-8 py-2 mb-10 sm:mb-0 text-white font-semibold px-2 rounded-md  h-fit mt-10 "
+                    >
+                      See Details
+                    </button>
                     <Typography
                       variant="h5"
                       color="white"
-                      className="pt-5 pb-8 leading-[1.5] text-gray-400 text-sm lg:text-xl"
+                      className="pt-5 hidden sm:block pb-8 leading-[1.5] text-gray-400 text-sm lg:text-xl"
                     >
                       {event.description}
                       <br />
@@ -340,16 +267,13 @@ function ClubScreen() {
           <h1 className="font-bold  text-2xl sm:text-3xl pt-10 text-center text-brown-700">
             Event Registrations
           </h1>
-          <EventRegistrations
-            club={name}
-            handleOpen={handleOpen}
-          />
+          <EventRegistrations club={name} handleOpen={handleOpen} />
         </div>
       )}
       {filteRegisters.filter((item) => item.isWinner || item.isRunner).length >
         0 && (
         <div className="my-20 lg:mx-32 mx-10 ">
-          <h1 className="text-center text-3xl font-bold mb-16 text-brown-700">
+          <h1 className="text-center sm:text-3xl text-2xl font-bold mb-16 text-brown-700">
             Winners and Runners
           </h1>
           <Slider {...settings}>
@@ -365,7 +289,7 @@ function ClubScreen() {
                       <img
                         src={item?.eventregisteruser?.image}
                         alt="winorrun"
-                        className="w-60 h-60 object-cover rounded-full"
+                        className="md:w-60 w-32 md:h-60 h-32 object-cover rounded-full"
                       />
                       <div className="flex flex-col items-center gap-2">
                         <h1 className="text-3xl font-semibold pb-3">
@@ -438,15 +362,16 @@ function ClubScreen() {
       )}
       {clubregisters.filter(
         (item) =>
-          item?.eventregisteruser?.category === "Coordinator" &&
-          item.clubname === name
+          item?.registeruser?.category === "Coordinator" &&
+          item?.club?.name === name
       ).length > 0 && (
         <Team
           data={clubregisters.filter(
             (item) =>
-              item?.eventregisteruser?.category === "Coordinator" &&
-              item.clubname === name
+              item?.registeruser?.category === "Coordinator" &&
+              item.club?.name === name
           )}
+          handleDialogData={handleDialogData}
         />
       )}
       <Tutorials value={name} />

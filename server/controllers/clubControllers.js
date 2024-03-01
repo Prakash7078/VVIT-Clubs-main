@@ -36,10 +36,9 @@ const updateUserregister = async (req, res) => {
 };
 const clubRegister = async (req, res) => {
   const { club, user } = req.body.data;
-  const res1 = await ClubRegister.findOne({ "user._id": user._id });
+  const res1 = await ClubRegister.findOne({ 'registeruser._id': user._id });
   const user1 = await User.findOne({ rollno: user.rollno });
   if (res1) {
-    console.log(res1);
     return res.json({
       error: true,
       message: `You already registered for ${res1.club.name} club`,

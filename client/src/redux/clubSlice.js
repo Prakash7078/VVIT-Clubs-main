@@ -72,6 +72,7 @@ export const addClub=createAsyncThunk("api/addClub",async({user, name,image,desc
     }
 })
 export const clubRegister=createAsyncThunk("api/clubRegister",async({data})=>{
+    console.log("clubRegister",data);
     const result=await axios.post(`${BASE_URL}/api/clubs/register`,{
         data,
     },{

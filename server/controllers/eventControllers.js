@@ -68,7 +68,7 @@ const eventRegistration = expressAsyncHandler(async (req, res) => {
     if (rollnum) {
       res.json({
         error: true,
-        message: `You already registered for ${rollnum.event} event`,
+        message: `You already registered for ${rollnum.event.eventname} event`,
       });
       return;
     }

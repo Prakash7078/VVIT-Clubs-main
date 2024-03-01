@@ -17,7 +17,7 @@ function EventRegistrations({ club, handleOpen, event_id }) {
   const [studentFilter, setStudentFilter] = useState(false);
   const [coordinatorFilter, setCoordinatorFilter] = useState(false);
   const [searchroll, setSearchroll] = useState("");
-  const[profileroll,setProfileroll]=useState("");
+  const [profileroll, setProfileroll] = useState("");
   const userInfo = useSelector((state) => state.auth.userInfo);
   const dispatch = useDispatch();
   const registers = useSelector((state) => state.register.registers);
@@ -100,7 +100,7 @@ function EventRegistrations({ club, handleOpen, event_id }) {
     await dispatch(getRegisters());
   };
   return (
-    <div>
+    <div className="mx-6">
       <div
         className={`${
           userInfo.isAdmin || userInfo.category === "Coordinator"
