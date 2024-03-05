@@ -100,7 +100,7 @@ function EventRegistrations({ club, handleOpen, event_id }) {
     await dispatch(getRegisters());
   };
   return (
-    <div className="mx-6">
+    <div className="mx-4">
       <div
         className={`${
           userInfo.isAdmin || userInfo.category === "Coordinator"
@@ -188,7 +188,7 @@ function EventRegistrations({ club, handleOpen, event_id }) {
             </Button>
           </div>
         </div>
-        <div className="overflow-x-auto lg:mx-10 bg-white mx-2">
+        <div className="overflow-x-auto rounded-lg lg:mx-10 bg-white mx-1">
           <table className="w-full border-collapse">
             <thead className="top-0 sticky">
               <tr className="bg-orange-500 text-secondary  ">
@@ -221,7 +221,7 @@ function EventRegistrations({ club, handleOpen, event_id }) {
                       />
                     </td>
                     <td className="border text-center px-4 py-2">
-                      {product?.eventregisteruser?.name}
+                      {product?.eventregisteruser?.username}
                     </td>
                     <td className="border text-center px-4 py-2">
                       {product?.event?.eventname}

@@ -57,7 +57,7 @@ function Brand() {
       className=" m-0 pt-28 lg:pb-52  lg:pt-40 to-bg-black-20 bg-gradient-to-t from-black/70 via-black/30  h-full w-full rounded-none bg-cover bg-center zoominout"
       style={{ backgroundImage: `url(${vvit})` }}
     >
-      <div className="flex items-center md:justify-between justify-center mx-20 my-auto">
+      <div className="flex items-center md:justify-between justify-center mx-28 pt-10 my-auto">
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}

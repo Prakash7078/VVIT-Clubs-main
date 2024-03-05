@@ -55,16 +55,17 @@ const forgotPassword=(expressAsyncHandler(async(req,res)=>{
 
 const login=(expressAsyncHandler(async(req,res)=>{
     const user=await User.findOne({email:req.body.data.email});
-    if(user){
-        if(bcrypt.compareSync(req.body.data.password,user.password)){
-            const token=generateToken(user);
-            res
-            .status(201)
-            .json({token, user});
-            return ;
-        }
+    if(!user){
+        res.status(403).send({error:"user not found"});
     }
-    res.status(401).send({message:'invalid Password or Email'});
+    if(bcrypt.compareSync(req.body.data.password,user.password)){
+        const token=generateToken(user);
+        res
+        .status(201)
+        .json({token, user});
+        return ;
+    }
+    res.status(401).send({error:'invalid Password or Email'});
     
 }));
 const signup=(expressAsyncHandler(async(req,res)=>{

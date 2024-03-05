@@ -39,8 +39,12 @@ function ClubScreen() {
 
   const [profileroll, setProfileroll] = useState("");
   const [dialog, setDialog] = useState(false);
+  const [eventRegisterDialog, setEventRegisterDialog] = useState(false);
   const handleDialog = () => {
     setDialog(!dialog);
+  };
+  const handleEventRegisterDialog = () => {
+    setEventRegisterDialog(!eventRegisterDialog);
   };
   const handleDialogData = (rollno) => {
     setProfileroll(rollno);
@@ -262,18 +266,69 @@ function ClubScreen() {
             ))}
         </Slider>
       )}
-      {userInfo && (
+      {userInfo && filteRegisters?.length && (
         <div className="relative ">
           <h1 className="font-bold  text-2xl sm:text-3xl pt-10 text-center text-brown-700">
             Event Registrations
           </h1>
-          <EventRegistrations club={name} handleOpen={handleOpen} />
+          <div className="my-10 md:hidden block">
+            {filteRegisters?.slice(0, 5)?.map((item) => (
+              <div className="" key={item._id}>
+                <div className="bg-white mx-8 mb-3 px-3 py-2 rounded-lg justify-between flex items-center">
+                  <div className="flex items-center">
+                    <img
+                      onClick={() =>
+                        handleDialogData(item?.eventregisteruser?.rollno)
+                      }
+                      src={item?.eventregisteruser?.image}
+                      className="w-20 h-20 rounded-full"
+                      alt="image"
+                    />
+                    <div className="ml-4 flex flex-col gap-1 text-gray-700">
+                      <h1>{item?.eventregisteruser?.username}</h1>
+                      <h1>{item?.eventregisteruser?.category}</h1>
+                      <h1 className="font-semibold">
+                        {item?.eventregisteruser?.rollno}
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="">
+                    {item?.isWinner && (
+                      <img
+                        src={gold}
+                        alt="gold"
+                        className="w-10 h-10 object-cover"
+                      />
+                    )}
+                    {item?.isRunner && (
+                      <img
+                        src={silver}
+                        alt="silver"
+                        className="w-10 h-10 object-cover"
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div className="flex mt-5 justify-center">
+              <button
+                onClick={() => handleEventRegisterDialog(!eventRegisterDialog)}
+                className="border-brown-400 bg-white border-2 px-4 py-2 text-black font-semibold"
+              >
+                See All
+              </button>
+            </div>
+          </div>
+          <div className="hidden md:block">
+            <EventRegistrations club={name} handleOpen={handleOpen} />
+          </div>
         </div>
       )}
       {filteRegisters.filter((item) => item.isWinner || item.isRunner).length >
         0 && (
-        <div className="my-20 lg:mx-32 mx-10 ">
-          <h1 className="text-center sm:text-3xl text-2xl font-bold mb-16 text-brown-700">
+        <div className="my-16 lg:mx-32 mx-10 ">
+          <h1 className="text-center sm:text-3xl text-2xl font-bold mb-10 text-brown-700">
             Winners and Runners
           </h1>
           <Slider {...settings}>
@@ -282,7 +337,7 @@ function ClubScreen() {
               .map((item) => (
                 <div key={item?.eventregisteruser?._id} className=" ">
                   <div
-                    className={`bg-orange-200 rounded-lg py-20 shadow-lg flex bg-cover bg-center `}
+                    className={`bg-orange-200 rounded-lg py-16 shadow-lg flex bg-cover bg-center `}
                     style={{ backgroundImage: `url(${congrats})` }}
                   >
                     <div className="flex md:flex-row mx-auto w-fit flex-col items-center lg:gap-10 gap-6">
@@ -399,6 +454,14 @@ function ClubScreen() {
             <span>Confirm</span>
           </Button>
         </DialogFooter>
+      </Dialog>
+      <Dialog
+        size="xs"
+        open={eventRegisterDialog}
+        handler={handleEventRegisterDialog}
+        className="bg-white shadow-lg "
+      >
+        <EventRegistrations club={name} handleOpen={handleOpen} />
       </Dialog>
       <Dialog
         size="xs"
