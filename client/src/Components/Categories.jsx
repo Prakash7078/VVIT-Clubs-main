@@ -93,11 +93,11 @@ function Categories() {
                     >
                       <img
                         src={product.image}
-                        className="  w-full h-80 xl:h-72 object-fill rounded-t-lg mb-10"
+                        className="  w-full h-96 xl:h-72 object-fill rounded-t-lg mb-10"
                         alt="event"
                       />
                       <div className="absolute cursor-pointer left-0 top-0 right-0 bottom-0 backdrop-brightness-50">
-                        <div className="absolute bottom-12 inset-x-0 flex flex-col gap-5 text-white items-center">
+                        <div className="absolute bottom-20 inset-x-0 flex flex-col gap-5 text-white items-center">
                           <h1 className="font-bold text-xl">{product.name}</h1>
                           <Button
                             onClick={() => checkLogin(product.name)}

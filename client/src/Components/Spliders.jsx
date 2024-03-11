@@ -1,25 +1,34 @@
-import React, { useState } from 'react'; // Import useState for managing the showMore state
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
+import React, { useState, useEffect } from "react"; // Import useState for managing the showMore state
+// import { Splide, SplideSlide } from "@splidejs/react-splide";
+// import "@splidejs/react-splide/css";
 
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import YouTube from 'react-youtube';
-import vvit from '../Images/vvit-main.jpeg';
-import dance from '../Images/dance1.avif';
-import music from '../Images/music.jpg';
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import vvit from "../Images/vvit-main.jpeg";
+import dance from "../Images/dance1.avif";
+import music from "../Images/music.jpg";
 // import {motion} from 'framer-motion'
-import { Button} from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 
 function Spliders() {
-  const images = [vvit,dance,music, vvit,dance];
-  const opts = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-    },
-  };
+  const images = [vvit, dance, music, vvit, dance];
+  // const opts = {
+  //   height: '390',
+  //   width: '640',
+  //   playerVars: {
+  //     // https://developers.google.com/youtube/player_parameters
+  //     autoplay: 1,
+  //   },
+  // };
+  const [imageIndex, setImageIndex] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Increment the image index
+      setImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 1000); // Change image every second (1000 milliseconds)
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [imageIndex, images.length]);
   // const [showMore, setShowMore] = useState(false); // Initialize the showMore state
 
   // const toggleShowMore = () => {
@@ -27,23 +36,35 @@ function Spliders() {
   // };
 
   return (
-    <div id="home" className='bg-[#fff3e0] grid md:grid-cols-2 gap-5  md:px-10 py-16 lg:py-20'>
-      
-      <div className='flex flex-col md:items-start  px-8 md:px-0 items-center md:gap-6 gap-4 lg:w-3/4 mx-auto font-medium'>
-          <h1 className='text-2xl font-bold'>Celebrity Visits of College</h1>
-          <p className="w-full lg:leading-loose text-gray-700">
-            Experience the vibrant tapestry of talent as our college clubs take center stage during celebrity visits! From electrifying dance performances that defy gravity to soul-stirring musical renditions that captivate the senses, our clubs showcase unparalleled skills and creativity.
-          </p>
-          <Link to="/gallery">
-          <Button color='brown'>Visit Glory</Button>
+    <div
+      id="home"
+      className="bg-[#fff3e0] grid md:grid-cols-2 gap-5  md:px-10 py-16 lg:py-20"
+    >
+      <div className="flex flex-col md:items-start  px-8 md:px-0 items-center md:gap-6 gap-4 lg:w-3/4 mx-auto font-medium">
+        <h1 className="text-2xl font-bold">Celebrity Visits of College</h1>
+        <p className="w-full lg:leading-loose text-gray-700">
+          Experience the vibrant tapestry of talent as our college clubs take
+          center stage during celebrity visits! From electrifying dance
+          performances that defy gravity to soul-stirring musical renditions
+          that captivate the senses, our clubs showcase unparalleled skills and
+          creativity.
+        </p>
+        <Link to="/gallery">
+          <Button color="brown">Visit Glory</Button>
         </Link>
-          {/* <button onClick={toggleShowMore} className='text-blue-300 font-bold text-sm hover:bg-blue-gray-300 w-fit mx-auto p-1 rounded-lg mt-2'>
+        {/* <button onClick={toggleShowMore} className='text-blue-300 font-bold text-sm hover:bg-blue-gray-300 w-fit mx-auto p-1 rounded-lg mt-2'>
             {showMore ? 'Read Less' : 'Read More'}
           </button> */}
       </div>
 
       <div className="md:block cursor-pointer w-3/4  mx-auto  ">
-        <Splide
+        <img
+          className="object-cover rounded-md w-full lg:h-72 h-60"
+          src={images[imageIndex]}
+          alt={`Image ${imageIndex + 1}`}
+        />
+
+        {/* <Splide
           options={{
             rewind: true,
             perPage: 1,
@@ -62,7 +83,7 @@ function Spliders() {
               </SplideSlide>
             );
           })}
-        </Splide>
+        </Splide> */}
       </div>
     </div>
   );

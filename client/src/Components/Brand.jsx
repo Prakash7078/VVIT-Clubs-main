@@ -104,7 +104,7 @@ function Brand() {
         <div className="flex flex-col gap-16 items-center  lg:pb-0 pb-20">
           <div className="flex items-center gap-2    md:hidden  border-b-2 border-white">
             <input
-              className="bg-transparent w-full outline-none text-white  "
+              className="bg-transparent  outline-none text-white  "
               placeholder="Club..."
               value={search}
               onChange={(e) => setSearch(e.target.value.toUpperCase())}
@@ -124,7 +124,7 @@ function Brand() {
                       deleteSpeed={50}
                       delaySpeed={1000}
                   /> */}
-            <img src={chotu} className="lg:w-96 w-72" alt="gif" />
+            <img src={chotu} className="w-96" alt="gif" />
             {/* <h1 >See All Events</h1> */}
           </span>
         </div>
