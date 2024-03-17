@@ -28,7 +28,7 @@ function EventDetails() {
       setEvent(eventdetails);
     };
     fetchEvents();
-  }, [dispatch, id]);
+  }, [dispatch, id, events]);
   useEffect(() => {
     findRegister();
   }, [events]);

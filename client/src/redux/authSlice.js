@@ -14,14 +14,14 @@ const initialState = {
 // Async thunk action to handle user login
 export const loginUser = createAsyncThunk(
   "auth/login",
-  async (data) => {
+  async (data,{ rejectWithValue }) => {
     try {
       const response = await axios.post(`${BASE_URL}/api/auth/login`,{
         data,
     });
       return response.data;
     } catch (error) {
-      throw new Error(error.message);
+      return rejectWithValue(error?.response?.data);
 
     }
   }
@@ -121,8 +121,8 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
-        toast.error("Login failed!");
+        state.error = action.payload?.error;
+        toast.error(action.payload?.error);
       });
 
     builder
@@ -141,8 +141,8 @@ const authSlice = createSlice({
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
-        toast.error("Signup failed!");
+        state.error = action.payload.error;
+        toast.error(action.payload.error);
       });
     builder
       .addCase(forgotPassword.pending, (state) => {

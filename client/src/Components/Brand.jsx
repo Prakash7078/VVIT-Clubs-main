@@ -101,10 +101,10 @@ function Brand() {
             </div>
           </div>
         </motion.div>
-        <div className="flex flex-col gap-16 items-center  lg:pb-0 pb-20">
-          <div className="flex items-center gap-2    md:hidden  border-b-2 border-white">
+        <div className="flex flex-col gap-16 items-center lg:pb-0 pb-20 ">
+          <div className="flex md:hidden  border-b-2 border-white">
             <input
-              className="bg-transparent  outline-none text-white  "
+              className="bg-transparent outline-none  text-white  "
               placeholder="Club..."
               value={search}
               onChange={(e) => setSearch(e.target.value.toUpperCase())}
@@ -124,41 +124,41 @@ function Brand() {
                       deleteSpeed={50}
                       delaySpeed={1000}
                   /> */}
-            <img src={chotu} className="w-96" alt="gif" />
+            <img src={chotu} className="md:w-96 w-80" alt="gif" />
             {/* <h1 >See All Events</h1> */}
           </span>
         </div>
       </div>
-      <div className="fixed lg:top-3/4 sm:top-80 right-8 z-50">
-        <SpeedDial>
-          <SpeedDialHandler>
-            <IconButton color="brown" size="lg" className="rounded-full">
-              <AiOutlinePlus className="h-5 w-5 transition-transform group-hover:rotate-45 " />
-            </IconButton>
-          </SpeedDialHandler>
-          <SpeedDialContent>
-            {userInfo &&
-              (userInfo.isAdmin || userInfo.category === "Coordinator") && (
+      {userInfo && (
+        <div className="fixed lg:top-3/4 sm:top-80 right-8 z-50">
+          <SpeedDial>
+            <SpeedDialHandler>
+              <IconButton color="brown" size="lg" className="rounded-full">
+                <AiOutlinePlus className="h-5 w-5 transition-transform group-hover:rotate-45 " />
+              </IconButton>
+            </SpeedDialHandler>
+            <SpeedDialContent>
+              {(userInfo.isAdmin || userInfo.category === "Coordinator") && (
                 <SpeedDialAction>
                   <Link to="/chat">
                     <BsChatTextFill className="h-5 w-5" />
                   </Link>
                 </SpeedDialAction>
               )}
-            {userInfo && userInfo.isAdmin && (
-              <SpeedDialAction>
-                <Link to="/dashboard">
-                  <IconButton
-                    variant="outlined"
-                    color="white"
-                    className="rounded-full"
-                  >
-                    <img src={dash} alt="dash" />
-                  </IconButton>
-                </Link>
-              </SpeedDialAction>
-            )}
-            {/* <SpeedDialAction>
+              {userInfo.isAdmin && (
+                <SpeedDialAction>
+                  <Link to={`/dashboard/${userInfo._id}`}>
+                    <IconButton
+                      variant="outlined"
+                      color="white"
+                      className="rounded-full"
+                    >
+                      <img src={dash} alt="dash" />
+                    </IconButton>
+                  </Link>
+                </SpeedDialAction>
+              )}
+              {/* <SpeedDialAction>
 
             <AudioComponent isMuted={isMuted} />
             <div onClick={handleButtonClick} className="cursor-pointer bg-green-400 rounded-full">
@@ -229,9 +229,10 @@ function Brand() {
               )}
             </div>
             </SpeedDialAction> */}
-          </SpeedDialContent>
-        </SpeedDial>
-      </div>
+            </SpeedDialContent>
+          </SpeedDial>
+        </div>
+      )}
     </div>
   );
 }

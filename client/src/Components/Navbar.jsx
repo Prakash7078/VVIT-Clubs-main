@@ -27,7 +27,6 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen((cur) => !cur);
-    toggleMenu();
   };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -174,7 +173,7 @@ function Navbar() {
               </div>
             )}
             {!userInfo ? (
-              <Button className="bg-brown-400 mx-3" onClick={handleOpen}>
+              <Button className="bg-brown-400 mx-3" onClick={()=>{toggleMenu();handleOpen();}}>
                 Log In
               </Button>
             ) : (
@@ -221,7 +220,7 @@ function Navbar() {
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Login value={handleOpen} />
+        <Login value={handleOpen}/>
       </Dialog>
     </div>
   );

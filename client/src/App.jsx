@@ -26,6 +26,7 @@ import EventGuestList from "./Components/EventGuestList";
 import Gallery from "./Components/Gallery";
 import EventDetails from "./Components/EventDetails";
 import ClubDetails from "./Components/ClubDetails";
+import AllClubDetails from "./Components/ClubDetails";
 function App() {
   return (
     <div className="">
@@ -44,7 +45,7 @@ function App() {
             element={<ResetPassword />}
           />
           <Route path="/myprofile" element={<UserProfile />} />
-          <Route path="/dashboard" element={<Welcome />} />
+          <Route path="/dashboard/:id" element={<Welcome />} />
 
           <Route path="/admin/clubs" element={<AllClubs />} />
           <Route path="/admin/events" element={<AllEvents />} />
@@ -58,7 +59,7 @@ function App() {
           <Route path="/admin/updateEvent/:eventname" element={<Event />} />
           <Route path="/admin/reviews" element={<Reviews />} />
           <Route path="/eventGuestList" element={<EventGuestList />} />
-          <Route path="/clubdetails" element={<ClubDetails />} />
+          <Route path="/clubdetails" element={<AllClubDetails />} />
           <Route path="/allEvents" element={<Allevents />} />
           <Route path="/allEvents/:id/details" element={<EventDetails />} />
           <Route path="/gallery" exact component={Gallery} />
