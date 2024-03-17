@@ -124,7 +124,7 @@ function AllClubs() {
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <Link to={`/admin/updateClub/${item.name}`}>
+                        <Link to={`/admin/${item?.user?._id}/updateClub/${item.name}`}>
                           <BiSolidEditAlt size={22}/>
                         </Link>
                       </td>

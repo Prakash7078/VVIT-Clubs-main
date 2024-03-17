@@ -173,7 +173,13 @@ function Navbar() {
               </div>
             )}
             {!userInfo ? (
-              <Button className="bg-brown-400 mx-3" onClick={()=>{toggleMenu();handleOpen();}}>
+              <Button
+                className="bg-brown-400 mx-3"
+                onClick={() => {
+                  toggleMenu();
+                  handleOpen();
+                }}
+              >
                 Log In
               </Button>
             ) : (
@@ -188,6 +194,7 @@ function Navbar() {
           </ul>
         </div>
       </div>
+
       <div className="hidden md:flex gap-4 items-center">
         {userInfo && userInfo.image != "" && (
           <Route to="/myprofile">
@@ -220,7 +227,7 @@ function Navbar() {
         handler={handleOpen}
         className="bg-transparent shadow-none"
       >
-        <Login value={handleOpen}/>
+        <Login value={handleOpen} />
       </Dialog>
     </div>
   );

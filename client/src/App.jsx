@@ -47,17 +47,17 @@ function App() {
           <Route path="/myprofile" element={<UserProfile />} />
           <Route path="/dashboard/:id" element={<Welcome />} />
 
-          <Route path="/admin/clubs" element={<AllClubs />} />
-          <Route path="/admin/events" element={<AllEvents />} />
-          <Route path="/admin/registers" element={<AllRegistrations />} />
+          <Route path="/admin/:id/clubs" element={<AllClubs />} />
+          <Route path="/admin/:id/events" element={<AllEvents />} />
+          <Route path="/admin/:id/registers" element={<AllRegistrations />} />
           {/* <Route path="/admin/testimony" element={<AddTestimony/>}/>         */}
           {/* <Route path="/admin/registers/:rollno/profile" element={<UserProfile/>}/>         */}
-          <Route path="/admin/addAdmin" element={<AddAdmin />} />
-          <Route path="/admin/addClub" element={<Club />} />
-          <Route path="/admin/updateClub/:clubname" element={<Club />} />
-          <Route path="/admin/addEvent" element={<Event />} />
-          <Route path="/admin/updateEvent/:eventname" element={<Event />} />
-          <Route path="/admin/reviews" element={<Reviews />} />
+          <Route path="/admin/:id/addAdmin" element={<AddAdmin />} />
+          <Route path="/admin/:id/addClub" element={<Club />} />
+          <Route path="/admin/:id/updateClub/:clubname" element={<Club />} />
+          <Route path="/admin/:id/addEvent" element={<Event />} />
+          <Route path="/admin/:id/updateEvent/:eventname" element={<Event />} />
+          <Route path="/admin/:id/reviews" element={<Reviews />} />
           <Route path="/eventGuestList" element={<EventGuestList />} />
           <Route path="/clubdetails" element={<AllClubDetails />} />
           <Route path="/allEvents" element={<Allevents />} />

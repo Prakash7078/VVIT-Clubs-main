@@ -19,13 +19,14 @@ function Sidebar() {
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+  const userInfo =useSelector((state)=>state.auth.userInfo);
   const clubs=useSelector((state)=>state.clubs.clubregisters);
   return (
       <div className='mt-24 '>
          <div className="hidden lg:block">
          <Card className="fixed top-4 w-fit h-full  max-w-[20rem] p-4 shadow-2xl shadow-deep-orange-200 mt-12 bg-[#ffccbc]">
               <List className="font-bold text-black pt-10 ">
-                <Link to="/dashboard">
+                <Link to={`/dashboard/${userInfo?._id}`}>
                   <ListItem>
                     <ListItemPrefix>
                         <ImHome className="h-5 w-5" />
@@ -33,7 +34,7 @@ function Sidebar() {
                     Home
                   </ListItem>
                 </Link>
-                <Link to='/admin/clubs'>
+                <Link to={`/admin/${userInfo?._id}/clubs`}>
                   <ListItem>
                     <ListItemPrefix>
                         <MdEmojiEvents className="h-5 w-5" />
@@ -41,7 +42,7 @@ function Sidebar() {
                     Clubs
                   </ListItem>
                 </Link>
-                <Link to='/admin/events'>
+                <Link to={`/admin/${userInfo?._id}/events`}>
                   <ListItem>
                     <ListItemPrefix>
                         <MdOutlineEmojiEvents className="h-5 w-5" />
@@ -49,7 +50,7 @@ function Sidebar() {
                     Events
                   </ListItem>
                 </Link>
-                <Link to='/admin/registers'>
+                <Link to={`/admin/${userInfo?._id}/registers`}>
                   <ListItem>
                     <ListItemPrefix>
                         <ImEnter className="h-5 w-5" />
@@ -60,7 +61,7 @@ function Sidebar() {
                     </ListItemSuffix>
                   </ListItem>
                 </Link>
-                <Link to='/admin/addAdmin'>
+                <Link to={`/admin/${userInfo?._id}/addAdmin`}>
                   <ListItem>
                     <ListItemPrefix>
                       <BsPersonFillAdd className="h-5 w-5" />
@@ -68,7 +69,7 @@ function Sidebar() {
                     Add Admin
                   </ListItem>
                 </Link>
-                <Link to='/admin/reviews'>
+                <Link to={`/admin/${userInfo?._id}/reviews`}>
                   <ListItem>
                     <ListItemPrefix>
                       <BsPersonFillAdd className="h-5 w-5" />
@@ -76,7 +77,7 @@ function Sidebar() {
                     Reviews
                   </ListItem>
                 </Link>
-                <Link to='/admin/addClub'>
+                <Link to={`/admin/${userInfo?._id}/addClub`}>
                   <ListItem>
                   <ListItemPrefix>
                       <GiHomeGarage className="h-5 w-5" />
@@ -84,7 +85,7 @@ function Sidebar() {
                   Add Club
                 </ListItem>
                 </Link>
-                <Link to='/admin/addEvent'>
+                <Link to={`/admin/${userInfo?._id}/addEvent`}>
                   <ListItem >
                     <ListItemPrefix>
                         <MdEvent className="h-5 w-5" />
