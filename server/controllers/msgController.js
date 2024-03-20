@@ -3,10 +3,16 @@ const expressAsyncHandler=require('express-async-handler');
 const msg=require('../models/msgsModel');
 const { StatusCodes } = require('http-status-codes');
 const { sendMail } = require('../middleware/sendMail');
+const Notifications = require('../models/notificationModel');
 
 const getMessages=async(req,res)=>{
     const Msg=await msg.find();
     res.status(StatusCodes.OK).json({messages:Msg});
+
+};
+const getNotifications=async(req,res)=>{
+    const Msg=await Notifications.find({'user.rollno':req.params.rollno});
+    res.status(StatusCodes.OK).json({notifications:Msg});
 
 };
 const deleteMessages = async (req, res) => {
@@ -45,4 +51,4 @@ const sendMsg=(expressAsyncHandler(async(req,res)=>{
         text:msgs.text,
     });
 }));
-module.exports={getMessages,getUsermsg,sendMsg,deleteMessages};
+module.exports={getMessages,getUsermsg,sendMsg,deleteMessages,getNotifications};

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../config/url";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,15 +19,16 @@ function UserProfile() {
   const [profileuser, setProfileuser] = useState(null);
   const registers = useSelector((state) => state.register.registers);
   const [feedback, setFeedback] = useState(null);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       const res1 = await axios.get(`${BASE_URL}/api/users/${userInfo.rollno}`);
-      const res3 = await axios.get(`${BASE_URL}/api/msgs/${userInfo.rollno}`);
+      const res3 = await axios.get(
+        `${BASE_URL}/api/msgs/notifications/${userInfo.rollno}`
+      );
       dispatch(getRegisters());
       setProfileuser(res1);
       setFeedback(res3);
-      console.log(registers);
     };
     fetchData();
   }, []);
@@ -41,7 +42,7 @@ function UserProfile() {
       value: "registers",
     },
     {
-      label: "Feedback",
+      label: "Notifications",
       value: "msgs",
     },
   ];
@@ -101,7 +102,12 @@ function UserProfile() {
                             <span className="font-bold">EventName</span>{" "}
                             {item?.event?.eventname}
                           </h1>
-                          <button onClick={()=>navigate(`/allEvents/${item?.event?._id}/details`)} className="mt-3 text-purple-500 font-bold">
+                          <button
+                            onClick={() =>
+                              navigate(`/allEvents/${item?.event?._id}/details`)
+                            }
+                            className="mt-3 text-purple-500 font-bold"
+                          >
                             See Details
                           </button>
                           {/* <h1><span className='font-bold'>Year</span> {item.year}</h1>
@@ -113,13 +119,13 @@ function UserProfile() {
               )}
               {value === "msgs" && feedback && (
                 <div className="flex flex-wrap w-full p-16 gap-10">
-                  {feedback.data.map((item, index) => (
+                  {feedback?.data?.notifications?.map((item, index) => (
                     <div
                       key={index}
                       className="flex flex-col gap-2 shadow-xl p-6"
                     >
-                      <h1 className="font-bold">{item?.name}</h1>
-                      <h1>{item?.email}</h1>
+                      <h1 className="font-bold">{item?.user?.username}:</h1>
+                      <h1>{item?.user?.email}</h1>
                       <h1>{item?.text}</h1>
                     </div>
                   ))}

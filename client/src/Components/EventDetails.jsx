@@ -28,10 +28,28 @@ function EventDetails() {
       setEvent(eventdetails);
     };
     fetchEvents();
-  }, [dispatch, id, events]);
+  }, [dispatch, id, events.length]);
+  const findRegister = () => {
+    if (userInfo && registers.length > 0) {
+      const res = registers.find(
+        (register) =>
+          userInfo.rollno === register.eventregisteruser.rollno &&
+          event?._id === register?.event?._id
+      );
+      console.log("res", res);
+
+      if (res) {
+        setRegisterInfo(res);
+      } else {
+        console.log("No matching register found.");
+        setRegisterInfo(null);
+      }
+    }
+  };
   useEffect(() => {
+    dispatch(getRegisters());
     findRegister();
-  }, [events]);
+  }, [dispatch, event,registerInfo]);
   const handleRegister = async (clubname, event) => {
     if (userInfo) {
       try {
@@ -43,6 +61,7 @@ function EventDetails() {
           })
         );
         await dispatch(getRegisters());
+        await findRegister();
         console.log(res1.payload);
         setRegisterInfo(res1.payload);
         console.log("registerInfo", registerInfo);
@@ -55,25 +74,7 @@ function EventDetails() {
   };
 
   //Find the specific register of club .
-  const findRegister = async () => {
-    await dispatch(getRegisters());
-    if (userInfo && registers.length > 0) {
-      const res = registers.find(
-        (register) =>
-          register.eventregisteruser.rollno === userInfo.rollno &&
-          register.clubname === event?.clubname
-      );
 
-      // Check if a matching register object was found
-      if (res) {
-        setRegisterInfo(res);
-      } else {
-        // Handle the case where no matching register was found
-        console.log("No matching register found.");
-        setRegisterInfo(null);
-      }
-    }
-  };
   const handleDeleteregister = async (rollno) => {
     try {
       await dispatch(deleteRegister(rollno));
@@ -112,9 +113,7 @@ function EventDetails() {
               <h1>{formatedDateTime(event?.eventdate)}</h1>
             </div>
             <div className="mt-3 flex justify-center">
-              {registerInfo &&
-              registerInfo?.clubname &&
-              registerInfo?.event?._id === event?._id ? (
+              {registerInfo ? (
                 <button
                   className="bg-red-500 md:px-8 px-2 lg:py-2 text-white h-fit  "
                   onClick={() =>
@@ -138,7 +137,7 @@ function EventDetails() {
         </div>
 
         <div className="mx-4 relative">
-          <EventRegistrations club={event?.clubname} event={event?._id} />
+          <EventRegistrations club={event?.clubname} event_id={event?._id} />
         </div>
       </div>
     </div>

@@ -1,8 +1,12 @@
 const nodemailer=require("nodemailer");
-const dotenv=require("dotenv");
+const User = require("../models/userModel");
+const Notifications = require("../models/notificationModel");
 const sendMail=async(email,message)=>{
     try{
         //Create a transporter
+        const userInfo=await User.findOne({email:email});
+        await Notifications.create({user: userInfo, text: message});
+
         const transporter=nodemailer.createTransport({
             service:"gmail",
             auth:{
@@ -25,8 +29,8 @@ const sendMail=async(email,message)=>{
             }
         })
     } catch (err) {
-        return res.status(500).json({ message: "Something went wrong" });
-      }
+        throw new Error(err.message);
+    }
 
 };
 module.exports={sendMail};
