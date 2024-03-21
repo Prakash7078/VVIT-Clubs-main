@@ -8,6 +8,7 @@ import { Link } from "react-scroll";
 // import { HashLink } from 'react-router-hash-link';
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/authSlice";
+import axios from "axios";
 import {
   Badge,
   Avatar,
@@ -23,6 +24,7 @@ import Login from "../pages/Login";
 import clu from "../Images/dj.png";
 import tele from "../Images/telephone.png";
 import dash from "../Images/dashboard.png";
+import { BASE_URL } from "../config/url";
 function Navbar() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -32,7 +34,17 @@ function Navbar() {
   const [search, setSearch] = useState("");
   const userInfo = useSelector((state) => state.auth.userInfo);
   const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const res3 = await axios.get(
+        `${BASE_URL}/api/msgs/notifications/${userInfo.rollno}`
+      );
+      setNotifications(res3.data);
+    };
+    fetchNotifications();
+  }, []);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -108,7 +120,13 @@ function Navbar() {
               </li>
             )}
             {userInfo && (
-              <li onClick={toggleMenu} className="cursor-pointer">
+              <li  className="cursor-pointer">
+                <Link
+                onClick={toggleMenu}
+                smooth={true}
+                duration={1000}
+                to="#category"
+              >
                 <IconButton
                   variant="outlined"
                   color="white"
@@ -117,6 +135,7 @@ function Navbar() {
                   <img src={clu} alt="clu" />
                 </IconButton>
                 My Events
+                </Link>
               </li>
             )}
             <li className="cursor-pointer">
@@ -155,22 +174,30 @@ function Navbar() {
             </li>
             <hr />
             {userInfo && (
-              <div onClick={toggleMenu} className="flex items-center gap-4">
-                <Route to="/myprofile">
-                  <Badge
-                    overlap="circular"
-                    placement="bottom-end"
-                    className="bg-green-600"
-                  >
+              <Route to="/myprofile">
+                <div onClick={toggleMenu} className="flex items-center gap-4">
+                  {notifications?.notificatons?.length > 0 ? (
+                    <Badge
+                      overlap="circular"
+                      placement="bottom-end"
+                      className="bg-green-600"
+                    >
+                      <Avatar
+                        size="sm"
+                        src={userInfo.image}
+                        alt="profile picture"
+                      />
+                    </Badge>
+                  ) : (
                     <Avatar
                       size="sm"
                       src={userInfo.image}
                       alt="profile picture"
                     />
-                  </Badge>
-                </Route>
-                <h1>My Profile</h1>
-              </div>
+                  )}
+                  <h1>My Profile</h1>
+                </div>
+              </Route>
             )}
             {!userInfo ? (
               <Button
@@ -198,13 +225,17 @@ function Navbar() {
       <div className="hidden md:flex gap-4 items-center">
         {userInfo && userInfo.image != "" && (
           <Route to="/myprofile">
-            <Badge
-              overlap="circular"
-              placement="bottom-end"
-              className="bg-green-600"
-            >
+            {notifications?.notificatons?.length > 0 ? (
+              <Badge
+                overlap="circular"
+                placement="bottom-end"
+                className="bg-green-600"
+              >
+                <Avatar size="sm" src={userInfo.image} alt="profile picture" />
+              </Badge>
+            ) : (
               <Avatar size="sm" src={userInfo.image} alt="profile picture" />
-            </Badge>
+            )}
           </Route>
         )}
         {!userInfo ? (
