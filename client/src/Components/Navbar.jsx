@@ -107,7 +107,7 @@ function Navbar() {
           >
             {userInfo && userInfo.isAdmin && (
               <li onClick={toggleMenu}>
-                <Route to="/dashboard">
+                <Route to={`/dashboard/${userInfo._id}`}>
                   <IconButton
                     variant="outlined"
                     color="white"

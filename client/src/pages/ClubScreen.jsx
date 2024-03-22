@@ -311,12 +311,12 @@ function ClubScreen() {
                 </div>
               </div>
             ))}
-            <div className="flex mt-5 justify-center">
+            <div className="flex mt-5 justify-end mr-10 ">
               <button
                 onClick={() => handleEventRegisterDialog(!eventRegisterDialog)}
-                className="border-brown-400 bg-white border-2 px-4 py-2 text-black font-semibold"
+                className="border-brown-400 border-b-2 rounded-sm px-5 py-1 text-black font-semibold"
               >
-                See All
+                See All...
               </button>
             </div>
           </div>
@@ -327,7 +327,7 @@ function ClubScreen() {
       )}
       {filteRegisters.filter((item) => item.isWinner || item.isRunner).length >
         0 && (
-        <div className="my-16 lg:mx-32 mx-10 ">
+        <div className="my-16 lg:mx-32 mx-8 ">
           <h1 className="text-center sm:text-3xl text-2xl font-bold mb-10 text-brown-700">
             Winners and Runners
           </h1>
