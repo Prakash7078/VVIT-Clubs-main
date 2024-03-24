@@ -106,7 +106,7 @@ function Sidebar() {
             <Drawer open={open} onClose={closeDrawer}>
               <Card>
               <List className="font-bold text-black flex flex-col gap-5 ">
-                <Link to="/dashboard">
+                <Link to={`/dashboard/${userInfo?._id}`}>
                   <ListItem>
                     <ListItemPrefix>
                         <ImHome className="h-5 w-5" />
@@ -114,7 +114,7 @@ function Sidebar() {
                     Home
                   </ListItem>
                 </Link>
-                <Link to='/admin/clubs'>
+                <Link to={`/admin/${userInfo?._id}/clubs`}>
                   <ListItem>
                     <ListItemPrefix>
                         <MdEmojiEvents className="h-5 w-5" />
@@ -122,7 +122,7 @@ function Sidebar() {
                     Clubs
                   </ListItem>
                 </Link>
-                <Link to='/admin/events'>
+                <Link to={`/admin/${userInfo?._id}/events`}>
                   <ListItem>
                     <ListItemPrefix>
                         <MdOutlineEmojiEvents className="h-5 w-5" />
@@ -130,18 +130,18 @@ function Sidebar() {
                     Events
                   </ListItem>
                 </Link>
-                <Link to='/admin/registers'>
+                <Link to={`/admin/${userInfo?._id}/registers`}>
                   <ListItem>
                     <ListItemPrefix>
                         <ImEnter className="h-5 w-5" />
                     </ListItemPrefix>
-                    Registrations
+                    Club Registrations
                     <ListItemSuffix>
                       <Chip value={clubs.length} size="sm" variant="ghost" color="white" className="rounded-full" />
                     </ListItemSuffix>
                   </ListItem>
                 </Link>
-                <Link to='/admin/addAdmin'>
+                <Link to={`/admin/${userInfo?._id}/addAdmin`}>
                   <ListItem>
                     <ListItemPrefix>
                       <BsPersonFillAdd className="h-5 w-5" />
@@ -149,7 +149,7 @@ function Sidebar() {
                     Add Admin
                   </ListItem>
                 </Link>
-                <Link to='/admin/reviews'>
+                <Link to={`/admin/${userInfo?._id}/reviews`}>
                   <ListItem>
                     <ListItemPrefix>
                       <BsPersonFillAdd className="h-5 w-5" />
@@ -157,7 +157,7 @@ function Sidebar() {
                     Reviews
                   </ListItem>
                 </Link>
-                <Link to='/admin/addClub'>
+                <Link to={`/admin/${userInfo?._id}/addClub`}>
                   <ListItem>
                   <ListItemPrefix>
                       <GiHomeGarage className="h-5 w-5" />
@@ -165,7 +165,7 @@ function Sidebar() {
                   Add Club
                 </ListItem>
                 </Link>
-                <Link to='/admin/addEvent'>
+                <Link to={`/admin/${userInfo?._id}/addEvent`}>
                   <ListItem >
                     <ListItemPrefix>
                         <MdEvent className="h-5 w-5" />
