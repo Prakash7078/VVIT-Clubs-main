@@ -34,20 +34,21 @@ function Navbar() {
   const [search, setSearch] = useState("");
   const userInfo = useSelector((state) => state.auth.userInfo);
   const navigate = useNavigate();
-  const [notifications, setNotifications] = useState([]);
   const dispatch = useDispatch();
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      const res3 = await axios.get(
-        `${BASE_URL}/api/msgs/notifications/${userInfo.rollno}`
-      );
-      setNotifications(res3.data);
-    };
-    fetchNotifications();
-  }, []);
+  const [notifications, setNotifications] = useState([]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        `${BASE_URL}/api/msgs/notifications/unseen/${userInfo.rollno}`
+      );
+      setNotifications(res.data);
+    };
+    fetchData();
+  }, []);
   const handleSignout = async () => {
     await dispatch(logoutUser());
     navigate("/");
@@ -120,21 +121,21 @@ function Navbar() {
               </li>
             )}
             {userInfo && (
-              <li  className="cursor-pointer">
+              <li className="cursor-pointer">
                 <Link
-                onClick={toggleMenu}
-                smooth={true}
-                duration={1000}
-                to="#category"
-              >
-                <IconButton
-                  variant="outlined"
-                  color="white"
-                  className="rounded-full mr-3"
+                  onClick={toggleMenu}
+                  smooth={true}
+                  duration={1000}
+                  to="#category"
                 >
-                  <img src={clu} alt="clu" />
-                </IconButton>
-                My Events
+                  <IconButton
+                    variant="outlined"
+                    color="white"
+                    className="rounded-full mr-3"
+                  >
+                    <img src={clu} alt="clu" />
+                  </IconButton>
+                  My Events
                 </Link>
               </li>
             )}
@@ -176,7 +177,7 @@ function Navbar() {
             {userInfo && (
               <Route to="/myprofile">
                 <div onClick={toggleMenu} className="flex items-center gap-4">
-                  {notifications?.notificatons?.length > 0 ? (
+                  {notifications?.length > 0 ? (
                     <Badge
                       overlap="circular"
                       placement="bottom-end"
@@ -225,7 +226,7 @@ function Navbar() {
       <div className="hidden md:flex gap-4 items-center">
         {userInfo && userInfo.image != "" && (
           <Route to="/myprofile">
-            {notifications?.notificatons?.length > 0 ? (
+            {notifications?.length > 0 ? (
               <Badge
                 overlap="circular"
                 placement="bottom-end"

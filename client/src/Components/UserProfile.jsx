@@ -12,26 +12,34 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import Profile from "../pages/Profile";
+import { getNotifications } from "../redux/adminSlice";
+import { toast } from "react-toastify";
 
 function UserProfile() {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.auth.userInfo);
   const [profileuser, setProfileuser] = useState(null);
   const registers = useSelector((state) => state.register.registers);
-  const [feedback, setFeedback] = useState(null);
   const navigate = useNavigate();
+  const notifications = useSelector((state) => state.admin.notifications);
+  const handleStatus = async (id) => {
+    try {
+      await axios.put(`${BASE_URL}/api/msgs/notifications/status/${id}`);
+      await dispatch(getNotifications());
+    } catch (err) {
+      toast.error("Network error");
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const res1 = await axios.get(`${BASE_URL}/api/users/${userInfo.rollno}`);
-      const res3 = await axios.get(
-        `${BASE_URL}/api/msgs/notifications/${userInfo.rollno}`
-      );
+      await dispatch(getNotifications(userInfo?.rollno));
       dispatch(getRegisters());
       setProfileuser(res1);
-      setFeedback(res3);
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
   const data = [
     {
       label: "My Profile",
@@ -117,18 +125,38 @@ function UserProfile() {
                     ))}
                 </div>
               )}
-              {value === "msgs" && feedback && (
-                <div className="flex flex-wrap w-full p-16 gap-10">
-                  {feedback?.data?.notifications?.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col gap-2 shadow-xl p-6"
-                    >
-                      <h1 className="font-bold">{item?.user?.username}:</h1>
-                      <h1>{item?.user?.email}</h1>
-                      <h1>{item?.text}</h1>
-                    </div>
-                  ))}
+              {value === "msgs" && notifications && (
+                <div className="md:p-16 p-5">
+                  <div className="flex flex-wrap w-full gap-10">
+                    {notifications
+                      ?.filter((item) => item.isPast === false)
+                      .map((item, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleStatus(item._id)}
+                          className={`flex bg-orange-100 flex-col gap-2 shadow-xl p-6`}
+                        >
+                          <h1 className="font-bold">{item?.user?.username}:</h1>
+                          <h1>{item?.user?.email}</h1>
+                          <h1>{item?.text}</h1>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="flex flex-wrap w-full  gap-10">
+                    {notifications
+                      ?.filter((item) => item.isPast === true)
+                      .map((item, index) => (
+                        <div
+                          key={index}
+                          className={`flex bg-white
+                            flex-col gap-2 shadow-xl p-6`}
+                        >
+                          <h1 className="font-bold">{item?.user?.username}:</h1>
+                          <h1>{item?.user?.email}</h1>
+                          <h1>{item?.text}</h1>
+                        </div>
+                      ))}
+                  </div>
                 </div>
               )}
             </TabPanel>

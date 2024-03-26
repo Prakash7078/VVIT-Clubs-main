@@ -47,9 +47,9 @@ const Chat = () => {
       socket.off("message");
     };
   }, [messages, navigate, userInfo]);
-  // useEffect(()=>{
-  //   setMessages(msgs);
-  // },[msgs])
+  useEffect(() => {
+    setMessages(msgs);
+  }, [msgs]);
 
   const handleInputChange = (event) => {
     setMessage(event.target.value);

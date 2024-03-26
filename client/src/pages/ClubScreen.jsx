@@ -429,7 +429,7 @@ function ClubScreen() {
           handleDialogData={handleDialogData}
         />
       )}
-      <Tutorials value={name} />
+      {/* <Tutorials value={name} /> */}
       <Footer />
       <Dialog
         open={open}

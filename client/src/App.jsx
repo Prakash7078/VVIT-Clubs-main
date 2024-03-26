@@ -25,7 +25,6 @@ import Allevents from "./Components/Allevents";
 import EventGuestList from "./Components/EventGuestList";
 import Gallery from "./Components/Gallery";
 import EventDetails from "./Components/EventDetails";
-import ClubDetails from "./Components/ClubDetails";
 import AllClubDetails from "./Components/ClubDetails";
 function App() {
   return (
