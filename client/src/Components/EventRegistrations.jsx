@@ -188,7 +188,13 @@ function EventRegistrations({ club, handleOpen, event_id }) {
             </Button>
           </div>
         </div>
-        <div className="overflow-x-auto rounded-lg lg:mx-10 bg-white mx-1">
+        <div
+          className={`overflow-x-auto rounded-lg lg:mx-10 ${
+            userInfo.isAdmin || userInfo.category === "Coordinator"
+              ? "blur-sm"
+              : "bg-white"
+          } mx-1`}
+        >
           <table className="w-full border-collapse">
             <thead className="top-0 sticky">
               <tr className="bg-orange-500 text-secondary  ">

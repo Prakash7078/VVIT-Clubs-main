@@ -21,6 +21,8 @@ function AllEvents() {
   const events = useSelector((state) => state.events.events);
   const loading = useSelector((state) => state.events.loading);
   const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.auth.userInfo);
+
   useEffect(() => {
     const fetchEvents = async () => {
       await dispatch(getEvents());
@@ -79,7 +81,7 @@ function AllEvents() {
                   view all
                 </Button>
                 <Button className="flex gap-2" color="brown" size="sm">
-                  <Link to="/admin/addEvent">
+                  <Link to={`/admin/${userInfo?._id}/addEvent`}>
                     <div className="flex gap-2">
                       <BiSolidAddToQueue />
                       Add Event

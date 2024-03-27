@@ -13,6 +13,7 @@ function AllClubs() {
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 5; // Number of products per page
   const dispatch=useDispatch();
+  const userInfo =useSelector((state)=>state.auth.userInfo);
   const clubs=useSelector((state)=>state.clubs.clubs);
   const registers= useSelector((state) => state.register.registers);
   const loading= useSelector((state) => state.clubs.load);
@@ -76,7 +77,7 @@ function AllClubs() {
                   view all
                 </Button>
                 <Button color="brown" size="sm" >
-                  <Link to='/admin/addClub'>
+                  <Link to={`/admin/${userInfo?._id}/addClub`}>
                     <div  className="flex gap-2">
                       <BiSolidAddToQueue/>
                       Add Club
