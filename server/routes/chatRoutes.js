@@ -4,6 +4,6 @@ const { getChats, updateChats} = require("../controllers/chatController");
 
 const router=express.Router();
 router.get("/",isAuth,getChats);
-router.patch("/:id",updateChats);
+router.put("/:id",updateChats);
 // router.post("/send",isAuth,sendChats);
 module.exports=router;

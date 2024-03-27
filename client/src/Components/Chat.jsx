@@ -32,7 +32,7 @@ const Chat = () => {
       console.log("messages", msgs);
     };
     fetchChats();
-  }, [dispatch]);
+  }, [dispatch,msgs]);
   useEffect(() => {
     // Socket.IO event listeners
     if (!userInfo) {
@@ -76,8 +76,7 @@ const Chat = () => {
     }
   };
   const handleLike = async (id) => {
-    console.log("addlike");
-    await axios.patch(`${BASE_URL}/api/chat/${id}`);
+    await axios.put(`${BASE_URL}/api/chat/${id}`);
     dispatch(getChats());
   };
   const handleSelectEmoji = (emoji) => {

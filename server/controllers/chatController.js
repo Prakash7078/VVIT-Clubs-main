@@ -13,7 +13,6 @@ const updateChats=async(req,res)=>{
     const chat=await Chat.findById(id);
     if(chat){
         const newchat=await Chat.findByIdAndUpdate(id,{likes:chat.likes+1});
-        console.log(newchat);
     }
 }
 // const sendChats=expressAsyncHandler(async(req,res)=>{
