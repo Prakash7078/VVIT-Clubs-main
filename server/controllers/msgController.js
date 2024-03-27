@@ -23,7 +23,7 @@ const getUnseenNotifications = async (req, res) => {
   res.status(StatusCodes.OK).json(Msgs);
 };
 const updateNotificationStatus = async (req,res) => {
-  await Notifications.updateOne(
+  await Notifications.findOneAndUpdate(
     {_id:req.params.id},
     { isPast: true },
     { new: true }
