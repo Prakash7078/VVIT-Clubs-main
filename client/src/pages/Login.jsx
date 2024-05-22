@@ -38,11 +38,7 @@ function Login(props) {
   };
   useEffect(() => {
     if (userInfo) {
-      if(userInfo.isAdmin){
-        		navigate(`/dashboard/${userInfo._id}`);
-      }else{
-            navigate("/");
-      }
+      navigate("/");
     }
   }, [navigate, userInfo]);
   const [showPassword, setShowPassword] = useState(false);
