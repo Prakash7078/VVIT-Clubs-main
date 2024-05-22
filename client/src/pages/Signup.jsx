@@ -46,11 +46,7 @@ function Signup() {
         
 
         await dispatch(signupUser(data));
-	if(userInfo.isAdmin){
-		navigate(`/dashboard/${userInfo._id}`);
-	}else{
-		navigate('/');
-	}
+	navigate('/');
     }
     useEffect(()=>{
         if(userInfo){
