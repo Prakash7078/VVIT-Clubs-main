@@ -63,7 +63,7 @@ function Navbar() {
     setSearch("");
   };
   return (
-    <div className="shadow-md z-50 fixed top-0 left-0 flex items-center justify-between py-4 sm:px-8 max-w-7xl mx-auto px-4 backdrop-blur-md">
+    <div className="shadow-md z-50 fixed top-0 left-0 right-0 flex items-center justify-between py-4 sm:px-8 max-w-7xl mx-auto px-4 backdrop-blur-md">
       <div className="flex gap-20">
         <Route to="/">
           <img
