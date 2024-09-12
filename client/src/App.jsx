@@ -28,7 +28,7 @@ import EventDetails from "./Components/EventDetails";
 import AllClubDetails from "./Components/ClubDetails";
 function App() {
   return (
-    <div className="">
+    <div className="max-w-7xl mx-auto">
       <BrowserRouter>
         <Navbar />
         <Routes>
